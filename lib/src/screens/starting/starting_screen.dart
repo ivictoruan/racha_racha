@@ -35,31 +35,25 @@ class _StartingScreenState extends State<StartingScreen> {
           ),
         ],
         elevation: 0,
-        // toolbarHeight: size.height * 0.05,
       ),
       body: IntroductionScreen(
-        curve: Curves.easeInOutCirc,
-        animationDuration: 400,
+        showDoneButton: true,
+
+        curve: Curves.easeInOutCubicEmphasized,
+        animationDuration: 100,
         isBottomSafeArea: true,
         pages: [
           PageViewModel(
-            titleWidget: Column(
-              children: [
-                buildImage("assets/lottie/receipt.json"),
-                const Spacer(),
-                const Text("'Boas-vindas ao Racha Racha!!!"),
-              ],
-            ),
-            // body: Text('Boas-vindas ao Racha Racha!!!\nDivida a conta no seu rolê.'),
+            title: "Boas-vindas ao Racha Racha!",
             bodyWidget: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                //   Text(
-                //   'Boas-vindas ao Racha Racha!!!',
-                //   style: TextStyle(fontWeight: FontWeight.bold),
-                // ),
-                // \nDivida a conta no seu rolê.
-                 Text('Divida a conta no seu rolê.'),
+              children: [
+                buildImage("assets/lottie/receipt.json"),
+                SizedBox(height: size.height * 0.02),
+                const Text(
+                  'Rache a conta no rolê!',
+                  textAlign: TextAlign.center,
+                ),
               ],
             ),
             decoration: getPageDecoration(),
@@ -71,34 +65,60 @@ class _StartingScreenState extends State<StartingScreen> {
               children: [
                 const Text(
                   'É muito simples! Digite o valor total da conta, das bebidas (se houver alguém bebendo) e quantidade de pessoas para encontrar o melhor resultado.',
-                  textAlign: TextAlign.justify,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: size.height * 0.02),
-                CustomMaterialWidget(
-                  child: TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(Icons.safety_divider_outlined),
-                    label: const Text(
-                      "Rachar!",
-                    ),
-                  ),
-                ),
+                // CustomMaterialWidget(
+                //   child: TextButton.icon(
+                //     onPressed: () => customUtils.goTo("/totalValue", context),
+                //     icon: const Icon(Icons.safety_divider_outlined),
+                //     label: const Text(
+                //       "Rachar!",
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             image: buildImage("assets/lottie/question.json"),
             decoration: getPageDecoration(),
           ),
         ],
-        onDone: () => customUtils.goTo("/totalValue", context),
         //ClampingScrollPhysics prevent the scroll offset from exceeding the bounds of the content.
         scrollPhysics: const ClampingScrollPhysics(),
-        showDoneButton: true,
         showNextButton: true,
-        showSkipButton: true,
-        skip: const Text("Avançar",
-            style: TextStyle(fontWeight: FontWeight.w600)),
-        next: const Icon(Icons.arrow_forward_outlined),
-        done: const Text("Ok!", style: TextStyle(fontWeight: FontWeight.w600)),
+        done: Material(
+          borderRadius: BorderRadius.circular(28),
+          elevation: 3,
+          shadowColor: Colors.purpleAccent,
+          child: const CircleAvatar(
+            backgroundColor: Colors.purple,
+            radius: 28,
+            child: Icon(
+              Icons.arrow_forward,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        onDone: () => customUtils.goTo("/totalValue", context),
+        // onSkip: () => ,
+        // skip: FloatingActionButton(
+        //   onPressed: () {},
+        //   child: const Icon(Icons.arrow_forward),
+        // ),
+        next: Material(
+          borderRadius: BorderRadius.circular(28),
+          elevation: 3,
+          shadowColor: Colors.purpleAccent,
+          child: const CircleAvatar(
+            backgroundColor: Colors.purple,
+            radius: 28,
+            child: Icon(
+              Icons.arrow_forward,
+              color: Colors.white,
+            ),
+          ),
+        ),
+
         dotsDecorator: getDotsDecorator(),
       ),
     );
