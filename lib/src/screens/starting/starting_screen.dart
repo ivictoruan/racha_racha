@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:lottie/lottie.dart';
-import 'package:racha_racha/src/core/utils/custom_utils.dart';
-import 'package:racha_racha/src/core/wigets/custom_material_widget.dart';
+
+import '../../core/utils/custom_utils.dart';
 
 class StartingScreen extends StatefulWidget {
   const StartingScreen({Key? key}) : super(key: key);
@@ -18,16 +18,19 @@ class _StartingScreenState extends State<StartingScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
         title: Image.asset(
           "assets/images/app/splash.png",
           width: size.width * 0.3,
           height: size.height * 0.15,
         ),
+        backgroundColor: Colors.white,
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () => customUtils.goTo("/totalValue", context),
+            onPressed: () => customUtils.goTo(
+              "/totalValue",
+              context,
+            ),
             icon: const Icon(
               Icons.close,
               color: Colors.purple,
@@ -38,123 +41,141 @@ class _StartingScreenState extends State<StartingScreen> {
       ),
       body: IntroductionScreen(
         showDoneButton: true,
-
         curve: Curves.easeInOutCubicEmphasized,
         animationDuration: 100,
         isBottomSafeArea: true,
         pages: [
           PageViewModel(
-            title: "Boas-vindas ao Racha Racha!",
+            titleWidget: Text(
+              "Boas-vindas ao Racha Racha!",
+              style: TextStyle(
+                color: Colors.purple,
+                fontSize: 0.06 * size.width,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             bodyWidget: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                buildImage("assets/lottie/receipt.json"),
+                //
+                buildImage("assets/lottie/receipt.json", size),
                 SizedBox(height: size.height * 0.02),
-                const Text(
+                Text(
                   'Rache a conta no rolê!',
                   textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.purple,
+                    fontSize: 0.04 * size.width,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
-            decoration: getPageDecoration(),
+            decoration: getPageDecoration(size),
           ),
           PageViewModel(
-            title: 'Como funciona?',
+            titleWidget: Text(
+              "Vamos lá?",
+              style: TextStyle(
+                color: Colors.purple,
+                fontSize: 0.06 * size.width,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             bodyWidget: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                buildImage("assets/lottie/question.json", size),
+                Text(
                   'É muito simples! Digite o valor total da conta, das bebidas (se houver alguém bebendo) e quantidade de pessoas para encontrar o melhor resultado.',
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.justify,
+                  style: TextStyle(
+                    color: Colors.purple,
+                    fontSize: 0.04 * size.width,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 SizedBox(height: size.height * 0.02),
-                // CustomMaterialWidget(
-                //   child: TextButton.icon(
-                //     onPressed: () => customUtils.goTo("/totalValue", context),
-                //     icon: const Icon(Icons.safety_divider_outlined),
-                //     label: const Text(
-                //       "Rachar!",
-                //     ),
-                //   ),
-                // ),
               ],
             ),
-            image: buildImage("assets/lottie/question.json"),
-            decoration: getPageDecoration(),
+            decoration: getPageDecoration(size),
           ),
         ],
         //ClampingScrollPhysics prevent the scroll offset from exceeding the bounds of the content.
         scrollPhysics: const ClampingScrollPhysics(),
         showNextButton: true,
-        done: Material(
-          borderRadius: BorderRadius.circular(28),
-          elevation: 3,
-          shadowColor: Colors.purpleAccent,
-          child: const CircleAvatar(
-            backgroundColor: Colors.purple,
-            radius: 28,
-            child: Icon(
-              Icons.arrow_forward,
-              color: Colors.white,
-            ),
-          ),
-        ),
+        done: const CustomDoneWidget(),
+        next: const CustomDoneWidget(),
         onDone: () => customUtils.goTo("/totalValue", context),
-        // onSkip: () => ,
-        // skip: FloatingActionButton(
-        //   onPressed: () {},
-        //   child: const Icon(Icons.arrow_forward),
-        // ),
-        next: Material(
-          borderRadius: BorderRadius.circular(28),
-          elevation: 3,
-          shadowColor: Colors.purpleAccent,
-          child: const CircleAvatar(
-            backgroundColor: Colors.purple,
-            radius: 28,
-            child: Icon(
-              Icons.arrow_forward,
-              color: Colors.white,
-            ),
-          ),
-        ),
-
-        dotsDecorator: getDotsDecorator(),
+        dotsDecorator: getDotsDecorator(size),
       ),
     );
   }
 }
 
-Widget buildImage(String lottiePath) {
+Widget buildImage(String lottiePath, Size size) {
   return Center(
     child: Lottie.asset(
       lottiePath,
-      width: 450,
-      height: 200,
+      width: 0.68 * size.width,
+      height: 0.3 * size.height,
     ),
   );
 }
 
 //method to customise the page style
-PageDecoration getPageDecoration() {
-  return const PageDecoration(
-    imagePadding: EdgeInsets.only(top: 120),
+PageDecoration getPageDecoration(Size size) {
+  return PageDecoration(
+    imagePadding: EdgeInsets.only(top: 0.35 * size.width),
     pageColor: Colors.white,
-    bodyPadding: EdgeInsets.only(top: 8, left: 20, right: 20),
-    titlePadding: EdgeInsets.only(top: 50),
-    bodyTextStyle: TextStyle(color: Colors.black54, fontSize: 15),
+    bodyPadding: EdgeInsets.only(
+        top: 0.023 * size.width,
+        left: 0.058 * size.width,
+        right: 0.058 * size.width),
+    titlePadding: EdgeInsets.only(top: 0.147 * size.width),
+    bodyTextStyle: TextStyle(
+      color: Colors.black54,
+      fontSize: 0.044 * size.width,
+    ),
   );
 }
 
 //method to customize the dots style
-DotsDecorator getDotsDecorator() {
-  return const DotsDecorator(
-    spacing: EdgeInsets.symmetric(horizontal: 2),
+DotsDecorator getDotsDecorator(Size size) {
+  return DotsDecorator(
+    spacing: EdgeInsets.symmetric(
+      horizontal: 0.0058823529411764705 * size.width,
+    ),
     activeColor: Colors.purple,
     color: Colors.grey,
-    activeSize: Size(12, 5),
+    activeSize: Size(0.06 * size.width, 0.0075 * size.height),
     activeShape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(25.0)),
+      borderRadius: BorderRadius.all(
+        Radius.circular(
+          25.0 * size.width,
+        ),
+      ),
     ),
   );
+}
+
+class CustomDoneWidget extends StatelessWidget {
+  const CustomDoneWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Material(
+      borderRadius: BorderRadius.circular(0.08 * size.width),
+      elevation: 3,
+      child: CircleAvatar(
+        backgroundColor: Colors.purple,
+        radius: 0.08 * size.width,
+        child: const Icon(
+          Icons.arrow_forward,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
 }
