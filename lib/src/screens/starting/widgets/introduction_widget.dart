@@ -31,7 +31,6 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
         CarouselSlider(
           options: CarouselOptions(
             height: MediaQuery.of(context).size.height * 0.75,
-            // autoPlay: true,
             autoPlayInterval: const Duration(seconds: 8),
             autoPlayAnimationDuration: const Duration(seconds: 2),
             autoPlayCurve: Curves.fastLinearToSlowEaseIn,

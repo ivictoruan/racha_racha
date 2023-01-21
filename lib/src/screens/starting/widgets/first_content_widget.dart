@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lottie/lottie.dart';
 
+import 'main_content_widget.dart';
+
 class FirstContentWidget extends StatelessWidget {
   const FirstContentWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     const String welcomeContent = "Boas-vindas ao Racha Racha!";
     const String receiptLottie = "assets/lottie/receipt.json";
     const String titleContent = "Rache a conta no rolê!";
@@ -18,7 +21,6 @@ class FirstContentWidget extends StatelessWidget {
     - Divisões para quem está bebendo:
         Quem não bebeu paga menos! 
           ''';
-    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Lottie.asset(receiptLottie, height: size.height * 0.35),
@@ -44,21 +46,7 @@ class FirstContentWidget extends StatelessWidget {
             ),
           ),
         ),
-        SafeArea(
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: size.height * 0.25,
-              width: size.width * 0.9,
-              child: Markdown(
-                data: mainContent,
-                // shrinkWrap: true,
-                controller: ScrollController(),
-                selectable: true,
-                softLineBreak: true,
-              ),
-            ),
-          ),
-        ),
+        const MainContentWidget(mainContent: mainContent),
         const Divider(
           color: Colors.purple,
         ),
