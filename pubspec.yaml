@@ -1,3 +1,4 @@
+
 name: racha_racha
 description: A new Flutter project.
 
@@ -35,13 +36,29 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.3
-  desktop_window: ^0.4.0
   go_router: ^4.5.1
-  mask_text_input_formatter: ^2.4.0
-  animated_text_kit: ^4.2.2
+  flutter_native_splash: ^2.2.9
+  flutter_launcher_icons: ^0.11.0
+  url_launcher: ^6.1.6
   lottie: ^1.4.2
-  slimy_card: ^1.0.4
-  social_share: ^2.2.1
+  social_share: any
+  qr_flutter: ^4.0.0
+  carousel_slider: ^4.2.1
+  flutter_markdown: ^0.6.13
+
+flutter_native_splash: # flutter pub run flutter_native_splash:create
+  color: "#FFFFFF" # c332c4
+  image: "assets/images/app/splash.png"
+  android: true
+  ios: true
+
+flutter_icons: # flutter pub run flutter_launcher_icons
+  image_path: "assets/images/app/icon.png"
+  ios: true
+  remove_alpha_ios: true
+  android: "launcher_icon"
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: "assets/images/app/icon-android.png"
 
 dev_dependencies:
   flutter_test:
@@ -66,10 +83,12 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-    # - assets/lottie/isDrinkingLottie.json
-    # - assets/icons/tal_icon
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/lottie/receipt.json
+    - assets/lottie/question.json
+    - assets/lottie/smartphone.json
+    - assets/images/app/icon.png
+    - assets/images/app/splash.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
