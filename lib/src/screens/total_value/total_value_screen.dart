@@ -34,6 +34,11 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    const String titleText =
+        'Para começar, digite o valor total da sua conta/recibo';
+    const String subtitleText =
+        'Precisamos dele para dar início à divisão da sua conta.';
+    const String pathToNextPage = "/totalPeople";
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -42,15 +47,13 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
           child: Column(
             children: [
               const CustomTitleTextWidget(
-                titleText:
-                    'Para começar, digite o valor total da sua conta/recibo',
+                titleText: titleText,
               ),
               SizedBox(
-                  height: size.height * 0.01,
+                  height: size.height * 0.04,
                   child: const CustomSmallDividerWidget()),
               const CustomSubitleTextWidget(
-                subtitle:
-                    'Precisamos dele para dar início à divisão da sua conta.',
+                subtitle: subtitleText,
               ),
               SizedBox(
                 width: size.width * 0.8,
@@ -75,7 +78,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
         ),
       ),
       floatingActionButton: const CustomFloatingActionButton(
-        pageToGo: "/totalPeople",
+        pageToGo: pathToNextPage,
         state: CheckState.totalCheckValueValid,
       ),
     );
