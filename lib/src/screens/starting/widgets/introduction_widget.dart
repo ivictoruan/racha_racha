@@ -30,11 +30,11 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
       children: [
         CarouselSlider(
           options: CarouselOptions(
+            autoPlay: true,
             height: MediaQuery.of(context).size.height * 0.75,
-            autoPlayInterval: const Duration(seconds: 8),
+            autoPlayInterval: const Duration(seconds: 6),
             autoPlayAnimationDuration: const Duration(seconds: 2),
             autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-            enlargeCenterPage: true,
             onPageChanged: (index, reason) => setActiveDot(index),
             scrollDirection: Axis.horizontal,
             viewportFraction: 1.0,
