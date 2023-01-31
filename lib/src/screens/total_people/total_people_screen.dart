@@ -5,7 +5,7 @@ import '../../core/wigets/custom_small_divider_widget.dart';
 import '../../core/wigets/custom_subtitle_text_widget.dart';
 import '../../core/wigets/custom_title_text_widget.dart';
 import '../../core/wigets/custom_will_pop_scope_widget.dart';
-import '../home/controller/check_controller.dart';
+import 'package:racha_racha/src/core/controller/check_controller.dart';
 import '../home/view/widgets/custom_slider.dart';
 import 'field/total_people_field_widget.dart';
 import 'widgets/floating_action_buttons_widget.dart';
