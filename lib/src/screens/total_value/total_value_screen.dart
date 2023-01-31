@@ -5,7 +5,7 @@ import '../../core/wigets/custom_floating_action_button.dart';
 import '../../core/wigets/custom_small_divider_widget.dart';
 import '../../core/wigets/custom_subtitle_text_widget.dart';
 import '../../core/wigets/custom_title_text_widget.dart';
-import '../home/controller/check_controller.dart';
+import 'package:racha_racha/src/core/controller/check_controller.dart';
 import '../is_someone_drinking/widgets/info_text_alert_widget.dart';
 import 'field/total_value_field.dart';
 
@@ -50,7 +50,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
                 titleText: titleText,
               ),
               SizedBox(
-                  height: size.height * 0.04,
+                  height: size.height * 0.01,
                   child: const CustomSmallDividerWidget()),
               const CustomSubitleTextWidget(
                 subtitle: subtitleText,
