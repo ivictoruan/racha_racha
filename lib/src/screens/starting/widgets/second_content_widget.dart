@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:lottie/lottie.dart';
 
 import 'main_content_widget.dart';
