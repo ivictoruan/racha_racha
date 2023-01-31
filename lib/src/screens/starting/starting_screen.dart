@@ -56,14 +56,7 @@ class _StartingScreenState extends State<StartingScreen>
               height: size.height * 0.08,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                // gradient: const LinearGradient(
-                //   begin: Alignment.topLeft,
-                //   end: Alignment.bottomRight,
-                //   colors: [
-                //     // Colors.white,
-                //     // Color.fromARGB(255, 205, 176, 210),
-                //   ],
-                // ),
+
               ),
               child: TextButton(
                 onPressed: () => customUtils.goTo(
