@@ -1,7 +1,7 @@
 # README - Racha Racha 💸📱
 
 ## Descrição 📝
-Com o aplicativo Racha Racha, você pode dividir facilmente as contas entre amigos e garantir que cada um pague exatamente o que consumiu. Esqueça aquela confusão de quem pagou mais ou menos e aproveite uma interface amigável e divertida para gerenciar suas despesas.
+Com o aplicativo Racha Racha, você pode dividir facilmente as contas entre amigos e garantir que cada um pague exatamente o que consumiu. Esqueça aquela confusão de quem pagou mais ou menos e aproveite uma interface amigável e divertida para gerenciar suas despesas no rolê.
 
 O aplicativo foi desenvolvido em Flutter, utilizando a arquitetura MVC para separação de responsabilidades. Além disso, a inversão de dependências foi implementada com Provider e a gestão de estado é feita através de ChangeNotifier.
 
