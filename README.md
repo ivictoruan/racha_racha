@@ -16,10 +16,13 @@ O aplicativo foi desenvolvido em Flutter, utilizando a arquitetura MVC para sepa
 O Racha Racha pode ser baixado gratuitamente na Play Store através do link: https://play.google.com/store/apps/details?id=com.matopibatech.racharacha&hl=pt_BR&gl=US
 
 ## Como usar 🤔
-1. Adicione as pessoas que irão dividir a conta
-2. Adicione os itens consumidos, incluindo bebidas e outros produtos
-3. O aplicativo irá calcular automaticamente quanto cada pessoa deve pagar
-4. Compartilhe a conta no WhatsApp com seus amigos
+1. Adicione o valor total da conta
+2. Adicione a quantidade de pessoas que irão pagar a conta
+3. Adicione uma taxa para o garçom se você for pagar
+4. Adicione os valores das bebidas se alguém estiver bebendo
+5. Confirme as informações que você forneceu
+6. O aplicativo irá calcular automaticamente quanto cada pessoa deve pagar
+7. Compartilhe a conta no WhatsApp com seus amigos
 
 ## Contribuições 🤝
 Contribuições são bem-vindas e podem ser feitas através do GitHub do projeto: [https://github.com/ivictoruan/racha_racha](https://github.com/ivictoruan/racha_racha/)
