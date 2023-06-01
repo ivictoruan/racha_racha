@@ -14,8 +14,7 @@ class RachaRachaApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Racha Racha",
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        // useMaterial3: true,
+        useMaterial3: true,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
