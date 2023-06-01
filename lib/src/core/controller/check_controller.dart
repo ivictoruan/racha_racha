@@ -160,7 +160,7 @@ class CheckController extends ChangeNotifier
         if (intTotalPeople == 0) {
           state = CheckState.totalPeopleValueInvalid;
           model.totalPeople = 1;
-          msgError = "A quantidade de pessoas não pode ser igual a zero!";
+          msgError = "❗️ A quantidade de pessoas não pode ser igual a zero!";
         }
       } else {
         state = CheckState.totalPeopleValueInvalid;
