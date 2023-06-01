@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/wigets/custom_small_divider_widget.dart';
 import '../../core/wigets/custom_subtitle_text_widget.dart';
 import '../../core/wigets/custom_title_text_widget.dart';
 import '../../core/wigets/custom_will_pop_scope_widget.dart';
@@ -31,9 +30,9 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
               children: [
                 const CustomTitleTextWidget(
                   titleText:
-                      "Digite a quantidade de pessoas que estão dividindo a conta",
+                      "👥 Digite a quantidade de pessoas dividindo a conta",
                 ),
-                const CustomSmallDividerWidget(),
+                // const CustomSmallDividerWidget(),
                 SizedBox(height: size.height * 0.02),
                 Consumer<CheckController>(
                   builder: (context, controller, child) {
@@ -41,31 +40,32 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
                   },
                 ),
                 SizedBox(height: size.height * 0.015),
-                SizedBox(
-                    width: size.width * 0.8,
-                    child: const CustomSmallDividerWidget()),
+                // SizedBox(
+                //     width: size.width * 0.8,
+                //     child: const CustomSmallDividerWidget()),
                 Consumer<CheckController>(
                   builder: (context, controller, child) {
                     return Column(
                       children: [
                         CustomSubitleTextWidget(
                             subtitle: controller.msgError == ""
-                                ? '* Se você for pagar a gorjeta/taxa do garçom, mova o ponteiro abaixo ( % ):'
+                                ? '* Se você for pagar a taxa de serviço de serviço 💼, mova o ponteiro abaixo (%):'
                                 : controller.msgError),
                       ],
                     );
                   },
                 ),
-                SizedBox(
-                    width: size.width * 0.8,
-                    child: const CustomSmallDividerWidget()),
+                // SizedBox(
+                //     width: size.width * 0.8,
+                //     child: const CustomSmallDividerWidget()),
                 SizedBox(height: size.height * 0.01),
                 Consumer<CheckController>(
                   builder: (context, controller, child) {
                     bool showSlider = controller.msgError ==
                             "Incluíndo você, digite a quantidade de pessoas dividindo a conta." ||
                         controller.msgError ==
-                            "A quantidade de pessoas não pode ser igual a zero!";
+                            "❗️ A quantidade de pessoas não pode ser igual a zero!";
+
                     return showSlider ? const SizedBox() : const CustomSlider();
                   },
                 )
