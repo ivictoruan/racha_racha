@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/utils/custom_utils.dart';
-import '../../core/wigets/custom_material_widget.dart';
+
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -37,11 +37,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               "https://play.google.com/store/apps/details?id=com.matopibatech.racharacha",
             ),
       },
-      // {
-      //   "icon": Icons.document_scanner_outlined,
-      //   "text": "Termos e Condições",
-      //   "onTap": () {},
-      // },
       {
         "icon": Icons.youtube_searched_for_outlined,
         "text": " Meu canal no Youtube",
@@ -109,36 +104,43 @@ class SettingsButtonWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return InkWell(
       onTap: onTap,
-      child: CustomMaterialWidget(
-        child: SizedBox(
-          height: size.height * 0.08,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              Icon(
-                icon,
-                color: Colors.purple,
-              ),
-              const Spacer(),
-              Text(
-                text,
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          elevation: 2,
+          shadowColor: Colors.purple,
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(0.02 * size.width),
+          child: SizedBox(
+            height: size.height * 0.08,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  width: 20,
                 ),
-              ),
-              const Spacer(),
-              const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.purple,
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-            ],
+                Icon(
+                  icon,
+                  color: Colors.purple,
+                ),
+                const Spacer(),
+                Text(
+                  text,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                ),
+                const Spacer(),
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  color: Colors.purple,
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+              ],
+            ),
           ),
         ),
       ),
