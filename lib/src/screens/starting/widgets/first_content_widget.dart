@@ -10,19 +10,21 @@ class FirstContentWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     const String welcomeContent = "Boas-vindas ao Racha Racha!";
-    const String receiptLottie = "assets/lottie/receipt.json";
+    // const String receiptLottie = "assets/lottie/receipt.json";
+    const String smartphoneLottie = "assets/lottie/smartphone.json";
+
     const String titleContent = "Rache a conta no rolê!";
     const String mainContent = '''
     - Divisões Simples:
         Todos exatamente pagam o
-        mesmo valor.  
+        mesmo valor. 😄  
           
     - Divisões para quem está bebendo:
-        Quem não bebeu paga menos! 
+        Quem não bebeu paga menos! 😉🚱 
           ''';
     return Column(
       children: [
-        Lottie.asset(receiptLottie, height: size.height * 0.35),
+        Lottie.asset(smartphoneLottie, height: size.height * 0.35),
         const Text(
           titleContent,
           style: TextStyle(
@@ -31,9 +33,7 @@ class FirstContentWidget extends StatelessWidget {
             color: Colors.purple,
           ),
         ),
-        const Divider(
-          color: Colors.purple,
-        ),
+        // const Divider(color: Colors.purple),
         const Align(
           alignment: Alignment.center,
           child: Text(
@@ -46,9 +46,7 @@ class FirstContentWidget extends StatelessWidget {
           ),
         ),
         const MainContentWidget(mainContent: mainContent),
-        const Divider(
-          color: Colors.purple,
-        ),
+        // const Divider(color: Colors.purple),
       ],
     );
   }
