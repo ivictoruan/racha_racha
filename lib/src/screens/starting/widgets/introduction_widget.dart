@@ -32,8 +32,8 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
           options: CarouselOptions(
             autoPlay: true,
             height: MediaQuery.of(context).size.height * 0.75,
-            autoPlayInterval: const Duration(seconds: 6),
-            autoPlayAnimationDuration: const Duration(seconds: 2),
+            autoPlayInterval: const Duration(seconds: 8),
+            autoPlayAnimationDuration: const Duration(seconds: 4),
             autoPlayCurve: Curves.fastLinearToSlowEaseIn,
             onPageChanged: (index, reason) => setActiveDot(index),
             scrollDirection: Axis.horizontal,
@@ -44,23 +44,34 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
             SecondContentWidget(),
           ],
         ),
-        Positioned(
-          left: 0,
-          right: 0,
-          bottom: 10,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(
-              2,
-              (index) {
-                return activeIndex == index
-                    ? const ActiveDotWidget()
-                    : const InactiveDotWidget();
-              },
-            ),
-          ),
-        )
+        CustomDotSplider(activeIndex: activeIndex),
       ],
+    );
+  }
+}
+
+class CustomDotSplider extends StatelessWidget {
+  final int activeIndex;
+
+  const CustomDotSplider({super.key, required this.activeIndex});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: 0,
+      right: 0,
+      bottom: 10,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(
+          2,
+          (index) {
+            return activeIndex == index
+                ? const ActiveDotWidget()
+                : const InactiveDotWidget();
+          },
+        ),
+      ),
     );
   }
 }
