@@ -12,20 +12,22 @@ class SecondContentWidget extends StatelessWidget {
     const String welcomeContent = "É muito simples, apenas digite:";
     const String titleContent = "Como funciona?";
     const String mainContent = ''' 
-    1. O valor total da conta;
-    
-    2. A quantidade de pessoas no rolê;
-    
-    3. Se houver alguém bebendo, 
-       o valor das bebidas;
-    
-    4. A quantidade de pessoas bebebendo.
+    1. 💰 O valor total da conta;
+
+    2. 👥 A quantidade de pessoas 
+          no rolê;
+
+    3. 🍻 Se houver alguém bebendo, 
+          o valor das bebidas;
+
+    4. 🥂 Quantidade de pessoas bebendo.
 ''';
-    const String smartphoneLottie = "assets/lottie/smartphone.json";
+    // const String smartphoneLottie = "assets/lottie/smartphone.json";
+    const String receiptLottie = "assets/lottie/receipt.json";
 
     return Column(
       children: [
-        Lottie.asset(smartphoneLottie, height: size.height * 0.35),
+        Lottie.asset(receiptLottie, height: size.height * 0.35),
         const Text(
           titleContent,
           style: TextStyle(
@@ -34,9 +36,7 @@ class SecondContentWidget extends StatelessWidget {
             color: Colors.purple,
           ),
         ),
-        const Divider(
-          color: Colors.purple,
-        ),
+        // const Divider(color: Colors.purple),
         const Align(
           alignment: Alignment.center,
           child: Text(
@@ -49,9 +49,7 @@ class SecondContentWidget extends StatelessWidget {
           ),
         ),
         const MainContentWidget(mainContent: mainContent),
-        const Divider(
-          color: Colors.purple,
-        ),
+        // const Divider(color: Colors.purple),
       ],
     );
   }
