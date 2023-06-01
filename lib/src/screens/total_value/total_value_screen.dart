@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/wigets/custom_floating_action_button.dart';
-import '../../core/wigets/custom_small_divider_widget.dart';
 import '../../core/wigets/custom_subtitle_text_widget.dart';
 import '../../core/wigets/custom_title_text_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
@@ -35,9 +34,9 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     const String titleText =
-        'Para começar, digite o valor total da sua conta/recibo';
+        '💰 Para começar, digite o valor total da sua conta';
     const String subtitleText =
-        'Precisamos dele para dar início à divisão da sua conta.';
+        '🔢 Precisamos do valor do recibo para dar início à divisão da sua conta.';
     const String pathToNextPage = "/totalPeople";
     return Scaffold(
       backgroundColor: Colors.white,
@@ -49,15 +48,8 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
               const CustomTitleTextWidget(
                 titleText: titleText,
               ),
-              SizedBox(
-                  height: size.height * 0.01,
-                  child: const CustomSmallDividerWidget()),
               const CustomSubitleTextWidget(
                 subtitle: subtitleText,
-              ),
-              SizedBox(
-                width: size.width * 0.8,
-                child: const CustomSmallDividerWidget(),
               ),
               SizedBox(height: size.height * 0.04),
               Consumer<CheckController>(
