@@ -5,24 +5,40 @@ import '../controller/check_controller.dart';
 import '../utils/custom_utils.dart';
 
 class CustomWillPopWidget extends StatelessWidget {
-  final Widget child;
-  const CustomWillPopWidget({Key? key, required this.child}) : super(key: key);
+  final Widget body;
+  final bool? isExitedPaged;
+  final Widget? floatingActionButton;
+  final PreferredSizeWidget? appBar;
+  final Widget? bottomNavigationBar;
+  final Widget? drawer;
+
+  const CustomWillPopWidget(
+      {Key? key,
+      required this.body,
+      this.isExitedPaged,
+      this.floatingActionButton,
+      this.appBar,
+      this.bottomNavigationBar,
+      this.drawer})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return WillPopScope(
       onWillPop: () async {
         final shouldPop = await showDialog<bool>(
           context: context,
-          barrierColor: Colors.purple.withOpacity(0.1),
+          barrierColor: Colors.deepPurple.withOpacity(0.2),
           builder: (context) {
             return AlertDialog(
-              title: const Center(
+              title: Center(
                 child: Text(
-                  'Gostaria de recomeçar?',
-                  style: TextStyle(
-                    color: Colors.purple,
+                  isExitedPaged ?? false
+                      ? "Gostaria de sair do app?"
+                      : 'Gostaria de recomeçar?',
+                  style: const TextStyle(
+                    color: Colors.deepPurple,
                     fontSize: 16,
                   ),
                 ),
@@ -36,8 +52,10 @@ class CustomWillPopWidget extends StatelessWidget {
                   builder: (context, controller, child) {
                     return TextButton(
                       onPressed: () {
-                        CustomUtils customUtils = CustomUtils();
-                        controller.restartSplit();
+                        final CustomUtils customUtils = CustomUtils();
+                        isExitedPaged ?? false
+                            ? customUtils.exitApp()
+                            : controller.restartSplit();
                         customUtils.goTo("/totalValue", context);
                       },
                       child: const Text('Sim'),
@@ -56,7 +74,19 @@ class CustomWillPopWidget extends StatelessWidget {
         );
         return shouldPop!;
       },
-      child: child,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: appBar,
+        drawer: drawer,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.all(0.01 * size.height),
+            child: SingleChildScrollView(child: body),
+          ),
+        ),
+        floatingActionButton: floatingActionButton,
+        bottomNavigationBar: bottomNavigationBar,
+      ),
     );
   }
 }

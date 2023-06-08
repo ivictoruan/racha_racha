@@ -8,7 +8,7 @@ class SecondContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     const String welcomeContent = "É muito simples, apenas digite:";
     const String titleContent = "Como funciona?";
     const String mainContent = ''' 
@@ -27,16 +27,16 @@ class SecondContentWidget extends StatelessWidget {
 
     return Column(
       children: [
-        Lottie.asset(receiptLottie, height: size.height * 0.35),
+        Lottie.asset(receiptLottie, height: size.height * 0.25),
         const Text(
           titleContent,
           style: TextStyle(
             fontWeight: FontWeight.w400,
             fontStyle: FontStyle.italic,
-            color: Colors.purple,
+            color: Colors.deepPurple,
           ),
         ),
-        // const Divider(color: Colors.purple),
+        // const Divider(color: Colors.deepPurple),
         const Align(
           alignment: Alignment.center,
           child: Text(
@@ -44,12 +44,12 @@ class SecondContentWidget extends StatelessWidget {
             style: TextStyle(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w600,
-              color: Colors.purple,
+              color: Colors.deepPurple,
             ),
           ),
         ),
         const MainContentWidget(mainContent: mainContent),
-        // const Divider(color: Colors.purple),
+        // const Divider(color: Colors.deepPurple),
       ],
     );
   }

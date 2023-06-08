@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../controller/check_controller.dart';
 
-
 class CustomFloatingActionButton extends StatefulWidget {
   final Enum state;
   final String? pageToGo;
@@ -27,7 +26,7 @@ class _CustomFloatingActionButtonState
     extends State<CustomFloatingActionButton> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     void goToPage(String page) {
       GoRouter.of(context).push(page);
@@ -36,12 +35,12 @@ class _CustomFloatingActionButtonState
     return Consumer<CheckController>(
       builder: (context, controller, child) {
         return FloatingActionButton(
-          hoverColor: Colors.purple.withOpacity(0.6),
-          elevation: controller.state == widget.state ? 5 : 0,
-          // focusElevation: 2,
+          // hoverColor: Colors.deepPurple.withOpacity(0.6),
+          elevation: controller.state == widget.state ? 2 : 0,
+          focusElevation: 2,
           backgroundColor: controller.state == widget.state
-              ? Colors.purple
-              : Colors.purple.withOpacity(0.1),
+              ? Colors.deepPurple
+              : const Color(0xFFE0E0E0),
           onPressed: !(controller.state == widget.state)
               ? null
               : () {
@@ -52,6 +51,7 @@ class _CustomFloatingActionButtonState
           child: Icon(
             widget.icon ?? Icons.arrow_forward,
             size: 0.04 * size.height,
+            color: Colors.white,
           ),
         );
       },

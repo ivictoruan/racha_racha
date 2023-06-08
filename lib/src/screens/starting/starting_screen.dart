@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:racha_racha/src/core/wigets/custom_will_pop_scope_widget.dart';
 
 import '../../core/utils/custom_utils.dart';
 import 'widgets/introduction_widget.dart';
@@ -12,67 +13,91 @@ class StartingScreen extends StatefulWidget {
 
 class _StartingScreenState extends State<StartingScreen>
     with SingleTickerProviderStateMixin {
-  CustomUtils customUtils = CustomUtils();
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.white,
+    Size size = MediaQuery.sizeOf(context);
+    return CustomWillPopWidget(
+      isExitedPaged: true,
       appBar: AppBar(
         title: Image.asset(
           "assets/images/app/splash.png",
           width: size.width * 0.3,
           height: size.height * 0.15,
         ),
-        backgroundColor: Colors.white,
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () => customUtils.goTo(
-              "/totalValue",
-              context,
-            ),
-            icon: const Icon(
-              Icons.close,
-              color: Colors.purple,
-            ),
-          ),
-        ],
+        backgroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
       ),
-      body: Column(
-        children: [
-          const IntroductionWidget(),
-          const Spacer(
-            flex: 1,
-          ),
-          Material(
-            elevation: 2,
-            shadowColor: Colors.purple,
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              width: size.width * 0.4,
-              height: size.height * 0.08,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
+      body: const IntroductionWidget(),
+      floatingActionButton: const BottomRachar(),
+      // child: Scaffold(
+      //   appBar: AppBar(
+      //     title: Image.asset(
+      //       "assets/images/app/splash.png",
+      //       width: size.width * 0.3,
+      //       height: size.height * 0.15,
+      //     ),
+      //     centerTitle: true,
+      //     backgroundColor: Colors.white,
+      //     elevation: 0,
+      //     automaticallyImplyLeading: false,
+      //   ),
+      //   body: const Column(
+      //     children: [
+      //       IntroductionWidget(),
+      //       Spacer(
+      //         flex: 1,
+      //       ),
+      //       // SizedBox(height: 10),
+      //       // SizedBox(height: 10),
+      //       // BottomRachar(),
+      //     ],
+      //   ),
 
-              ),
-              child: TextButton(
-                onPressed: () => customUtils.goTo(
-                  "/totalValue",
-                  context,
-                ),
-                child: const Text(
-                  "Rachar!",
-                ),
-              ),
-            ),
+      //   // bottomSheet: const BottomRachar(),
+      // ),
+    );
+  }
+}
+
+class BottomRachar extends StatefulWidget {
+  const BottomRachar({super.key});
+
+  @override
+  State<BottomRachar> createState() => _BottomRacharState();
+}
+
+class _BottomRacharState extends State<BottomRachar> {
+  @override
+  Widget build(BuildContext context) {
+    CustomUtils customUtils = CustomUtils();
+
+    return Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(14),
+      shadowColor: Colors.deepPurple,
+      color: Colors.deepPurple[100],
+      child: FloatingActionButton.extended(
+        backgroundColor: Colors.deepPurple,
+        onPressed: () => customUtils.goTo(
+          "/totalValue",
+          context,
+        ),
+        icon: const Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Colors.white,
+        ),
+        label: const Text(
+          "Rachar",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            // fontStyle: FontStyle.italic,
+            color: Colors.white,
+            fontSize: 14,
           ),
-          const SizedBox(
-            height: 10,
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -22,7 +22,7 @@ class CheckResultScreen extends StatefulWidget {
 class _CheckResultScreenState extends State<CheckResultScreen> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     // TextStyle resultTextStyle = const TextStyle();
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +48,9 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
               color: Color.fromARGB(255, 26, 163, 124),
               //  height: 40,
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             Padding(
               padding: EdgeInsets.all(size.height * 0.02),
               child: Text(
@@ -66,16 +68,19 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
                 ),
               ),
             },
-            const Divider( height: 40,),
+            const Divider(
+              height: 40,
+            ),
             Padding(
               padding: EdgeInsets.all(size.height * 0.02),
               child: Text(
                 '🤵🏽 Gorjeta: R\$${widget.waiterValue.toStringAsFixed(2)}',
-                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Colors.red,
-                  fontSize: 20,
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: Colors.red,
+                      fontSize: 20,
+                    ),
               ),
-            ),),
+            ),
             const Divider(
               height: 40,
             ),
@@ -84,10 +89,9 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
               child: Text(
                 'Valor total: R\$${widget.totalPrice.toStringAsFixed(2)}',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Colors.green,
-                  fontSize: 23,
-                ),
-                
+                      color: Colors.green,
+                      fontSize: 23,
+                    ),
               ),
             ),
             const SizedBox(
@@ -96,8 +100,7 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
             const Divider(
               height: 20,
               thickness: 10,
-              color: Colors.red
-              ,
+              color: Colors.red,
             ),
             Padding(
               padding: EdgeInsets.all(size.height * 0.02),
@@ -129,7 +132,9 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
               thickness: 10,
               color: Colors.red,
             ),
-            const SizedBox(height:20,),
+            const SizedBox(
+              height: 20,
+            ),
             Row(
               // crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,

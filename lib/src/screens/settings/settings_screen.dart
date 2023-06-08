@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/utils/custom_utils.dart';
 
-
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
@@ -15,7 +14,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     CustomUtils customUtils = CustomUtils();
 
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
 
     List<Map> settingsItems = [
       {
@@ -67,7 +66,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         leading: IconButton(
           icon: const Icon(
             Icons.close,
-            color: Colors.purple,
+            color: Colors.deepPurple,
           ),
           onPressed: () => customUtils.goToBack(context),
         ),
@@ -101,14 +100,14 @@ class SettingsButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return InkWell(
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
           elevation: 2,
-          shadowColor: Colors.purple,
+          shadowColor: Colors.deepPurple,
           color: Colors.white,
           borderRadius: BorderRadius.circular(0.02 * size.width),
           child: SizedBox(
@@ -121,7 +120,7 @@ class SettingsButtonWidget extends StatelessWidget {
                 ),
                 Icon(
                   icon,
-                  color: Colors.purple,
+                  color: Colors.deepPurple,
                 ),
                 const Spacer(),
                 Text(
@@ -134,7 +133,7 @@ class SettingsButtonWidget extends StatelessWidget {
                 const Spacer(),
                 const Icon(
                   Icons.arrow_forward_ios_rounded,
-                  color: Colors.purple,
+                  color: Colors.deepPurple,
                 ),
                 const SizedBox(
                   width: 20,
@@ -148,7 +147,7 @@ class SettingsButtonWidget extends StatelessWidget {
     // Material(
     //   elevation: 2,
     //   borderRadius: BorderRadius.circular(size.height * 0.04),
-    //   shadowColor: Colors.purple,
+    //   shadowColor: Colors.deepPurple,
     //   color: Colors.white,
     //   child: SizedBox(
     //     height: 0.09 * size.height,
@@ -160,7 +159,7 @@ class SettingsButtonWidget extends StatelessWidget {
     //           style: const TextStyle(
     //             fontWeight: FontWeight.bold,
     //             fontSize: 18,
-    //             color: Colors.purple,
+    //             color: Colors.deepPurple,
     //           ),
     //         ),
     //       ),

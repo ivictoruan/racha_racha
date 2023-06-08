@@ -16,6 +16,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   final bool? autofocus;
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
+  final Function()? onClearTextPressed;
 
   const CustomTextFieldWidget({
     Key? key,
@@ -33,48 +34,74 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.autofocus,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.onClearTextPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Material(
-      elevation: 4,
-      borderRadius: BorderRadius.all(Radius.circular(size.width * 0.2)),
-      shadowColor: Colors.purpleAccent,
-      child: SizedBox(
-        width: size.width * 0.85,
-        child: TextFormField(
-          initialValue: initialValue,
-          controller: controller,
-          autofocus: autofocus ?? true,
-          inputFormatters: inputFormatters,
-          textInputAction: textInputAction,
-          enabled: enabled,
-          keyboardType: keyboardType,
-          decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.purple.withOpacity(0.8)),
-              borderRadius: BorderRadius.all(Radius.circular(size.width * 0.2)),
-            ),
-            labelText: labelText,
-            labelStyle: TextStyle(fontSize: 0.044 * size.width),
-            hintText: hintText ?? "Digite o $labelText",
-            hintStyle: TextStyle(fontSize: 0.044 * size.width),
-            prefixIcon: icon == null ? null : Icon(icon, color: Colors.black),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(size.width * 0.2),
+    Size size = MediaQuery.sizeOf(context);
+    return SizedBox(
+      width: size.width * 0.85,
+      child: Material(
+        elevation: 3,
+        borderRadius: BorderRadius.all(Radius.circular(size.width * 0.2)),
+        shadowColor: Colors.deepPurpleAccent,
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(.75),
+          child: TextFormField(
+            initialValue: initialValue,
+            controller: controller,
+            autofocus: autofocus ?? true,
+            inputFormatters: inputFormatters,
+            textInputAction: textInputAction,
+            enabled: enabled,
+            keyboardType: keyboardType,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: Colors.deepPurple.withOpacity(0.8)),
+                borderRadius:
+                    BorderRadius.all(Radius.circular(size.width * 0.2)),
               ),
-              borderSide: const BorderSide(
-                  color: Colors.purple, width: 5, style: BorderStyle.none),
+              labelText: labelText,
+              labelStyle: TextStyle(
+                fontSize: 0.035 * size.width,
+                // color: Colors.purple[300],
+              ),
+              hintText: hintText ?? "Digite o $labelText",
+              hintStyle: TextStyle(
+                fontSize: 0.035 * size.width,
+                // color: Colors.purple,
+              ),
+              prefixIcon: icon == null
+                  ? null
+                  : Icon(
+                      icon,
+                      color: Colors.purple,
+                    ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(size.width * 0.2),
+                ),
+                borderSide: const BorderSide(
+                    color: Colors.deepPurple,
+                    width: 5,
+                    style: BorderStyle.none),
+              ),
+              // suffixIcon: IconButton(
+              //     icon: const Icon(Icons.clear),
+              //     color: Colors.purple,
+              //     onPressed: () => onClearTextPressed!() ?? () {}),
             ),
+            validator: validator,
+            onSaved: onSaved,
+            onChanged: onChanged,
+            maxLines: 1,
+            onFieldSubmitted: onFieldSubmitted,
+
+            // maxLength: 15,
           ),
-          validator: validator,
-          onSaved: onSaved,
-          onChanged: onChanged,
-          maxLines: 1,
-          onFieldSubmitted: onFieldSubmitted,
         ),
       ),
     );

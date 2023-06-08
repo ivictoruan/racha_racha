@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "346936929887",
+    "project_id": "racha-racha",
+    "storage_bucket": "racha-racha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:346936929887:android:e9688c58ec16e69531f5ea",
+        "android_client_info": {
+          "package_name": "com.matopibatech.racharacha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "346936929887-cd0aqjvk1f7jgdkgu5l5792iqd8brc29.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGnzS0EiNeSG-xTte83Lb-c_Ew6oiT6hA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "346936929887-cd0aqjvk1f7jgdkgu5l5792iqd8brc29.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

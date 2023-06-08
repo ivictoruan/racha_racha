@@ -31,6 +31,9 @@ class TotalPeopleFieldWidget extends StatelessWidget {
         bool isValid = controller.totalPeople > 1;
         isValid ? customUtils.goTo("/isSomeoneDrinking", context) : null;
       },
+      onClearTextPressed: () {
+        controller.totalPeople = '1';
+      },
     );
   }
 }

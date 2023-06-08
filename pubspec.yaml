@@ -1,6 +1,6 @@
 
 name: racha_racha
-description: A new Flutter project.
+description: Com o Racha Racha, você pode dividir facilmente as contas entre amigos e garantir que cada um pague exatamente o que consumiu!
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.5.0+1
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -38,13 +38,20 @@ dependencies:
   provider: ^6.0.3
   go_router: ^7.1.1
   flutter_native_splash: ^2.2.9
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: ^0.13.1
   url_launcher: ^6.1.6
-  lottie: ^1.4.2
+  lottie: ^2.3.2
   social_share: any
-  qr_flutter: ^4.0.0
+  # qr_flutter: ^4.0.0
   carousel_slider: ^4.2.1
-  flutter_markdown: ^0.6.13
+  # flutter_markdown: ^0.6.13
+  smooth_page_indicator: ^1.1.0
+  firebase_core: ^2.13.1
+  firebase_auth: ^4.6.2
+  firebase_ui_auth: ^1.4.2
+  firebase_ui_localizations: ^1.2.0
+  flutter_localizations:
+    sdk: flutter
 
 flutter_native_splash: # flutter pub run flutter_native_splash:create
   color: "#FFFFFF" # c332c4
@@ -87,6 +94,7 @@ flutter:
     - assets/lottie/receipt.json
     - assets/lottie/question.json
     - assets/lottie/smartphone.json
+    - assets/lottie/register.json
     - assets/images/app/icon.png
     - assets/images/app/splash.png
 

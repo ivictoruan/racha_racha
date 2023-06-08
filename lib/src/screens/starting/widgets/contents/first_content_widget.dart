@@ -8,45 +8,51 @@ class FirstContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     const String welcomeContent = "Boas-vindas ao Racha Racha!";
     // const String receiptLottie = "assets/lottie/receipt.json";
     const String smartphoneLottie = "assets/lottie/smartphone.json";
 
     const String titleContent = "Rache a conta no rolê!";
     const String mainContent = '''
+    
+    - Compartilhe a conta! 💸
+
     - Divisões Simples:
-        Todos exatamente pagam o
+        Todos pagam exatamente o
         mesmo valor. 😄  
-          
+
     - Divisões para quem está bebendo:
-        Quem não bebeu paga menos! 😉🚱 
+        Quem não bebeu paga menos! 🚱
+
           ''';
     return Column(
       children: [
-        Lottie.asset(smartphoneLottie, height: size.height * 0.35),
+        Lottie.asset(smartphoneLottie, height: size.height * 0.25),
         const Text(
           titleContent,
           style: TextStyle(
             fontWeight: FontWeight.w400,
             fontStyle: FontStyle.italic,
-            color: Colors.purple,
+            color: Colors.deepPurple,
           ),
         ),
-        // const Divider(color: Colors.purple),
+        // const Divider(color: Colors.deepPurple),
         const Align(
           alignment: Alignment.center,
           child: Text(
             welcomeContent,
+            textAlign: TextAlign.justify,
             style: TextStyle(
               fontStyle: FontStyle.italic,
               fontWeight: FontWeight.w600,
-              color: Colors.purple,
+              color: Colors.deepPurple,
             ),
           ),
         ),
         const MainContentWidget(mainContent: mainContent),
-        // const Divider(color: Colors.purple),
+
+        // const Divider(color: Colors.deepPurple),
       ],
     );
   }

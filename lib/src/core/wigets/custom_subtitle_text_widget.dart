@@ -7,7 +7,7 @@ class CustomSubitleTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 0.01 * size.width),
       child: Text(
@@ -16,7 +16,7 @@ class CustomSubitleTextWidget extends StatelessWidget {
         style: TextStyle(
           fontSize: 0.04 * size.width,
           fontWeight: FontWeight.w400,
-          color: Colors.purple.withOpacity(0.6),
+          color: Colors.deepPurple.withOpacity(0.6),
         ),
       ),
     );
