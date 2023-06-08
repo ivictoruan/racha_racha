@@ -13,15 +13,23 @@ class WrongTotalCheckValueWidget extends StatelessWidget {
     return Consumer<CheckController>(
       builder: (context, controller, child) {
         CustomUtils customUtils = CustomUtils();
-        return TextButton(
-          onPressed: () {
-            customUtils.goTo('/totalValue', context);
-          },
-          child: Text(
-            text ?? "Errou o valor total da conta?",
-            style: const TextStyle(fontWeight: FontWeight.w600),
-          ),
-        );
+        return FilledButton.tonalIcon(
+            onPressed: () {
+              customUtils.goTo('/totalValue', context);
+            },
+            icon: const Icon(
+              Icons.restart_alt_rounded,
+              size: 16,
+              color: Colors.grey,
+            ),
+            label: Text(
+              text ?? "Reiniciar",
+              style: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 12,
+                color: Colors.grey,
+              ),
+            ));
       },
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/wigets/custom_subtitle_text_widget.dart';
-import '../../core/wigets/custom_title_text_widget.dart';
 import '../../core/wigets/custom_will_pop_scope_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
 import '../home/view/widgets/custom_slider.dart';
@@ -17,64 +16,96 @@ class TotalPeopleScreen extends StatefulWidget {
 }
 
 class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
+  late final CheckController controller;
+  bool serviceTax = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Provider.of<CheckController>(context, listen: false);
+    controller.msgError =
+        "Incluíndo você, digite a quantidade de pessoas dividindo a conta.";
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return CustomWillPopWidget(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(0.03 * size.height),
-            child: Column(
-              children: [
-                const CustomTitleTextWidget(
-                  titleText:
-                      "👥 Digite a quantidade de pessoas dividindo a conta",
-                ),
-                // const CustomSmallDividerWidget(),
-                SizedBox(height: size.height * 0.02),
-                Consumer<CheckController>(
-                  builder: (context, controller, child) {
-                    return TotalPeopleFieldWidget(controller: controller);
-                  },
-                ),
-                SizedBox(height: size.height * 0.015),
-                // SizedBox(
-                //     width: size.width * 0.8,
-                //     child: const CustomSmallDividerWidget()),
-                Consumer<CheckController>(
-                  builder: (context, controller, child) {
-                    return Column(
-                      children: [
-                        CustomSubitleTextWidget(
-                            subtitle: controller.msgError == ""
-                                ? '* Se você for pagar a taxa de serviço de serviço 💼, mova o ponteiro abaixo (%):'
-                                : controller.msgError),
-                      ],
-                    );
-                  },
-                ),
-                // SizedBox(
-                //     width: size.width * 0.8,
-                //     child: const CustomSmallDividerWidget()),
-                SizedBox(height: size.height * 0.01),
-                Consumer<CheckController>(
-                  builder: (context, controller, child) {
-                    bool showSlider = controller.msgError ==
-                            "Incluíndo você, digite a quantidade de pessoas dividindo a conta." ||
-                        controller.msgError ==
-                            "❗️ A quantidade de pessoas não pode ser igual a zero!";
+    Size size = MediaQuery.sizeOf(context);
+    // bool showSlider = controller.msgError ==
+    // "❗️ A quantidade de pessoas não pode ser igual a zero!";
 
-                    return showSlider ? const SizedBox() : const CustomSlider();
+    return CustomWillPopWidget(
+      body: Column(
+        children: [
+          SizedBox(height: size.height * 0.02),
+          Consumer<CheckController>(
+            builder: (context, controller, child) {
+              // controller.totalPeople = 0;
+              return TotalPeopleFieldWidget(controller: controller);
+            },
+          ),
+          SizedBox(height: size.height * 0.015),
+          // MENSAGEM DE INFORMAÇÃO:
+          const Column(
+            children: [
+              CustomSubitleTextWidget(
+                subtitle:
+                    "* Incluíndo você, digite a quantidade de pessoas dividindo a conta.",
+              ),
+            ],
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const CustomSubitleTextWidget(
+                  subtitle: "Vai pagar taxa de Serviço/Garçom?",
+                ),
+                Switch(
+                  value: serviceTax,
+                  onChanged: (bool newValue) {
+                    setState(() {
+                      serviceTax = newValue;
+                      controller.waiterPercentage = 0;
+                    });
                   },
-                )
+                ),
               ],
             ),
           ),
-        ),
-        floatingActionButton: const FloatingActionButtonsWidget(),
+          serviceTax ? const CustomSlider() : const SizedBox.shrink(),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const CustomSubitleTextWidget(
+                  subtitle: "Alguém está bebendo?",
+                ),
+                Switch(
+                  value: controller.isSomeoneDrinking,
+                  onChanged: (bool isSomeoneDrinking) {
+                    setState(() {
+                      controller.isSomeoneDrinking = isSomeoneDrinking;
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
+      floatingActionButton: const FloatingActionButtonsWidget(),
     );
   }
 }
+
+// const FloatingActionButtonsWidget()

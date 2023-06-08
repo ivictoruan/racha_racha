@@ -7,14 +7,14 @@ class CustomTitleTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     return Text(
       titleText,
       textAlign: TextAlign.center,
       style: TextStyle(
         fontSize: 0.063 * size.width,
         fontWeight: FontWeight.w700,
-        color: Colors.purple,
+        color: Colors.deepPurple,
       ),
     );
   }

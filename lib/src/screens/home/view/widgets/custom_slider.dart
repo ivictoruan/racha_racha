@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import '../../../../core/controller/check_controller.dart';
 
-
 class CustomSlider extends StatelessWidget {
   const CustomSlider({Key? key}) : super(key: key);
 
@@ -11,13 +10,14 @@ class CustomSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CheckController>(
       builder: (context, controller, child) {
-        Size size = MediaQuery.of(context).size;
+        Size size = MediaQuery.sizeOf(context);
         return Material(
           elevation: 10,
-          shadowColor: Colors.purple.withOpacity(0.3),
+          shadowColor: Colors.deepPurple.withOpacity(0.15),
           borderRadius: BorderRadius.circular(20),
           child: Row(
             children: [
+              // const Icon(Icons.attach_money, ),
               Expanded(
                 child: Slider(
                   value: controller.model.waiterPercentage.toDouble(),
@@ -34,7 +34,7 @@ class CustomSlider extends StatelessWidget {
                 "${controller.waiterPercentage.toStringAsFixed(0)} %  ",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.purple,
+                  color: Colors.deepPurple,
                   fontSize: 0.05 * size.width,
                 ),
               ),

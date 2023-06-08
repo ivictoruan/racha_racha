@@ -3,6 +3,7 @@
 // No model: consumo da regra de negócio (casos de uso)
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/check_model.dart';
 import 'check_controller_interface.dart';
@@ -28,7 +29,17 @@ class CheckController extends ChangeNotifier
 
   CheckState state = CheckState.idle;
 
-  String msgError = "Digite o valor total da conta";
+  String _msgError = "Digite o valor total da conta";
+
+  String get msgError => _msgError;
+
+  set msgError(String value) {
+    _msgError = value;
+    notifyListeners();
+  }
+
+  
+  
 
   @override
   void calculateCheckResult() {
@@ -128,6 +139,14 @@ class CheckController extends ChangeNotifier
 
   double get totalCheckPrice => model.totalCheckPrice;
 
+  String trataValor(var valor) {
+    FilteringTextInputFormatter.allow(
+      RegExp(r'^\d{1,9}$|(?=^.{1,9}$)^\d+\.\d{0,2}$'),
+    );
+    return "";
+  }
+
+  // TOTAL VALUE
   set totalCheckPrice(newTotalCheckPrice) {
     try {
       if (newTotalCheckPrice.isNotEmpty &&
@@ -156,17 +175,17 @@ class CheckController extends ChangeNotifier
         int intTotalPeople = int.parse(totalPeople);
         state = CheckState.totalPeopleValueValid;
         model.totalPeople = intTotalPeople;
-        msgError = "";
+        msgError =
+            "Incluíndo você, digite a quantidade de pessoas dividindo a conta.";
         if (intTotalPeople == 0) {
           state = CheckState.totalPeopleValueInvalid;
-          model.totalPeople = 1;
           msgError = "❗️ A quantidade de pessoas não pode ser igual a zero!";
+          model.totalPeople = 1;
         }
       } else {
         state = CheckState.totalPeopleValueInvalid;
         model.totalPeople = 1;
-        msgError =
-            "Incluíndo você, digite a quantidade de pessoas dividindo a conta.";
+        msgError = "";
       }
       notifyListeners();
     } catch (e) {
@@ -268,6 +287,7 @@ class CheckController extends ChangeNotifier
       debugPrint("Erro ao setar valor total de bebida!");
     }
   }
+
   @override
   Future<void> restartSplit() async {
     state = CheckState.idle;
