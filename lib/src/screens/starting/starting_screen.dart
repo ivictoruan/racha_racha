@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:racha_racha/src/core/wigets/custom_will_pop_scope_widget.dart';
+import 'package:racha_racha/src/core/widgets/custom_will_pop_scope_widget.dart';
 
 import '../../core/utils/custom_utils.dart';
 import 'widgets/introduction_widget.dart';

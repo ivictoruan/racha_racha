@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../core/controller/check_controller.dart';
 import '../../../core/utils/custom_utils.dart';
-import '../../../core/wigets/custom_text_field_widget.dart';
+import '../../../core/widgets/custom_text_field_widget.dart';
 
 class TotalPeopleFieldWidget extends StatelessWidget {
   final CheckController controller;

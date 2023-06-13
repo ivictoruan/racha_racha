@@ -17,18 +17,18 @@ class RachaRachaApp extends StatelessWidget {
       // const Locale('en', 'US'), // Inglês (Estados Unidos), caso necessário
     ];
     return MaterialApp.router(
-      supportedLocales: locales,
       localizationsDelegates: [
         // Creates an instance of FirebaseUILocalizationDelegate with overridden labels
         FirebaseUILocalizations.withDefaultOverrides(const LabelOverrides()),
 
         // Delegates below take care of built-in flutter widgets
         GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
+        // GlobalWidgetsLocalizations.delegate,
 
         // This delegate is required to provide the labels that are not overridden by LabelOverrides
         FirebaseUILocalizations.delegate,
       ],
+      supportedLocales: locales,
       routerDelegate: routes.routerDelegate,
       routeInformationParser: routes.routeInformationParser,
       routeInformationProvider: routes.routeInformationProvider,

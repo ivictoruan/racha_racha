@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/wigets/custom_subtitle_text_widget.dart';
-import '../../core/wigets/custom_will_pop_scope_widget.dart';
+import '../../core/widgets/custom_subtitle_text_widget.dart';
+import '../../core/widgets/custom_will_pop_scope_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
 import '../home/view/widgets/custom_slider.dart';
 import 'field/total_people_field_widget.dart';
