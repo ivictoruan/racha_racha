@@ -5,7 +5,7 @@ import 'package:racha_racha/src/core/extentions/monetary_extention.dart';
 import '../../../core/input_formatters/currency_text_input_formatter.dart';
 import '../../../core/models/check_model.dart';
 import '../../../core/utils/custom_utils.dart';
-import '../../../core/wigets/custom_text_field_widget.dart';
+import '../../../core/widgets/custom_text_field_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
 
 class TotalDrinkValueFieldWidget extends StatelessWidget {

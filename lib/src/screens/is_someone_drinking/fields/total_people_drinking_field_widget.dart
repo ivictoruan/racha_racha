@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../core/models/check_model.dart';
-import '../../../core/wigets/custom_text_field_widget.dart';
+import '../../../core/widgets/custom_text_field_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
 
 class TotalPeopleDrinkingFieldWidget extends StatelessWidget {

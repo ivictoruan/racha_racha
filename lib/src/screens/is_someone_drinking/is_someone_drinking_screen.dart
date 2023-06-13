@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:racha_racha/src/core/utils/custom_utils.dart';
 
 // import '../../core/wigets/custom_subtitle_text_widget.dart';
-import '../../core/wigets/custom_title_text_widget.dart';
-import '../../core/wigets/custom_will_pop_scope_widget.dart';
+import '../../core/widgets/custom_title_text_widget.dart';
+import '../../core/widgets/custom_will_pop_scope_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
 import 'widgets/is_drinking_buttons_widget.dart';
 import 'widgets/is_drinking_form_field_widget.dart';

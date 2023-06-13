@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/core/wigets/wrong_total_check_value_widget.dart';
+import 'package:racha_racha/src/core/widgets/wrong_total_check_value_widget.dart';
 
 import '../../../core/controller/check_controller.dart';
 import '../../../core/utils/custom_utils.dart';

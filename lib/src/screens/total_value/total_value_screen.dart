@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/core/wigets/custom_will_pop_scope_widget.dart';
+import 'package:racha_racha/src/core/widgets/custom_will_pop_scope_widget.dart';
 
-import '../../core/wigets/custom_drawer.dart';
-import '../../core/wigets/custom_floating_action_button.dart';
-import '../../core/wigets/custom_subtitle_text_widget.dart';
-import '../../core/wigets/custom_title_text_widget.dart';
+import '../../core/widgets/custom_drawer.dart';
+import '../../core/widgets/custom_floating_action_button.dart';
+import '../../core/widgets/custom_subtitle_text_widget.dart';
+import '../../core/widgets/custom_title_text_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
 // import '../../core/wigets/default_app_bar.dart';
 // import '../is_someone_drinking/widgets/info_text_alert_widget.dart';

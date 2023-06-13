@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:racha_racha/src/core/utils/custom_utils.dart';
 
-import '../../core/wigets/custom_subtitle_text_widget.dart';
+import '../../core/widgets/custom_subtitle_text_widget.dart';
 
 class CheckingRegisterPage extends StatefulWidget {
   const CheckingRegisterPage({super.key});
