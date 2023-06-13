@@ -1,7 +1,7 @@
 import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:racha_racha/src/core/ui/theme_config.dart';
 
 import 'core/utils/routes/routes.dart';
 
@@ -34,19 +34,7 @@ class RachaRachaApp extends StatelessWidget {
       routeInformationProvider: routes.routeInformationProvider,
       debugShowCheckedModeBanner: false,
       title: "Racha Racha",
-      theme: ThemeData(
-        useMaterial3: true,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        colorSchemeSeed: Colors.deepPurple,
-        appBarTheme: const AppBarTheme(
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarIconBrightness: Brightness.dark,
-            systemNavigationBarIconBrightness: Brightness.dark,
-            statusBarColor: Color(0xFFD1C4E9),
-            statusBarBrightness: Brightness.dark,
-          ),
-        ),
-      ),
+      theme: ThemeConfig.theme,
     );
   }
 }
