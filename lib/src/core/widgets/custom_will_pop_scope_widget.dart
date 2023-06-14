@@ -72,7 +72,7 @@ class CustomWillPopWidget extends StatelessWidget {
             );
           },
         );
-        return shouldPop!;
+        return shouldPop ?? false;
       },
       child: Scaffold(
         backgroundColor: Colors.white,
