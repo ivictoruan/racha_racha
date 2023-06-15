@@ -5,9 +5,10 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class CustomDotSplider extends StatelessWidget {
   final int activeIndex;
   final CarouselController controller;
+  final int count;
 
   const CustomDotSplider(
-      {super.key, required this.controller, required this.activeIndex});
+      {super.key, required this.controller, required this.activeIndex, required this.count});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CustomDotSplider extends StatelessWidget {
             dotColor: Colors.deepPurple,
             activeDotColor: Colors.deepPurple),
         activeIndex: activeIndex,
-        count: 2,
+        count: count,
       ),
     );
   }
