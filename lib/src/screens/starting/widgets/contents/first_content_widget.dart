@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 import 'main_content_widget.dart';
 
@@ -8,13 +7,11 @@ class FirstContentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     const String welcomeContent = "Boas-vindas ao Racha Racha!";
     // const String receiptLottie = "assets/lottie/receipt.json";
-    const String smartphoneLottie = "assets/lottie/smartphone.json";
 
     const String titleContent = "Rache a conta no rolê!";
-    const String mainContent = '''
+    const String bodyContent = '''
     
     - Compartilhe a conta! 💸
 
@@ -26,19 +23,10 @@ class FirstContentWidget extends StatelessWidget {
         Quem não bebeu paga menos! 🚱
 
           ''';
-    return Column(
+    return const Column(
       children: [
-        Lottie.asset(smartphoneLottie, height: size.height * 0.25),
-        const Text(
-          titleContent,
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.italic,
-            color: Colors.deepPurple,
-          ),
-        ),
         // const Divider(color: Colors.deepPurple),
-        const Align(
+        Align(
           alignment: Alignment.center,
           child: Text(
             welcomeContent,
@@ -50,7 +38,11 @@ class FirstContentWidget extends StatelessWidget {
             ),
           ),
         ),
-        const MainContentWidget(mainContent: mainContent),
+        
+        MainContentWidget(
+          bodyContent: bodyContent,
+          titleContent: titleContent,
+        ),
 
         // const Divider(color: Colors.deepPurple),
       ],
