@@ -7,8 +7,6 @@ import '../../core/widgets/custom_floating_action_button.dart';
 import '../../core/widgets/custom_subtitle_text_widget.dart';
 import '../../core/widgets/custom_title_text_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
-// import '../../core/wigets/default_app_bar.dart';
-// import '../is_someone_drinking/widgets/info_text_alert_widget.dart';
 import 'field/total_value_field.dart';
 
 class TotalValueScreen extends StatefulWidget {
@@ -47,10 +45,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
     const String pathToNextPage = "/totalPeople";
     return CustomWillPopWidget(
       isExitedPaged: true,
-        // appBar: const DefaultAppBar(),
-
         drawer: const CustomDrawer(),
-        
         body: Padding(
           padding: EdgeInsets.all(0.02 * size.height),
           child: SafeArea(
