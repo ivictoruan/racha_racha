@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:lottie/lottie.dart';
 
 import 'contents/first_content_widget.dart';
 import 'contents/second_content_widget.dart';
@@ -27,35 +28,51 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    Size size = MediaQuery.sizeOf(context);
+    const String smartphoneLottie = "assets/lottie/smartphone.json";
+
+    final List<Widget> startingItems = [
+      const FirstContentWidget(),
+      const SecondContentWidget(),
+      // ThirdContentWidget(), // Login/Registration
+    ];
+    return Column(
       children: [
-        CarouselSlider(
-          carouselController: controller,
-          options: CarouselOptions(
-            // TODO: ativar autoplay
-            autoPlay: true,
-            height: MediaQuery.sizeOf(context).height * 0.75,
-            autoPlayInterval: const Duration(seconds: 15),
-            autoPlayAnimationDuration: const Duration(seconds: 4),
-            autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-            onPageChanged: (index, reason) => setActiveDot(index),
-            scrollDirection: Axis.horizontal,
-            viewportFraction: 1.0,
-          ),
-          items: const [
-            FirstContentWidget(),
-            SecondContentWidget(),
-            // ThirdContentWidget(), // Login/Registration
-          ],
+        Lottie.asset(
+          smartphoneLottie,
+          height: size.height * 0.25,
         ),
-        // const Spacer(),
-        Padding(
-          padding:
-              EdgeInsets.only(top: MediaQuery.sizeOf(context).height * 0.75),
-          child: CustomDotSplider(
-            activeIndex: activeIndex,
-            controller: controller,
-          ),
+        Stack(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          children: [
+            CarouselSlider(
+              carouselController: controller,
+              options: CarouselOptions(
+                autoPlay: true,
+                height: MediaQuery.sizeOf(context).height * 0.75,
+                autoPlayInterval: const Duration(seconds: 15),
+                autoPlayAnimationDuration: const Duration(seconds: 4),
+                autoPlayCurve: Curves.fastLinearToSlowEaseIn,
+                onPageChanged: (index, reason) => setActiveDot(index),
+                scrollDirection: Axis.horizontal,
+                viewportFraction: 1.0,
+              ),
+              items: startingItems,
+            ),
+            // const Spacer(),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.sizeOf(context).height * 0.55),
+                child: CustomDotSplider(
+                  activeIndex: activeIndex,
+                  controller: controller,
+                  count: startingItems.length,
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

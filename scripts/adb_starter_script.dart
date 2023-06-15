@@ -1,5 +1,6 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 void main() {
@@ -12,15 +13,15 @@ void main() {
 void executeCommand(String command) {
   Process.start('cmd', ['/c', command]).then((Process process) {
     process.stdout.transform(utf8.decoder).listen((data) {
-      log(data);
+      print(data);
     });
 
     process.stderr.transform(utf8.decoder).listen((data) {
-      log(data);
+      print(data);
     });
 
     process.exitCode.then((exitCode) {
-      log('Command executed with exit code $exitCode');
+      print('Command executed with exit code $exitCode');
     });
   });
 }

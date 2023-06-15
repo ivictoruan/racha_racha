@@ -11,16 +11,18 @@ class CustomWillPopWidget extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? bottomNavigationBar;
   final Widget? drawer;
+  final bool? isBodyScrollable;
 
-  const CustomWillPopWidget(
-      {Key? key,
-      required this.body,
-      this.isExitedPaged,
-      this.floatingActionButton,
-      this.appBar,
-      this.bottomNavigationBar,
-      this.drawer})
-      : super(key: key);
+  const CustomWillPopWidget({
+    Key? key,
+    required this.body,
+    this.isExitedPaged,
+    this.floatingActionButton,
+    this.appBar,
+    this.bottomNavigationBar,
+    this.drawer,
+    this.isBodyScrollable,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +74,7 @@ class CustomWillPopWidget extends StatelessWidget {
             );
           },
         );
-        return shouldPop!;
+        return shouldPop ?? false;
       },
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -81,7 +83,12 @@ class CustomWillPopWidget extends StatelessWidget {
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(0.01 * size.height),
-            child: SingleChildScrollView(child: body),
+            child: SingleChildScrollView(
+              physics: isBodyScrollable == false
+                  ? const NeverScrollableScrollPhysics()
+                  : null,
+              child: body,
+            ),
           ),
         ),
         floatingActionButton: floatingActionButton,
