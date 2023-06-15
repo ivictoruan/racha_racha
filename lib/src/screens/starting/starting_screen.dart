@@ -30,33 +30,8 @@ class _StartingScreenState extends State<StartingScreen>
         automaticallyImplyLeading: false,
       ),
       body: const IntroductionWidget(),
+      isBodyScrollable: false,
       floatingActionButton: const BottomRachar(),
-      // child: Scaffold(
-      //   appBar: AppBar(
-      //     title: Image.asset(
-      //       "assets/images/app/splash.png",
-      //       width: size.width * 0.3,
-      //       height: size.height * 0.15,
-      //     ),
-      //     centerTitle: true,
-      //     backgroundColor: Colors.white,
-      //     elevation: 0,
-      //     automaticallyImplyLeading: false,
-      //   ),
-      //   body: const Column(
-      //     children: [
-      //       IntroductionWidget(),
-      //       Spacer(
-      //         flex: 1,
-      //       ),
-      //       // SizedBox(height: 10),
-      //       // SizedBox(height: 10),
-      //       // BottomRachar(),
-      //     ],
-      //   ),
-
-      //   // bottomSheet: const BottomRachar(),
-      // ),
     );
   }
 }
