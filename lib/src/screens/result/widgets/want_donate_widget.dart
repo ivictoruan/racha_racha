@@ -112,7 +112,6 @@ class WantDonateWidget extends StatelessWidget {
                 //     elevation: 2,
                 //     shadowColor: Colors.deepPurple,
                 //     borderRadius: BorderRadius.circular(20),
-                //     // TODO: rever isto!
                 //     child: Center(
                 //       child: QrImage(
                 //         data: qrCode,
