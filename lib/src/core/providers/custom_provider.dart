@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../app_widget.dart';
-import 'package:racha_racha/src/core/controller/check_controller.dart';
+import '../controller/check_controller.dart';
 import '../models/check_model.dart';
 
 class CustomProvider extends StatelessWidget {
