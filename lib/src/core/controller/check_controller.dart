@@ -1,11 +1,8 @@
-// No controller: VALIDAÇÕES E E PARSING ( PARA VIEW)
-
-// No model: consumo da regra de negócio (casos de uso)
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../models/check_model.dart';
+import '../utils/errors/check_controller_error_mesages.dart';
 import 'check_controller_interface.dart';
 import 'package:flutter/foundation.dart';
 
@@ -29,13 +26,7 @@ class CheckController extends ChangeNotifier
 
   CheckState state = CheckState.idle;
 
-  String msgError = "Digite o valor total da conta";
-
-  // String get msgError => _msgError;
-
-  // set msgError(String value) {
-  //   _msgError = value;
-  // }
+  String msgError = CheckControllerErrorMessages.errorMsgTotalCheckPrice;
 
   @override
   void calculateCheckResult() {
@@ -107,42 +98,8 @@ class CheckController extends ChangeNotifier
     return model.individualPriceWhoIsDrinking;
   }
 
-  // final CheckValidation validation;
-  // final TotalValueController totalValueScreenController;
-  // final TotalPeopleController totalPeopleScreenController;
-  // final IsSomeoneDrikingController isSomeoneDrikingScreenController;
-  // final ResultController resultScreenController;
-
-  // bool isCheckFormValidated() {
-  //   if (model.isSomeoneDrinking) {
-  //     if (model.totalCheckPrice > 0 &&
-  //         model.totalPeople > 0 &&
-  //         model.totalPeople > model.totalPeopleDrinking &&
-  //         model.totalCheckPrice > model.totalDrinkPrice) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   } else {
-  //     if (model.totalCheckPrice > 0 && model.totalPeople > 0) {
-  //       return true;
-  //     } else {
-  //       debugPrint('Formulário Inválido!');
-  //       return false;
-  //     }
-  //   }
-  // }
-
   double get totalCheckPrice => model.totalCheckPrice;
 
-  String trataValor(var valor) {
-    FilteringTextInputFormatter.allow(
-      RegExp(r'^\d{1,9}$|(?=^.{1,9}$)^\d+\.\d{0,2}$'),
-    );
-    return "";
-  }
-
-  // TOTAL VALUE
   set totalCheckPrice(newTotalCheckPrice) {
     try {
       if (newTotalCheckPrice.isNotEmpty &&
@@ -153,7 +110,7 @@ class CheckController extends ChangeNotifier
         model.totalCheckPrice = newDoubleTotalCheckPice;
         msgError = "";
         if (newDoubleTotalCheckPice == 0) {
-          msgError = "Digite o valor total da conta";
+          msgError = CheckControllerErrorMessages.errorMsgTotalCheckPrice;
           state = CheckState.totalCheckValueInvalid;
         }
       } else {
@@ -172,8 +129,7 @@ class CheckController extends ChangeNotifier
         int intTotalPeople = int.tryParse(totalPeople) ?? 1;
         state = CheckState.totalPeopleValueValid;
         model.totalPeople = intTotalPeople;
-        msgError =
-            "Incluíndo você, digite a quantidade de pessoas dividindo a conta.";
+        msgError = CheckControllerErrorMessages.errorMsgTotalCheckPrice;
         if (intTotalPeople == 0) {
           state = CheckState.totalPeopleValueInvalid;
           msgError = "❗️ A quantidade de pessoas não pode ser igual a zero!";
@@ -218,21 +174,21 @@ class CheckController extends ChangeNotifier
         model.totalPeopleDrinking = intNewValuePeopleDriking;
         msgError = "";
       } else {
-        msgError = "Mais pessoas bebendo do que rachando a conta!";
+        msgError = CheckControllerErrorMessages.errorMsgPeopleDrinking;
         model.totalPeopleDrinking = 0;
       }
       if (intNewValuePeopleDriking == model.totalPeople) {
-        msgError = "Se todos estão bebendo, toques em \"Não\"!";
+        msgError = CheckControllerErrorMessages.errorMsgPeopleDrinkingEveryone;
       }
 
       if (intNewValuePeopleDriking == 0) {
-        msgError = "Se não há ninguém bebendo, toques em \"Não\"!";
+        msgError = CheckControllerErrorMessages.errorMsgNoPeopleDrinking;
       }
 
       if (newValuePeopleDriking.startsWith(' ')) {
-        msgError = "Incluíndo você, digite a quantidade de pessoas bebendo.";
+        msgError = CheckControllerErrorMessages.errorMsgEmptyPeopleDrinking;
         model.totalPeopleDrinking = 0;
-        msgError = "O campo não pode ser vazio!";
+        msgError = CheckControllerErrorMessages.errorMsgEmptyField;
       }
 
       notifyListeners();
@@ -267,18 +223,18 @@ class CheckController extends ChangeNotifier
           msgError = "";
         } else {
           model.totalDrinkPrice = 0;
-          msgError = "Valor das bebidas maior do que o valor total!";
+          msgError = CheckControllerErrorMessages.errorMsgTotalDrinkPrice;
         }
         if (doubleTotalDrinkPrice == model.totalCheckPrice) {
-          msgError = "Valor das bebidas igual ao total, toque em \"Não\"";
+          msgError = CheckControllerErrorMessages.errorMsgTotalDrinkPriceEqual;
         }
         if (doubleTotalDrinkPrice == 0) {
-          msgError = "Se não há valor para bebidas toques em \"Não\"!";
+          msgError = CheckControllerErrorMessages.errorMsgNoDrinkPrice;
           model.totalDrinkPrice = 0;
         }
       } else {
         model.totalDrinkPrice = 0;
-        msgError = "Prencha os campos corretamente!";
+        msgError = CheckControllerErrorMessages.errorMsgInvalidFields;
       }
       notifyListeners();
     } catch (e) {
