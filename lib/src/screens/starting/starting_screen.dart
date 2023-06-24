@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:racha_racha/src/core/widgets/custom_will_pop_scope_widget.dart';
 
 import '../../core/utils/custom_utils.dart';
+import '../../core/widgets/racha_main_widget.dart';
 import 'widgets/introduction_widget.dart';
 
 class StartingScreen extends StatefulWidget {
@@ -15,15 +16,19 @@ class _StartingScreenState extends State<StartingScreen>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
+    // Size size = MediaQuery.sizeOf(context);
     return CustomWillPopWidget(
       isExitedPaged: true,
       appBar: AppBar(
-        title: Image.asset(
-          "assets/images/app/splash.png",
-          width: size.width * 0.3,
-          height: size.height * 0.15,
+        title: const RachaMainWidget(
+          widthPercentage: 0.3,
+          heightPercentage: 0.15,
         ),
+        // Image.asset(
+        //   "assets/images/app/splash.png",
+        //   width: size.width * 0.3,
+        //   height: size.height * 0.15,
+        // ),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
