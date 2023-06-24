@@ -29,17 +29,13 @@ class CheckController extends ChangeNotifier
 
   CheckState state = CheckState.idle;
 
-  String _msgError = "Digite o valor total da conta";
+  String msgError = "Digite o valor total da conta";
 
-  String get msgError => _msgError;
+  // String get msgError => _msgError;
 
-  set msgError(String value) {
-    _msgError = value;
-    notifyListeners();
-  }
-
-  
-  
+  // set msgError(String value) {
+  //   _msgError = value;
+  // }
 
   @override
   void calculateCheckResult() {
@@ -151,7 +147,8 @@ class CheckController extends ChangeNotifier
     try {
       if (newTotalCheckPrice.isNotEmpty &&
           !newTotalCheckPrice.startsWith(' ')) {
-        var newDoubleTotalCheckPice = double.parse(newTotalCheckPrice);
+        var newDoubleTotalCheckPice =
+            double.tryParse(newTotalCheckPrice) ?? 0.0;
         state = CheckState.totalCheckValueValid;
         model.totalCheckPrice = newDoubleTotalCheckPice;
         msgError = "";
@@ -172,7 +169,7 @@ class CheckController extends ChangeNotifier
   set totalPeople(totalPeople) {
     try {
       if (totalPeople.isNotEmpty && !totalPeople.startsWith(' ')) {
-        int intTotalPeople = int.parse(totalPeople);
+        int intTotalPeople = int.tryParse(totalPeople) ?? 1;
         state = CheckState.totalPeopleValueValid;
         model.totalPeople = intTotalPeople;
         msgError =
@@ -214,7 +211,7 @@ class CheckController extends ChangeNotifier
 
   set peopleDrinking(newValuePeopleDriking) {
     try {
-      int intNewValuePeopleDriking = int.parse(newValuePeopleDriking);
+      int intNewValuePeopleDriking = int.tryParse(newValuePeopleDriking) ?? 0;
       bool isTotalPeopleDrinkingSmallerThanTotalPeople =
           intNewValuePeopleDriking < model.totalPeople;
       if (isTotalPeopleDrinkingSmallerThanTotalPeople) {
@@ -259,7 +256,8 @@ class CheckController extends ChangeNotifier
     try {
       if (newTotalDrinkPrice.isNotEmpty &&
           !newTotalDrinkPrice.startsWith(' ')) {
-        double doubleTotalDrinkPrice = double.parse(newTotalDrinkPrice);
+        double doubleTotalDrinkPrice =
+            double.tryParse(newTotalDrinkPrice) ?? 0.0;
 
         bool isTotalDrinkPriceSmallerThanTotalCheckPrice =
             doubleTotalDrinkPrice < model.totalCheckPrice;
