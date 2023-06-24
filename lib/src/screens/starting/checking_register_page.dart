@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:racha_racha/src/core/utils/custom_utils.dart';
 
-import '../../core/widgets/custom_subtitle_text_widget.dart';
+import '../../core/widgets/racha_main_widget.dart';
 
 class CheckingRegisterPage extends StatefulWidget {
   const CheckingRegisterPage({super.key});
@@ -20,7 +20,7 @@ class _CheckingRegisterPageState extends State<CheckingRegisterPage> {
 
   void checkIfUserIsLogged() async {
     final CustomUtils utils = CustomUtils();
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(milliseconds: 2000));
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         // print('Usuário não está logado!');
@@ -34,14 +34,27 @@ class _CheckingRegisterPageState extends State<CheckingRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Size size = MediaQuery.sizeOf(context);
     return const Scaffold(
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: Center(
-        child: CircularProgressIndicator(),
-      ),
-      bottomSheet: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: CustomSubitleTextWidget(
-          subtitle: "Nunca mais seja enrolado no rolê!",
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            RachaMainWidget(
+              widthPercentage: 0.4,
+              heightPercentage: 0.4,
+            ),
+            Text(
+              "Rache a conta no rolê!💸",
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ],
         ),
       ),
     );
