@@ -13,10 +13,10 @@ class CustomProvider extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(
-          create: (_) => CheckModel(),
+          create: (context) => CheckModel(),
         ),
         ChangeNotifierProvider(
-          create: (_) => CheckController(model: CheckModel()),
+          create: (context) => CheckController(model: CheckModel()),
         ),
       ],
       child: const RachaRachaApp(),
