@@ -1,6 +1,8 @@
 /// Classe que define as mensagens de erro utilizadas pelo controller
 /// responsável pela divisão de uma conta (check).
 class CheckControllerErrorMessages {
+  static const String errorMsgEmpty = "";
+
   /// Mensagem de erro para o valor total da conta não ser informado.
   static const String errorMsgTotalCheckPrice = "Digite o valor total da conta";
 
@@ -41,4 +43,9 @@ class CheckControllerErrorMessages {
 
   /// Mensagem de erro para campos inválidos ou preenchidos incorretamente.
   static const String errorMsgInvalidFields = "Prencha os campos corretamente!";
+
+  static const String errorMsgFieldsMustBeFilled = "Os campos devem ser preenchidos";
+
+  static const String numberOfPeopleCannotEqualToZero =  "❗️ A quantidade de pessoas não pode ser igual a zero!";
+  
 }
