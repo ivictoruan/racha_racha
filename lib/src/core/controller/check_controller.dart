@@ -53,7 +53,7 @@ class CheckController extends ChangeNotifier
   void calculateCheckResultWithDrinkers() {
     double individualTotalPriceWhoIsDrinking =
         model.totalDrinkPrice / model.totalPeopleDrinking;
-        
+
     model.individualPrice =
         (model.totalCheckPrice - model.totalDrinkPrice) / model.totalPeople;
     if (model.waiterPercentage == 0) {
@@ -108,7 +108,7 @@ class CheckController extends ChangeNotifier
             double.tryParse(newTotalCheckPrice) ?? 0.0;
         state = CheckState.totalCheckValueValid;
         model.totalCheckPrice = newDoubleTotalCheckPice;
-        msgError = "";
+        CheckControllerErrorMessages.errorMsgEmpty;
         if (newDoubleTotalCheckPice == 0) {
           msgError = CheckControllerErrorMessages.errorMsgTotalCheckPrice;
           state = CheckState.totalCheckValueInvalid;
@@ -132,13 +132,14 @@ class CheckController extends ChangeNotifier
         msgError = CheckControllerErrorMessages.errorMsgTotalCheckPrice;
         if (intTotalPeople == 0) {
           state = CheckState.totalPeopleValueInvalid;
-          msgError = "❗️ A quantidade de pessoas não pode ser igual a zero!";
+          msgError =
+              CheckControllerErrorMessages.numberOfPeopleCannotEqualToZero;
           model.totalPeople = 1;
         }
       } else {
         state = CheckState.totalPeopleValueInvalid;
         model.totalPeople = 1;
-        msgError = "";
+        CheckControllerErrorMessages.errorMsgEmpty;
       }
       notifyListeners();
     } catch (e) {
@@ -172,7 +173,7 @@ class CheckController extends ChangeNotifier
           intNewValuePeopleDriking < model.totalPeople;
       if (isTotalPeopleDrinkingSmallerThanTotalPeople) {
         model.totalPeopleDrinking = intNewValuePeopleDriking;
-        msgError = "";
+        CheckControllerErrorMessages.errorMsgEmpty;
       } else {
         msgError = CheckControllerErrorMessages.errorMsgPeopleDrinking;
         model.totalPeopleDrinking = 0;
@@ -193,7 +194,7 @@ class CheckController extends ChangeNotifier
 
       notifyListeners();
     } catch (e) {
-      msgError = "Os campos devem ser preenchidos";
+      msgError = CheckControllerErrorMessages.errorMsgFieldsMustBeFilled;
       model.totalPeopleDrinking = 0;
       notifyListeners(); // ?
     }
@@ -220,7 +221,7 @@ class CheckController extends ChangeNotifier
 
         if (isTotalDrinkPriceSmallerThanTotalCheckPrice) {
           model.totalDrinkPrice = doubleTotalDrinkPrice;
-          msgError = "";
+          CheckControllerErrorMessages.errorMsgEmpty;
         } else {
           model.totalDrinkPrice = 0;
           msgError = CheckControllerErrorMessages.errorMsgTotalDrinkPrice;
@@ -254,7 +255,7 @@ class CheckController extends ChangeNotifier
     model.totalPeopleDrinking = 0;
     model.individualPriceWhoIsDrinking = 0;
     model.totalPeople = 1;
-    msgError = "";
+    CheckControllerErrorMessages.errorMsgEmpty;
     await Future.delayed(const Duration(milliseconds: 10)); // sem isso dá erro
     notifyListeners();
   }
