@@ -12,8 +12,6 @@ enum CheckState {
   totalPeopleValueInvalid,
   totalPeopleValueValid,
   idle,
-  formValid,
-  formInValid,
 }
 
 class CheckController extends ChangeNotifier
