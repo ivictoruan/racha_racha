@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import '../models/check_model.dart';
 import '../utils/errors/check_controller_error_mesages.dart';
+
 import 'check_controller_interface.dart';
-import 'package:flutter/foundation.dart';
 
 enum CheckState {
   totalCheckValueInvalid,
