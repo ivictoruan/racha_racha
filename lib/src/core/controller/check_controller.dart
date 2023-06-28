@@ -53,9 +53,9 @@ class CheckController extends ChangeNotifier
   void calculateCheckResultWithDrinkers() {
     double individualTotalPriceWhoIsDrinking =
         model.totalDrinkPrice / model.totalPeopleDrinking;
+        
     model.individualPrice =
         (model.totalCheckPrice - model.totalDrinkPrice) / model.totalPeople;
-    notifyListeners();
     if (model.waiterPercentage == 0) {
       model.individualPriceWhoIsDrinking =
           model.individualPrice + individualTotalPriceWhoIsDrinking;
