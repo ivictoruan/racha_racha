@@ -12,7 +12,7 @@ import '../../../screens/total_people/total_people_screen.dart';
 import '../../../screens/total_value/total_value_screen.dart';
 import '../custom_utils.dart';
 
-final providers = [EmailAuthProvider()];
+final _providers = [EmailAuthProvider()];
 
 final GoRouter routes = GoRouter(
   routes: [
@@ -24,7 +24,7 @@ final GoRouter routes = GoRouter(
     GoRoute(
       path: '/sign-in',
       builder: (context, state) => SignInScreen(
-        providers: providers,
+        providers: _providers,
         actions: [
           AuthStateChangeAction<SignedIn>(
             (context, state) {
@@ -51,7 +51,7 @@ final GoRouter routes = GoRouter(
     GoRoute(
         path: '/profile',
         builder: (context, state) => ProfileScreen(
-              providers: providers,
+              providers: _providers,
               actions: [
                 SignedOutAction(
                   (context) {
