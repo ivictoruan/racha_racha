@@ -24,12 +24,12 @@ class TotalValueField extends StatelessWidget {
       icon: Icons.price_change_outlined,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       onChanged: (newTotalCheckValue) {
-        // print((newTotalCheckValue).convertCurrencyValues());
         controller.totalCheckPrice = newTotalCheckValue.convertCurrencyValues();
       },
       onFieldSubmitted: (String newTotalCheckValue) {
         CustomUtils customUtils = CustomUtils();
-        controller.totalCheckPrice = newTotalCheckValue;
+        controller.totalCheckPrice = newTotalCheckValue.convertCurrencyValues();
+
         bool isValid = controller.totalCheckPrice > 0;
         isValid ? customUtils.goTo("/totalPeople", context) : null;
       },
