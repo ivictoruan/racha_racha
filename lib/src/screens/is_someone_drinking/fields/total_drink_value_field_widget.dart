@@ -21,11 +21,6 @@ class TotalDrinkValueFieldWidget extends StatelessWidget {
     return CustomTextFieldWidget(
       enabled: model.isSomeoneDrinking,
       hintText: "Digite o valor total das bebidas R\$",
-      // inputFormatters: <TextInputFormatter>[
-      //   FilteringTextInputFormatter.allow(
-      //     RegExp(r'^\d{1,9}$|(?=^.{1,9}$)^\d+\.\d{0,2}$'),
-      //   ),
-      // ],
       inputFormatters: <TextInputFormatter>[
         CurrencyTextInputFormatter(),
       ],
@@ -36,7 +31,7 @@ class TotalDrinkValueFieldWidget extends StatelessWidget {
         controller.totalDrinkPrice = newTotalDrinkPrice.convertCurrencyValues();
       },
       onFieldSubmitted: (String newTotalDrinkPrice) {
-        controller.totalDrinkPrice = newTotalDrinkPrice;
+        controller.totalDrinkPrice = newTotalDrinkPrice.convertCurrencyValues();
         CustomUtils customUtils = CustomUtils();
 
         bool isContinueButtonActivated = controller.model.totalDrinkPrice > 0 &&
