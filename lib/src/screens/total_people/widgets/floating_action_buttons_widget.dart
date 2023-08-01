@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/core/widgets/wrong_total_check_value_widget.dart';
 
+import '../../../controllers/is_someone_drinking_controller.dart';
+import '../../../controllers/total_people_controller.dart';
 import '../../../core/controller/check_controller.dart';
 import '../../../core/utils/custom_utils.dart';
-import '../../is_someone_drinking/widgets/is_drinking_buttons_widget.dart';
+import '../../../core/widgets/confirm_info_widget.dart';
+import '../../../core/widgets/wrong_total_check_value_widget.dart';
+
 
 class FloatingActionButtonsWidget extends StatelessWidget {
   const FloatingActionButtonsWidget({Key? key}) : super(key: key);
@@ -12,13 +15,12 @@ class FloatingActionButtonsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CustomUtils customUtils = CustomUtils();
-    return Consumer<CheckController>(
+    return Consumer<TotalPeopleController>(
       builder: (context, controller, child) {
-        bool isValid = controller.state == CheckState.totalPeopleValueValid;
+        bool isValid = controller.state == TotalPeopleState.valid;
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // SizedBox(height: size.width * 0.05),
             const Padding(
               padding: EdgeInsets.only(left: 25),
               child: WrongTotalCheckValueWidget(),
@@ -68,12 +70,12 @@ class FloatingActionButtonsWidget extends StatelessWidget {
               "Informações estão corretas?",
               style: TextStyle(
                 color: Colors.deepPurple,
-                fontSize: 16,
+                fontSize: 18, // Increased font size
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: size.height * 0.02),
+            SizedBox(height: size.height * 0.03), // Increased height
             Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
@@ -84,17 +86,17 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                       endText:
                           "R\$ ${controller.totalCheckPrice.toStringAsFixed(2)}",
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12), // Increased height
                     ConfirmInfoWidget(
                       startText: "Quantidade de pessoas: ",
                       endText: controller.totalPeople.toString(),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12), // Increased height
                     ConfirmInfoWidget(
                       startText: "Gorjeta/Garçom: ",
                       endText: "${controller.waiterPercentage.toString()} %",
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 20), // Increased height
                   ],
                 );
               },
@@ -104,30 +106,35 @@ class FloatingActionButtonsWidget extends StatelessWidget {
               children: [
                 FilledButton(
                   onPressed: () {
-                    final controller = context.read<CheckController>();
-                    controller.calculateCheckResult();
+                    final checkController = context.read<CheckController>();
+                    final controller =
+                        context.read<IsSomeoneDrinkingController>();
+                    checkController.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
                     customUtils.goTo("/result", context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
                   ),
-                  child: const Text('Sim'),
+                  child: const Text('Sim',
+                      style: TextStyle(fontSize: 16)), // Increased font size
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 12), // Increased width
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Não'),
+                  child: const Text('Não',
+                      style: TextStyle(fontSize: 16)), // Increased font size
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: 12), // Increased width
                 TextButton.icon(
                   onPressed: () {
                     customUtils.goTo("/totalValue", context);
                   },
                   icon: const Icon(Icons.restart_alt_rounded),
-                  label: const Text("Reiniciar"),
+                  label: const Text("Reiniciar",
+                      style: TextStyle(fontSize: 16)), // Increased font size
                 ),
               ],
             ),
