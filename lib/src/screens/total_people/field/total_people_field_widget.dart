@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../core/controller/check_controller.dart';
-import '../../../core/utils/custom_utils.dart';
+import '../../../controllers/total_people_controller.dart';
 import '../../../core/widgets/custom_text_field_widget.dart';
 
 class TotalPeopleFieldWidget extends StatelessWidget {
-  final CheckController controller;
+  final TotalPeopleController controller;
   const TotalPeopleFieldWidget({Key? key, required this.controller})
       : super(key: key);
 
@@ -24,15 +23,6 @@ class TotalPeopleFieldWidget extends StatelessWidget {
       keyboardType: const TextInputType.numberWithOptions(decimal: false),
       onChanged: (String newTotalPeople) {
         controller.totalPeople = newTotalPeople;
-      },
-      onFieldSubmitted: (String newTotalPeople) {
-        CustomUtils customUtils = CustomUtils();
-        controller.totalPeople = newTotalPeople;
-        bool isValid = controller.totalPeople > 1;
-        isValid ? customUtils.goTo("/isSomeoneDrinking", context) : null;
-      },
-      onClearTextPressed: () {
-        controller.totalPeople = '1';
       },
     );
   }
