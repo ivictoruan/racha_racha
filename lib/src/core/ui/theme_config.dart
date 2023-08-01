@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 
 class ThemeConfig {
   ThemeConfig._();
-  /// A classe `ThemeConfig` fornece uma configuração para o tema do aplicativo. 
+
+  /// A classe `ThemeConfig` fornece uma configuração para o tema do aplicativo.
   /// Define o tema padrão da aplicação, incluindo cores e estilos.
 
   static final ThemeData theme = ThemeData(
@@ -16,6 +17,27 @@ class ThemeConfig {
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarColor: Color(0xFFD1C4E9),
         statusBarBrightness: Brightness.dark,
+      ),
+    ),
+    // Configuração de estilos de texto
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(
+        // fontSize: 24,
+        fontWeight: FontWeight.bold,
+        color: Colors.deepPurple,
+      ),
+      displayMedium: TextStyle(
+        // fontSize: 20,
+        fontWeight: FontWeight.bold,
+        color: Colors.deepPurple,
+      ),
+      bodyLarge: TextStyle(
+        // fontSize: 16,
+        color: Colors.deepPurple,
+      ),
+      bodyMedium: TextStyle(
+        // fontSize: 14,
+        color: Colors.deepPurple,
       ),
     ),
   );
