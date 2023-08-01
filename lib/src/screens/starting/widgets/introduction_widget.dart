@@ -4,7 +4,6 @@ import 'package:lottie/lottie.dart';
 
 import 'contents/first_content_widget.dart';
 import 'contents/second_content_widget.dart';
-// import 'contents/third_content_widget.dart';
 import 'dots/custom_dot_slider.dart';
 
 class IntroductionWidget extends StatefulWidget {
@@ -34,7 +33,6 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
     final List<Widget> startingItems = [
       const FirstContentWidget(),
       const SecondContentWidget(),
-      // ThirdContentWidget(), // Login/Registration
     ];
     return Column(
       children: [
@@ -59,7 +57,6 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
               ),
               items: startingItems,
             ),
-            // const Spacer(),
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
