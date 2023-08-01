@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../core/utils/custom_utils.dart';
-
 
 class BottomRacharWidget extends StatefulWidget {
   const BottomRacharWidget({super.key});
@@ -23,10 +21,12 @@ class _BottomRacharWidgetState extends State<BottomRacharWidget> {
       color: Colors.deepPurple[100],
       child: FloatingActionButton.extended(
         backgroundColor: Colors.deepPurple,
-        onPressed: () => customUtils.goTo(
-          "/totalValue",
-          context,
-        ),
+        onPressed: () {
+          customUtils.goTo(
+            "/totalValue",
+            context,
+          );
+        },
         icon: const Icon(
           Icons.arrow_forward_ios,
           size: 16,
