@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:racha_racha/src/core/utils/custom_utils.dart';
 
-// import '../../core/wigets/custom_subtitle_text_widget.dart';
+import '../../controllers/is_someone_drinking_controller.dart';
+import '../../core/widgets/confirm_info_widget.dart';
 import '../../core/widgets/custom_title_text_widget.dart';
 import '../../core/widgets/custom_will_pop_scope_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
@@ -18,32 +19,19 @@ class IsSomeoneDrinkingScreen extends StatefulWidget {
 }
 
 class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
-  late final CheckController controller;
+  late final IsSomeoneDrinkingController controller;
   bool? isSomeoneJustDrinking;
 
   @override
   void initState() {
     super.initState();
-    controller = context.read<CheckController>();
-    controller.msgError = '';
-    // isSomeoneJustDrinking = false;
+    controller = context.read<IsSomeoneDrinkingController>();
   }
 
   @override
   void dispose() {
     super.dispose();
     controller.dispose();
-  }
-
-  onChangedIsSomeoneDriking(bool isSomeoneDrinking) {
-    controller.isSomeoneDrinking = isSomeoneDrinking;
-    controller.isSomeoneDrinking == true
-        ? controller.msgError = "Preencha os campos se há alguém bebendo!"
-        : {
-            controller.msgError = "Preencha os campos se há alguém bebendo!",
-            _showModalWhotIsNotDrinking(context, CustomUtils()),
-          };
-    setState(() {});
   }
 
   @override
@@ -53,36 +41,44 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const CustomTitleTextWidget(
-                  titleText: "Alguém está bebendo?",
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Icon(
+                      Icons.local_bar_rounded,
+                      color: Colors.deepPurple,
+                      size: 32,
+                    ),
+                    CustomTitleTextWidget(titleText: "Alguém está bebendo?"),
+                  ],
                 ),
                 Switch(
                   value: controller.isSomeoneDrinking,
                   onChanged: (bool isSomeoneDrinking) {
-                    onChangedIsSomeoneDriking(isSomeoneDrinking);
+                    _onChangedIsSomeoneDriking(isSomeoneDrinking);
                   },
                 ),
               ],
             ),
           ),
-          controller.isSomeoneDrinking
-              ? Padding(
-                  padding: EdgeInsets.symmetric(vertical: 0.022 * size.height),
-                  child: const IsDrinkingFormFieldWidget(),
-                )
-              : const SizedBox(),
-
+          Visibility(
+            visible: controller.isSomeoneDrinking,
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 0.01 * size.height),
+              child: const IsDrinkingFormFieldWidget(),
+            ),
+          ),
           // TODO: Desenvolver funcionalidade para pessoas que estão apenas bebendo
           // Padding(
           //   padding: const EdgeInsets.symmetric(vertical: 10),
           //   child: Row(
           //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           //     children: [
-          //       const CustomSubitleTextWidget(
+          //       const CustomSubtitleTextWidget(
           //         subtitle: "Alguém está apenas bebendo?",
           //       ),
           //       Switch(
@@ -103,6 +99,80 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
       ),
       floatingActionButton: const IsDrikingButtonsWidget(),
     );
+  }
+
+  Future _onChangedIsSomeoneDriking(bool isSomeoneDrinking) async {
+    controller.isSomeoneDrinking = isSomeoneDrinking;
+    if (controller.isSomeoneDrinking == false) {
+      bool isSomeoneRealyNotDrinking =
+          await _showConfirmationPeopleNotDrinkingDialog(context);
+      if (isSomeoneRealyNotDrinking) {
+        setState(() {
+          _showModalWhotIsNotDrinking(context, CustomUtils());
+        });
+        controller.isSomeoneDrinking = false;
+        return;
+      }
+    }
+
+    setState(() {
+      controller.isSomeoneDrinking = true;
+    });
+  }
+
+  Future<bool> _showConfirmationPeopleNotDrinkingDialog(
+      BuildContext context) async {
+    bool? confirmationResult = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(
+                Icons.help_outline,
+                color: Theme.of(context).primaryColor,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                "Confirmação",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ],
+          ),
+          content:
+              const Text("Você tem certeza de que não há ninguém bebendo?"),
+          actions: [
+            TextButton(
+              child: Text(
+                "Sim",
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+            ),
+            TextButton(
+              child: const Text(
+                "Não",
+                style: TextStyle(
+                  color: Colors.red,
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+
+    return confirmationResult ?? false;
   }
 
   Future<void> _showModalWhotIsNotDrinking(
@@ -171,8 +241,8 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
               children: [
                 FilledButton(
                   onPressed: () {
-                    final controller = context.read<CheckController>();
-                    controller.calculateCheckResult();
+                    final checkController = context.read<CheckController>();
+                    checkController.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
                     customUtils.goTo("/result", context);
                   },
