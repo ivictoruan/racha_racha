@@ -64,15 +64,15 @@ class CustomTextFieldWidget extends StatelessWidget {
                 borderRadius:
                     BorderRadius.all(Radius.circular(size.width * 0.2)),
               ),
-              labelText: labelText,
+              labelText: "$labelText (obrigatório)",
               labelStyle: TextStyle(
                 fontSize: 0.035 * size.width,
-                // color: Colors.purple[300],
+                fontWeight: FontWeight.w500,
               ),
               hintText: hintText ?? "Digite o $labelText",
               hintStyle: TextStyle(
                 fontSize: 0.035 * size.width,
-                // color: Colors.purple,
+                fontWeight: FontWeight.w500,
               ),
               prefixIcon: icon == null
                   ? null
@@ -99,8 +99,6 @@ class CustomTextFieldWidget extends StatelessWidget {
             onChanged: onChanged,
             maxLines: 1,
             onFieldSubmitted: onFieldSubmitted,
-
-            // maxLength: 15,
           ),
         ),
       ),
