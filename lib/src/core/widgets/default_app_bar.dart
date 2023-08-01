@@ -10,20 +10,6 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    // void checkIfUserIsLogged() async {
-    //   final CustomUtils utils = CustomUtils();
-    //   await Future.delayed(const Duration(seconds: 4));
-    //   FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    //     if (user == null) {
-    //       // print('Usuário não está logado!');
-    //       utils.goTo('/sign-in', context);
-    //     } else {
-    //       // print('Usuário está logado!!');
-    //       utils.goTo('/profile', context);
-    //     }
-    //   });
-    // }
-
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.white,
@@ -34,7 +20,6 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
           utils.goToUrl(
             "https://play.google.com/store/apps/details?id=com.matopibatech.racharacha",
           );
-          // checkIfUserIsLogged();
         },
         icon: CircleAvatar(
           radius: 14,
