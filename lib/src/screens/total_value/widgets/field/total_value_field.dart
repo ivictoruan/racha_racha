@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:racha_racha/src/core/extentions/monetary_extention.dart';
 
-import '../../../core/input_formatters/currency_text_input_formatter.dart';
-import '../../../core/utils/custom_utils.dart';
-import '../../../core/widgets/custom_text_field_widget.dart';
-import 'package:racha_racha/src/core/controller/check_controller.dart';
+import '../../../../core/input_formatters/currency_text_input_formatter.dart';
+import '../../../../core/utils/custom_utils.dart';
+import '../../../../core/widgets/custom_text_field_widget.dart';
+
+import '../../../../controllers/total_value_controller.dart';
 
 class TotalValueField extends StatelessWidget {
-  final CheckController controller;
+  final TotalValueController controller;
   final bool? autofocus;
   const TotalValueField({Key? key, required this.controller, this.autofocus})
       : super(key: key);
