@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../controllers/is_someone_drinking_controller.dart';
 import '../../../core/models/check_model.dart';
 import '../../../core/widgets/custom_text_field_widget.dart';
-import 'package:racha_racha/src/core/controller/check_controller.dart';
 
 class TotalPeopleDrinkingFieldWidget extends StatelessWidget {
-  final CheckController controller;
+  final IsSomeoneDrinkingController controller;
   const TotalPeopleDrinkingFieldWidget({
     Key? key,
     required this.controller,
@@ -30,11 +30,11 @@ class TotalPeopleDrinkingFieldWidget extends StatelessWidget {
         decimal: false,
       ),
       onChanged: (String newTotalPeopleDrinking) {
-        controller.peopleDrinking = newTotalPeopleDrinking;
+        controller.peopleDrinking = newTotalPeopleDrinking.trim();
       },
       textInputAction: TextInputAction.next,
       onFieldSubmitted: (String newTotalPeopleDrinking) {
-        controller.peopleDrinking = newTotalPeopleDrinking;
+        controller.peopleDrinking = newTotalPeopleDrinking.trim();
       },
     );
   }
