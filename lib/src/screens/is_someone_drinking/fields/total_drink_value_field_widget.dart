@@ -4,9 +4,9 @@ import 'package:racha_racha/src/core/extentions/monetary_extention.dart';
 
 import '../../../controllers/is_someone_drinking_controller.dart';
 import '../../../core/input_formatters/currency_text_input_formatter.dart';
-import '../../../core/models/check_model.dart';
 import '../../../core/utils/custom_utils.dart';
 import '../../../core/widgets/custom_text_field_widget.dart';
+import '../../../models/check_model.dart';
 
 class TotalDrinkValueFieldWidget extends StatelessWidget {
   final IsSomeoneDrinkingController controller;

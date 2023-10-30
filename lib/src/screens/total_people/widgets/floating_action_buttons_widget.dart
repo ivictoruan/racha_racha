@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controllers/check_controller/check_controller.dart';
 import '../../../controllers/is_someone_drinking_controller.dart';
 import '../../../controllers/total_people_controller.dart';
-import '../../../core/controller/check_controller.dart';
 import '../../../core/utils/custom_utils.dart';
 import '../../../core/widgets/confirm_info_widget.dart';
 import '../../../core/widgets/wrong_total_check_value_widget.dart';

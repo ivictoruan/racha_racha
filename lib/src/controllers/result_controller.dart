@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../core/models/check_model.dart';
+import '../models/check_model.dart';
 
 class ResultController extends ChangeNotifier {
   final CheckModel model;

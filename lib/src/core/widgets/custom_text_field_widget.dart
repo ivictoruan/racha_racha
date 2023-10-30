@@ -44,7 +44,7 @@ class CustomTextFieldWidget extends StatelessWidget {
       width: size.width * 0.85,
       child: Material(
         elevation: 3,
-        borderRadius: BorderRadius.all(Radius.circular(size.width * 0.2)),
+        borderRadius: BorderRadius.all(Radius.circular(size.width * 0.15)),
         shadowColor: Colors.deepPurpleAccent,
         color: Colors.white,
         child: Padding(
@@ -62,7 +62,7 @@ class CustomTextFieldWidget extends StatelessWidget {
                 borderSide:
                     BorderSide(color: Colors.deepPurple.withOpacity(0.8)),
                 borderRadius:
-                    BorderRadius.all(Radius.circular(size.width * 0.2)),
+                    BorderRadius.all(Radius.circular(size.width * 0.15)),
               ),
               labelText: "$labelText (obrigatório)",
               labelStyle: TextStyle(

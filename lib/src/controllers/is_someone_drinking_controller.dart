@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../core/models/check_model.dart';
 import '../core/utils/errors/check_controller_error_mesages.dart';
+import '../models/check_model.dart';
 
 enum IsSomeoneDrinkingState {
   start,

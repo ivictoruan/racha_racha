@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:racha_racha/src/core/utils/custom_utils.dart';
 
+import '../../controllers/check_controller/check_controller.dart';
 import '../../controllers/is_someone_drinking_controller.dart';
 import '../../core/widgets/confirm_info_widget.dart';
 import '../../core/widgets/custom_title_text_widget.dart';
 import '../../core/widgets/custom_will_pop_scope_widget.dart';
-import 'package:racha_racha/src/core/controller/check_controller.dart';
 import 'widgets/is_drinking_buttons_widget.dart';
 import 'widgets/is_drinking_form_field_widget.dart';
 
@@ -39,6 +39,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
     Size size = MediaQuery.sizeOf(context);
     return CustomWillPopWidget(
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5),
@@ -56,11 +57,13 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                     CustomTitleTextWidget(titleText: "Alguém está bebendo?"),
                   ],
                 ),
-                Switch(
-                  value: controller.isSomeoneDrinking,
-                  onChanged: (bool isSomeoneDrinking) {
-                    _onChangedIsSomeoneDriking(isSomeoneDrinking);
-                  },
+                Expanded(
+                  child: Switch(
+                    value: controller.isSomeoneDrinking,
+                    onChanged: (bool isSomeoneDrinking) {
+                      _onChangedIsSomeoneDriking(isSomeoneDrinking);
+                    },
+                  ),
                 ),
               ],
             ),
@@ -146,11 +149,8 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
               const Text("Você tem certeza de que não há ninguém bebendo?"),
           actions: [
             TextButton(
-              child: Text(
+              child: const Text(
                 "Sim",
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                ),
               ),
               onPressed: () {
                 Navigator.of(context).pop(true);
@@ -159,9 +159,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
             TextButton(
               child: const Text(
                 "Não",
-                style: TextStyle(
-                  color: Colors.red,
-                ),
+                style: TextStyle(),
               ),
               onPressed: () {
                 Navigator.of(context).pop(false);

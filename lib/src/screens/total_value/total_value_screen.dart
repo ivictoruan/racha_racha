@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:racha_racha/src/controllers/check_controller/check_controller.dart';
 import 'package:racha_racha/src/core/widgets/custom_will_pop_scope_widget.dart';
 import 'package:racha_racha/src/controllers/total_value_controller.dart';
 
 import '../../core/widgets/custom_drawer.dart';
 import '../../core/widgets/custom_subtitle_text_widget.dart';
 import '../../core/widgets/custom_title_text_widget.dart';
-import 'package:racha_racha/src/core/controller/check_controller.dart';
 import 'widgets/field/total_value_field.dart';
 import 'widgets/total_value_floating_action_button.dart';
 
@@ -24,7 +24,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
   void restartData() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       checkController.restartSplit();
-      controller.resetTotalCheckPrice();
+      // controller.resetTotalCheckPrice();
     });
   }
 

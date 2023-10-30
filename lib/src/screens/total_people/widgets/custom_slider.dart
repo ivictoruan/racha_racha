@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../controllers/total_people_controller.dart';
+import '../../../controllers/total_people_controller.dart';
 
 class CustomSlider extends StatelessWidget {
   const CustomSlider({Key? key}) : super(key: key);

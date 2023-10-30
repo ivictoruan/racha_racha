@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../models/check_model.dart';
-import '../utils/errors/check_controller_error_mesages.dart';
-
+import '../../core/utils/errors/check_controller_error_mesages.dart';
+import '../../models/check_model.dart';
+import '../../services/splits/split_firebase_service.dart';
 import 'check_controller_interface.dart';
 
 enum CheckState {
@@ -13,10 +13,11 @@ enum CheckState {
 class CheckController extends ChangeNotifier
     implements CheckControllerInterface {
   final CheckModel model;
+  late final SplitFirebaseService service;
 
   CheckController({
     required this.model,
-  });
+  }) : service = SplitFirebaseService();
 
   @override
   void calculateCheckResult() {
@@ -56,7 +57,6 @@ class CheckController extends ChangeNotifier
     notifyListeners();
   }
 
-  
   @override
   Future<void> restartSplit() async {
     model.totalCheckPrice = 0;
@@ -69,6 +69,7 @@ class CheckController extends ChangeNotifier
     model.individualPriceWhoIsDrinking = 0;
     model.totalPeople = 1;
     CheckControllerErrorMessages.errorMsgEmpty;
+    service.createSplit(model);
     notifyListeners();
   }
 
@@ -105,5 +106,4 @@ class CheckController extends ChangeNotifier
   }
 
   double get totalCheckPrice => model.totalCheckPrice;
-
 }

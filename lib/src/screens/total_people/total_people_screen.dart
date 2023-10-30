@@ -5,8 +5,8 @@ import '../../controllers/total_people_controller.dart';
 import '../../core/widgets/custom_subtitle_text_widget.dart';
 import '../../core/widgets/custom_title_text_widget.dart';
 import '../../core/widgets/custom_will_pop_scope_widget.dart';
-import '../home/view/widgets/custom_slider.dart';
 import 'field/total_people_field_widget.dart';
+import 'widgets/custom_slider.dart';
 import 'widgets/floating_action_buttons_widget.dart';
 
 class TotalPeopleScreen extends StatefulWidget {
@@ -60,7 +60,6 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
               },
             ),
           ),
-
           const Column(
             children: [
               CustomSubtitleTextWidget(
@@ -70,15 +69,14 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
             ],
           ),
           const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const CustomSubtitleTextWidget(
-                  subtitle: "Vai pagar taxa de Serviço/Garçom?",
-                ),
-                Switch(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const CustomSubtitleTextWidget(
+                subtitle: "Vai pagar taxa de Serviço/Garçom?",
+              ),
+              Expanded(
+                child: Switch(
                   value: serviceTax,
                   onChanged: (bool newValue) {
                     setState(() {
@@ -87,8 +85,8 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
                     });
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           AnimatedCrossFade(
             duration: const Duration(milliseconds: 400),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+
+//TODO: alterar nome para RachaMainAssetWidget
 class RachaMainWidget extends StatelessWidget {
   final double widthPercentage;
   final double heightPercentage;

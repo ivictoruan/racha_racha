@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class ResultInfoWidget extends StatelessWidget {
   final String startText;
   final String endText;
-  const ResultInfoWidget(
-      {Key? key, required this.startText, required this.endText})
-      : super(key: key);
+  final bool isMainResult;
+  const ResultInfoWidget({
+    Key? key,
+    required this.startText,
+    required this.endText,
+    this.isMainResult = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,7 @@ class ResultInfoWidget extends StatelessWidget {
       elevation: 2,
       borderRadius: BorderRadius.circular(12),
       shadowColor: Colors.deepPurpleAccent,
-      color: Colors.white,
+      color: isMainResult ? Colors.deepPurple[400] : Colors.white,
       child: SizedBox(
         height: 0.08 * size.height,
         child: Padding(
@@ -24,17 +28,19 @@ class ResultInfoWidget extends StatelessWidget {
             children: [
               Text(
                 startText,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: Colors.deepPurple, fontSize: 15),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: isMainResult ? Colors.white : Colors.deepPurple,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
               ),
               Text(
                 'R\$ $endText',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: Colors.deepPurple, fontSize: 15),
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                      color: isMainResult ? Colors.white : Colors.deepPurple,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
               ),
             ],
           ),
