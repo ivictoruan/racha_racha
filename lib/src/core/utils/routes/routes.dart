@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:racha_racha/src/screens/home/home_screen.dart';
+import 'package:racha_racha/src/screens/starting/checking_register_page.dart';
 
 import '../../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
 import '../../../screens/result/result_screen.dart';
@@ -12,10 +14,14 @@ import '../../../screens/total_value/total_value_screen.dart';
 
 final GoRouter routes = GoRouter(
   routes: [
+    // GoRoute(
+    //   path: '/',
+    //   builder: (context, state) => const CheckingRegisterPage(),
+    // ),
     GoRoute(
       path:
-          '/', //FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/totalValue',
-      builder: (context, state) => const StartingScreen(),
+          '/home', //FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/totalValue',
+      builder: (context, state) => const HomeScreen(),
     ),
     // GoRoute(
     //   path: '/sign-in',
@@ -58,10 +64,10 @@ final GoRouter routes = GoRouter(
     //           ],
     //         )),
 
-    // GoRoute(
-    //   path: '/starting',
-    //   builder: (context, state) => const StartingScreen(),
-    // ),
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const StartingScreen(),
+    ),
 
     GoRoute(
       path: '/totalValue',

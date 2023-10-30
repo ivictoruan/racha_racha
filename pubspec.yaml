@@ -46,6 +46,8 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   firebase_crashlytics: ^3.3.4
   firebase_core: ^2.15.0
+  firebase_database: ^10.2.4
+  firebase_auth: ^4.7.2
 
 flutter_native_splash: # flutter pub run flutter_native_splash:create+
   color: "#FFFFFF" # c332c4
@@ -87,8 +89,10 @@ flutter:
   assets:
     - assets/lottie/smartphone.json
     - assets/lottie/register.json
+    - assets/lottie/empty.json
     - assets/images/app/icon.png
     - assets/images/app/splash.png
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../core/models/check_model.dart';
+import '../models/check_model.dart';
+
 
 enum TotalPeopleState {
   start,

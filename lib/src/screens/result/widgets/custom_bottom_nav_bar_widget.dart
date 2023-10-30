@@ -51,7 +51,7 @@ class CustomBottomNavBarWidget extends StatelessWidget {
               "Gostaria de recomeçar?",
               style: TextStyle(
                 color: Colors.deepPurple,
-                fontSize: 24, // Increase font size for the title
+                fontSize: 18, // Increase font size for the title
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -61,15 +61,14 @@ class CustomBottomNavBarWidget extends StatelessWidget {
               "Se você não quer reiniciar toque em \"Não\"",
               style: TextStyle(
                 color: Colors.deepPurple[200],
-                fontSize: 16, // Increase font size for the secondary text
-                fontWeight: FontWeight.bold,
+                fontSize: 14, // Increase font size for the secondary text
+                fontWeight: FontWeight.w400,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: size.height * 0.02),
-            const SizedBox(height: 16),
+            SizedBox(height: size.height * 0.03),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
                   onPressed: () {
@@ -83,7 +82,7 @@ class CustomBottomNavBarWidget extends StatelessWidget {
                   child: const Text(
                     'Sim',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: Colors.white,
                     ), // Increase font size for the button text
                   ),
@@ -100,7 +99,7 @@ class CustomBottomNavBarWidget extends StatelessWidget {
                   child: const Text(
                     'Não',
                     style: TextStyle(
-                        fontSize: 16), // Increase font size for the button text
+                        fontSize: 14), // Increase font size for the button text
                   ),
                 ),
               ],

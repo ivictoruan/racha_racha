@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../controller/check_controller.dart';
+import '../../controllers/check_controller/check_controller.dart';
 import '../utils/custom_utils.dart';
 
 class CustomWillPopWidget extends StatelessWidget {
@@ -41,8 +41,8 @@ class CustomWillPopWidget extends StatelessWidget {
                       : 'Gostaria de recomeçar?',
                   style: const TextStyle(
                     color: Colors.deepPurple,
-                    fontSize: 20, // Increase font size for the title
-                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
@@ -65,7 +65,7 @@ class CustomWillPopWidget extends StatelessWidget {
                         'Sim',
                         style: TextStyle(
                             fontSize:
-                                16), // Increase font size for the button text
+                                14), // Increase font size for the button text
                       ),
                     );
                   },
@@ -77,7 +77,7 @@ class CustomWillPopWidget extends StatelessWidget {
                   child: const Text(
                     'Voltar',
                     style: TextStyle(
-                        fontSize: 16), // Increase font size for the button text
+                        fontSize: 14), // Increase font size for the button text
                   ),
                 ),
               ],

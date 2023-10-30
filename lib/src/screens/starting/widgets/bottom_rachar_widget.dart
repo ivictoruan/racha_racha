@@ -23,7 +23,8 @@ class _BottomRacharWidgetState extends State<BottomRacharWidget> {
         backgroundColor: Colors.deepPurple,
         onPressed: () {
           customUtils.goTo(
-            "/totalValue",
+            // "/totalValue",
+            "/home",
             context,
           );
         },

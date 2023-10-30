@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../controllers/is_someone_drinking_controller.dart';
-import '../../../core/models/check_model.dart';
 import '../../../core/widgets/custom_text_field_widget.dart';
+import '../../../models/check_model.dart';
 
 class TotalPeopleDrinkingFieldWidget extends StatelessWidget {
   final IsSomeoneDrinkingController controller;

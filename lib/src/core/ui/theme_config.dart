@@ -15,7 +15,7 @@ class ThemeConfig {
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
-        statusBarColor: Color(0xFFD1C4E9),
+        statusBarColor: Color.fromARGB(255, 201, 177, 244),
         statusBarBrightness: Brightness.dark,
       ),
     ),
