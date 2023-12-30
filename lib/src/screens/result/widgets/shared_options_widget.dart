@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_share/social_share.dart';
 
-import '../../../controllers/check_controller/check_controller.dart';
-import '../../../core/widgets/racha_main_button_widget.dart';
+import 'package:racha_racha/src/core/controller/check_controller.dart';
 
 class SharedOptionsWidget extends StatelessWidget {
   const SharedOptionsWidget({Key? key}) : super(key: key);
@@ -14,43 +13,35 @@ class SharedOptionsWidget extends StatelessWidget {
 
     return Consumer<CheckController>(
       builder: (context, controller, child) {
-        return RachaMainButtonWidget(
-          text: "Compartilhar",
-          icon: Icons.share,
-          // TODO: criar função que consome dados do usuário sem precisar passar cada parâmetro
-          onPressed: () => shareWithWhatsApp(
-            controller.isSomeoneDrinking,
-            controller.totalWaiterValue,
-            controller.totalCheckPrice,
-            (controller.totalCheckPrice -
-                controller.totalWaiterValue), // sem gorjeta
-            controller.individualPrice,
-            controller.individualPriceWhoIsDrinking,
+        return Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(12),
+          shadowColor: Colors.deepPurpleAccent,
+          color: Colors.white,
+          child: FloatingActionButton.extended(
+            focusColor: const Color.fromARGB(255, 247, 243, 247),
+            backgroundColor: Colors.white,
+            onPressed: () => shareWithWhatsApp(
+              controller.isSomeoneDrinking,
+              controller.totalWaiterValue,
+              controller.totalCheckPrice,
+              (controller.totalCheckPrice -
+                  controller.totalWaiterValue), // sem gorjeta
+              controller.individualPrice,
+              controller.individualPriceWhoIsDrinking,
+            ),
+            icon: const Icon(Icons.share, color: Colors.deepPurple),
+            label: Text(
+              // "Compartilhe a Divisão",
+              "Compartilhar",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Colors.deepPurple,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
           ),
-          // child: FloatingActionButton.extended(
-          //   focusColor: const Color.fromARGB(255, 247, 243, 247),
-          //   backgroundColor: Colors.white,
-          //   onPressed: () => shareWithWhatsApp(
-          //     controller.isSomeoneDrinking,
-          //     controller.totalWaiterValue,
-          //     controller.totalCheckPrice,
-          //     (controller.totalCheckPrice -
-          //         controller.totalWaiterValue), // sem gorjeta
-          //     controller.individualPrice,
-          //     controller.individualPriceWhoIsDrinking,
-          //   ),
-          //   icon: const Icon(Icons.share, color: Colors.deepPurple),
-          //   label: Text(
-          //     // "Compartilhe a Divisão",
-          //     "Compartilhar",
-          //     textAlign: TextAlign.center,
-          //     style: Theme.of(context).textTheme.titleLarge!.copyWith(
-          //           color: Colors.deepPurple,
-          //           fontSize: 16,
-          //           fontWeight: FontWeight.w500,
-          //         ),
-          //   ),
-          // ),
         );
       },
     );
@@ -133,4 +124,3 @@ Faça o download do Racha Racha: https://play.google.com/store/apps/details?id=c
 //     );
 //   }
 }
-

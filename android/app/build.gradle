@@ -13,18 +13,17 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '3'
+    flutterVersionCode = '2'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.5.5'
+    flutterVersionName = '1.5.0'
 }
 
 apply plugin: 'com.android.application'
 // START: FlutterFire Configuration
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.crashlytics'
 // END: FlutterFire Configuration
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
@@ -32,7 +31,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
-     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
 
@@ -63,8 +62,8 @@ android {
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         // versionCode flutterVersionCode.toInteger()
-        versionCode 3
-        versionName '1.5.5'
+        versionCode 2
+        versionName '1.5.0'
     }
 
      signingConfigs {

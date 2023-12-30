@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../controllers/check_controller/check_controller.dart';
-
+import 'package:racha_racha/src/core/controller/check_controller.dart';
 
 class InfoTextModelWidget extends StatelessWidget {
   final CheckController controller;
