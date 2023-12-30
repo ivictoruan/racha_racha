@@ -8,7 +8,6 @@ import '../../../core/utils/custom_utils.dart';
 import '../../../core/widgets/confirm_info_widget.dart';
 import '../../../core/widgets/wrong_total_check_value_widget.dart';
 
-
 class FloatingActionButtonsWidget extends StatelessWidget {
   const FloatingActionButtonsWidget({Key? key}) : super(key: key);
 
@@ -66,14 +65,10 @@ class FloatingActionButtonsWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Informações estão corretas?",
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontSize: 18, // Increased font size
-                fontWeight: FontWeight.bold,
-              ),
+            Text(
+              "Todas as informações estão corretas?",
               textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(height: size.height * 0.03), // Increased height
             Consumer<CheckController>(

@@ -31,9 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  startSplit(){
+  startSplit() {
     log("[USUÁRIO] Iniciando nova divisão");
-    
+
     CustomUtils().goTo('/totalValue', context);
   }
 
@@ -57,12 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: size.height * 0.45,
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.all(20),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
                           child: Text(
                             "Você ainda não fez nenhuma divisão! Para começar toque no botão abaixo!",
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 12),
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                       ],
@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         log(split[index].toString());
                         return const SplitHistoryWidget();
                       },
-                    ),
+                    ),  
             ),
             floatingActionButton: RachaMainButtonWidget(
               text: "Nova Divisão!",

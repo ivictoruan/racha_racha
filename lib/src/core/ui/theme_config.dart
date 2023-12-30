@@ -21,6 +21,10 @@ class ThemeConfig {
     ),
     // Configuração de estilos de texto
     textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        fontWeight: FontWeight.bold,
+        color: Colors.deepPurple,
+      ),
       displayLarge: TextStyle(
         // fontSize: 24,
         fontWeight: FontWeight.bold,
