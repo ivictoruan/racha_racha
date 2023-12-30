@@ -57,7 +57,6 @@ class DefaultFirebaseOptions {
     appId: '1:346936929887:android:e9688c58ec16e69531f5ea',
     messagingSenderId: '346936929887',
     projectId: 'racha-racha',
-    databaseURL: 'https://racha-racha-default-rtdb.firebaseio.com',
     storageBucket: 'racha-racha.appspot.com',
   );
 }

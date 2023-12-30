@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../controllers/check_controller/check_controller.dart';
-import '../../../controllers/is_someone_drinking_controller.dart';
+import '../../../core/controller/check_controller.dart';
 import '../../../core/utils/custom_utils.dart';
-import '../../../core/widgets/confirm_info_widget.dart';
 import '../../../core/widgets/wrong_total_check_value_widget.dart';
 
 class IsDrikingButtonsWidget extends StatelessWidget {
   const IsDrikingButtonsWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Consumer<IsSomeoneDrinkingController>(
+  Widget build(BuildContext context) => Consumer<CheckController>(
         builder: (context, controller, child) {
           bool isResultButtonActivated = controller.totalDrinkPrice > 0 &&
-              controller.totalPeopleDrinking >= 1 &&
-              // controller.state == IsSomeoneDrinkingState.valid &&
-              controller.isSomeoneDrinking;
+              controller.model.totalPeopleDrinking > 0 &&
+              controller.msgError == "" &&
+              controller.model.isSomeoneDrinking;
+          // Size size = MediaQuery.sizeOf(context);
           CustomUtils customUtils = CustomUtils();
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,6 +37,8 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                       ? () async => await _showModalIsSomeoneDrinking(
                           context, customUtils)
                       : null,
+                  // : () async =>
+                  //     _showModalWhotIsNotDrinking(context, customUtils),
                   label: const Text(
                     "Resultados",
                     style: TextStyle(color: Colors.white),
@@ -53,6 +54,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
         },
       );
 
+  // Future _showModalIsSomeoneDrinking(
   Future _showModalIsSomeoneDrinking(
       BuildContext context, CustomUtils customUtils) async {
     final size = MediaQuery.of(context).size;
@@ -68,13 +70,16 @@ class IsDrikingButtonsWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              "Todas as informações estão corretas?",
-              style: Theme.of(context).textTheme.titleLarge,
+            const Text(
+              "Todas informações estão corretas?",
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.02),
-            Consumer<IsSomeoneDrinkingController>(
+            Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
                   children: [
@@ -88,7 +93,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                     ConfirmInfoWidget(
                       startText: "Valor das bebidas: ",
                       endText:
-                          "R\$ ${controller.totalDrinkPrice.toStringAsFixed(2)}",
+                          "R\$ ${controller.model.totalDrinkPrice.toStringAsFixed(2)}",
                     ),
                     const SizedBox(height: 8),
                     ConfirmInfoWidget(
@@ -115,10 +120,8 @@ class IsDrikingButtonsWidget extends StatelessWidget {
               children: [
                 FilledButton(
                   onPressed: () {
-                    final checkController = context.read<CheckController>();
-                    final controller =
-                        context.read<IsSomeoneDrinkingController>();
-                    checkController.calculateCheckResult();
+                    final controller = context.read<CheckController>();
+                    controller.calculateCheckResult();
                     controller.isSomeoneDrinking = true;
                     customUtils.goTo("/result", context);
                   },
@@ -147,6 +150,26 @@ class IsDrikingButtonsWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ConfirmInfoWidget extends StatelessWidget {
+  final String startText;
+  final String endText;
+
+  const ConfirmInfoWidget(
+      {Key? key, required this.startText, required this.endText})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(startText, style: Theme.of(context).textTheme.bodyMedium),
+        Text(endText, style: Theme.of(context).textTheme.bodyMedium),
+      ],
     );
   }
 }

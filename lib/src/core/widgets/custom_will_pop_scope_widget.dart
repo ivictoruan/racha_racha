@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../controllers/check_controller/check_controller.dart';
+import '../controller/check_controller.dart';
 import '../utils/custom_utils.dart';
 
 class CustomWillPopWidget extends StatelessWidget {
@@ -41,8 +41,7 @@ class CustomWillPopWidget extends StatelessWidget {
                       : 'Gostaria de recomeçar?',
                   style: const TextStyle(
                     color: Colors.deepPurple,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
                   ),
                 ),
               ),
@@ -61,12 +60,7 @@ class CustomWillPopWidget extends StatelessWidget {
                             : controller.restartSplit();
                         customUtils.goTo("/totalValue", context);
                       },
-                      child: const Text(
-                        'Sim',
-                        style: TextStyle(
-                            fontSize:
-                                14), // Increase font size for the button text
-                      ),
+                      child: const Text('Sim'),
                     );
                   },
                 ),
@@ -74,11 +68,7 @@ class CustomWillPopWidget extends StatelessWidget {
                   onPressed: () {
                     Navigator.pop(context, false);
                   },
-                  child: const Text(
-                    'Voltar',
-                    style: TextStyle(
-                        fontSize: 14), // Increase font size for the button text
-                  ),
+                  child: const Text('Não'),
                 ),
               ],
             );
