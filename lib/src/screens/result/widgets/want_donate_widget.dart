@@ -92,38 +92,10 @@ class WantDonateWidget extends StatelessWidget {
                 ),
                 SizedBox(height: size.height * 0.03),
                 const Divider(),
-                // const Padding(
-                //   padding: EdgeInsets.all(8.0),
-                //   child: Text(
-                //     "Ou aponte para o QR Code, no seu app de pagamentos.",
-                //     textAlign: TextAlign.center,
-                //     style: TextStyle(
-                //         fontWeight: FontWeight.bold, color: Colors.deepPurple),
-                //   ),
-                // ),
-                // const Divider(),
+              
                 SizedBox(height: size.height * 0.01),
-                // SizedBox(
-                //   height: size.height * 0.35,
-                //   width: size.width * 0.65,
-                //   child: Material(
-                //     borderOnForeground: true,
-                //     color: Colors.white,
-                //     elevation: 2,
-                //     shadowColor: Colors.deepPurple,
-                //     borderRadius: BorderRadius.circular(20),
-                //     // TODO: rever isto!
-                //     child: Center(
-                //       child: QrImage(
-                //         data: qrCode,
-                //         version: QrVersions.auto,
-                //         size: 200.0,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+               
                 SizedBox(height: size.height * 0.05),
-                // const Divider(),
                 FilledButton.tonal(
                   onPressed: () => customUtils.goToUrl(
                     "https://play.google.com/store/apps/details?id=com.matopibatech.racharacha",

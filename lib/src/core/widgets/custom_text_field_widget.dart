@@ -44,7 +44,7 @@ class CustomTextFieldWidget extends StatelessWidget {
       width: size.width * 0.85,
       child: Material(
         elevation: 3,
-        borderRadius: BorderRadius.all(Radius.circular(size.width * 0.2)),
+        borderRadius: BorderRadius.all(Radius.circular(size.width * 0.15)),
         shadowColor: Colors.deepPurpleAccent,
         color: Colors.white,
         child: Padding(
@@ -62,17 +62,17 @@ class CustomTextFieldWidget extends StatelessWidget {
                 borderSide:
                     BorderSide(color: Colors.deepPurple.withOpacity(0.8)),
                 borderRadius:
-                    BorderRadius.all(Radius.circular(size.width * 0.2)),
+                    BorderRadius.all(Radius.circular(size.width * 0.15)),
               ),
-              labelText: labelText,
+              labelText: "$labelText (obrigatório)",
               labelStyle: TextStyle(
                 fontSize: 0.035 * size.width,
-                // color: Colors.purple[300],
+                fontWeight: FontWeight.w500,
               ),
               hintText: hintText ?? "Digite o $labelText",
               hintStyle: TextStyle(
                 fontSize: 0.035 * size.width,
-                // color: Colors.purple,
+                fontWeight: FontWeight.w500,
               ),
               prefixIcon: icon == null
                   ? null
@@ -99,8 +99,6 @@ class CustomTextFieldWidget extends StatelessWidget {
             onChanged: onChanged,
             maxLines: 1,
             onFieldSubmitted: onFieldSubmitted,
-
-            // maxLength: 15,
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../controller/check_controller.dart';
+import '../../controllers/check_controller/check_controller.dart';
 import '../utils/custom_utils.dart';
 
 class WrongTotalCheckValueWidget extends StatelessWidget {

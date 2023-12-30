@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../controllers/total_people_controller.dart';
 import '../../core/widgets/custom_subtitle_text_widget.dart';
+import '../../core/widgets/custom_title_text_widget.dart';
 import '../../core/widgets/custom_will_pop_scope_widget.dart';
-import 'package:racha_racha/src/core/controller/check_controller.dart';
-import '../home/view/widgets/custom_slider.dart';
 import 'field/total_people_field_widget.dart';
+import 'widgets/custom_slider.dart';
 import 'widgets/floating_action_buttons_widget.dart';
 
 class TotalPeopleScreen extends StatefulWidget {
@@ -16,15 +17,15 @@ class TotalPeopleScreen extends StatefulWidget {
 }
 
 class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
-  late final CheckController controller;
+  late final TotalPeopleController controller;
   bool serviceTax = false;
 
   @override
   void initState() {
     super.initState();
-    controller = Provider.of<CheckController>(context, listen: false);
-    controller.msgError =
-        "Incluíndo você, digite a quantidade de pessoas dividindo a conta.";
+    controller = Provider.of<TotalPeopleController>(context, listen: false);
+    WidgetsBinding.instance
+        .addPostFrameCallback((timeStamp) => controller.restartTotalPeople());
   }
 
   @override
@@ -36,39 +37,46 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    // bool showSlider = controller.msgError ==
-    // "❗️ A quantidade de pessoas não pode ser igual a zero!";
-
+    const String titleText = "Digite a quantidade de pessoas dividindo a conta";
     return CustomWillPopWidget(
       body: Column(
         children: [
-          SizedBox(height: size.height * 0.02),
-          Consumer<CheckController>(
-            builder: (context, controller, child) {
-              // controller.totalPeople = 0;
-              return TotalPeopleFieldWidget(controller: controller);
-            },
+          const CustomTitleTextWidget(
+            titleText: titleText,
           ),
-          SizedBox(height: size.height * 0.015),
-          // MENSAGEM DE INFORMAÇÃO:
+          SizedBox(height: size.height * 0.02),
+          TotalPeopleFieldWidget(controller: controller),
+          Visibility(
+            visible: controller.msgError != "",
+            child: AnimatedBuilder(
+              animation: controller,
+              builder: (BuildContext context, Widget? child) {
+                return Text(
+                  controller.msgError,
+                  style: const TextStyle(
+                    color: Colors.red,
+                  ),
+                );
+              },
+            ),
+          ),
           const Column(
             children: [
-              CustomSubitleTextWidget(
+              CustomSubtitleTextWidget(
                 subtitle:
                     "* Incluíndo você, digite a quantidade de pessoas dividindo a conta.",
               ),
             ],
           ),
           const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const CustomSubitleTextWidget(
-                  subtitle: "Vai pagar taxa de Serviço/Garçom?",
-                ),
-                Switch(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const CustomSubtitleTextWidget(
+                subtitle: "Vai pagar taxa de Serviço/Garçom?",
+              ),
+              Expanded(
+                child: Switch(
                   value: serviceTax,
                   onChanged: (bool newValue) {
                     setState(() {
@@ -77,17 +85,28 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
                     });
                   },
                 ),
+              ),
+            ],
+          ),
+          AnimatedCrossFade(
+            duration: const Duration(milliseconds: 400),
+            crossFadeState: serviceTax
+                ? CrossFadeState.showFirst
+                : CrossFadeState.showSecond,
+            firstChild: const Column(
+              children: [
+                CustomSlider(),
+                Divider(),
               ],
             ),
+            secondChild: const Divider(),
           ),
-          serviceTax ? const CustomSlider() : const SizedBox.shrink(),
-          const Divider(),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const CustomSubitleTextWidget(
+                const CustomSubtitleTextWidget(
                   subtitle: "Alguém está bebendo?",
                 ),
                 Switch(
@@ -107,5 +126,3 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
     );
   }
 }
-
-// const FloatingActionButtonsWidget()
