@@ -35,11 +35,10 @@ class CheckController extends ChangeNotifier
 
   set msgError(String value) {
     _msgError = value;
-    notifyListeners();
+    Future.delayed(Duration.zero, () {
+      notifyListeners();
+    });
   }
-
-  
-  
 
   @override
   void calculateCheckResult() {
