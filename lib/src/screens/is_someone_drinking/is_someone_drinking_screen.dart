@@ -132,16 +132,10 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
         return AlertDialog(
           title: Row(
             children: [
-              Icon(
-                Icons.help_outline,
-                color: Theme.of(context).primaryColor,
-              ),
               const SizedBox(width: 8),
               Text(
                 "Confirmação",
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
             ],
           ),
@@ -189,23 +183,23 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Informações estão corretas?",
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            Text(
+              "Todas as informações estão corretas?",
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.01),
             Text(
               "Se há alguém bebendo toque em \"Não\"",
-              style: TextStyle(
-                color: Colors.deepPurple[200],
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Colors.deepPurple[200],
+                    fontSize: 12,
+                  ),
+              // style: TextStyle(
+              //   color: Colors.deepPurple[200],
+              //   fontSize: 10,
+              //   fontWeight: FontWeight.bold,d
+              // ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.01),

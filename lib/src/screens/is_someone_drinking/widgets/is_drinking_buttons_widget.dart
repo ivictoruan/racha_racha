@@ -68,12 +68,9 @@ class IsDrikingButtonsWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Todas informações estão corretas?",
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.bold,
-              ),
+            Text(
+              "Todas as informações estão corretas?",
+              style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.02),
@@ -153,5 +150,3 @@ class IsDrikingButtonsWidget extends StatelessWidget {
     );
   }
 }
-
-

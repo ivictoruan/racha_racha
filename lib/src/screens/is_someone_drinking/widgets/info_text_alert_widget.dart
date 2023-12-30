@@ -10,7 +10,7 @@ class InfoTextAlertWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Material(
-      elevation: 1,
+      elevation: 0.5,
       borderRadius: BorderRadius.circular(20), // 0.058 * size.width
       color: Colors.white,
       shadowColor: Colors.deepPurpleAccent,
@@ -45,17 +45,17 @@ class InfoTextAlertWidget extends StatelessWidget {
                               child: Text(
                                 controller.msgError,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: initialMsg == true
-                                      ? Colors.green
-                                      : Colors.red,
-                                  fontSize: 0.025 * size.width,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                softWrap: true, // Habilita quebra de linha
-                                maxLines: 2, // Define o número máximo de linhas
-                                overflow: TextOverflow
-                                    .ellipsis, // Define o comportamento em caso de overflow
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .copyWith(
+                                      color: initialMsg == true
+                                          ? Colors.green
+                                          : Colors.red,
+                                    ),
+                                softWrap: true,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
