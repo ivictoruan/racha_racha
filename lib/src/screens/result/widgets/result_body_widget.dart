@@ -27,7 +27,7 @@ class ResultBodyWidget extends StatelessWidget {
                       startText: "Se bebeu, paga:",
                       endText:
                           model.individualPriceWhoIsDrinking.toStringAsFixed(2),
-                      isMainResult: true,
+                      // isMainResult: true,
                     ),
                   },
                   SizedBox(height: 0.02 * size.height),
@@ -37,7 +37,7 @@ class ResultBodyWidget extends StatelessWidget {
                         ? "Não bebeu, paga:"
                         : "Valor individual: ",
                     endText: model.individualPrice.toStringAsFixed(2),
-                    isMainResult: true,
+                    // isMainResult: true,
                   ),
                   SizedBox(height: 0.02 * size.height),
 
@@ -46,7 +46,7 @@ class ResultBodyWidget extends StatelessWidget {
                       startText: "Valor total sem gorjeta:",
                       endText: (model.totalCheckPrice - model.totalWaiterValue)
                           .toStringAsFixed(2),
-                      isMainResult: true,
+                      // isMainResult: true,
                     ),
                   SizedBox(height: 0.02 * size.height),
 
