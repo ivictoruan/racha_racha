@@ -52,13 +52,12 @@ class TotalValueController extends ChangeNotifier {
     }
   }
 
-  // void resetTotalCheckPrice() {
-  //   state = TotalValueState.start;
-  //   // model.totalCheckPrice = 0;
-  //   service.updateSplit(model.copyWith(
-  //     totalCheckPrice: 0,
-  //   ));
-    
-  //   notifyListeners();
-  // }
+  void resetTotalCheckPrice() {
+    state = TotalValueState.start;
+    // service.updateSplit(model.copyWith(
+    //   totalCheckPrice: 0,
+    // ));
+
+    notifyListeners();
+  }
 }
