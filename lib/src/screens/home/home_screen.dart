@@ -22,8 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    AuthService auth = AuthService();
-    auth.signInUserAnonymously();
+   
   }
 
   @override
@@ -31,22 +30,21 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  startSplit(){
+  startSplit() {
     log("[USUÁRIO] Iniciando nova divisão");
-    
+
     CustomUtils().goTo('/totalValue', context);
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
+    final Size size = MediaQuery.sizeOf(context);
 
     return loading == true
         ? const LinearProgressIndicator()
         : Scaffold(
-            // appBar: const DefaultAppBar(),
             body: SizedBox(
-              height: 500,
+              height: size.height * 0.9,
               child: splits.isEmpty
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -62,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             "Você ainda não fez nenhuma divisão! Para começar toque no botão abaixo!",
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 12),
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
                       ],
@@ -71,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: splits.length,
                       itemBuilder: (BuildContext context, int index) {
                         var split = splits[index];
-                        log(split[index].toString());
+                        log('alguma coisa${split[index]}');
                         return const SplitHistoryWidget();
                       },
                     ),
@@ -83,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
-            // bottomNavigationBar: const CustomBottomNavBarWidget(),
           );
   }
 }

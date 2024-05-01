@@ -242,7 +242,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                     final checkController = context.read<CheckController>();
                     checkController.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
-                    customUtils.goTo("/result", context);
+                    customUtils.goTo("/home", context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,

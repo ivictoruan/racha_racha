@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -34,14 +33,13 @@ class _TotalValueFloatingActionButtonState
 
     return Consumer<TotalValueController>(
       builder: (context, controller, child) {
+        final bool isValid = controller.state == widget.state;
         return FloatingActionButton(
-          elevation: controller.state == widget.state ? 2 : 0,
+          elevation: isValid ? 2 : 0,
           focusElevation: 2,
-          backgroundColor: controller.state == widget.state
-              ? Colors.deepPurple
-              
-              : const Color(0xFFE0E0E0),
-          onPressed: !(controller.state == widget.state)
+          backgroundColor:
+              isValid ? Colors.deepPurple : const Color(0xFFE0E0E0),
+          onPressed: !(isValid)
               ? null
               : () {
                   widget.onPressed ??
@@ -50,7 +48,7 @@ class _TotalValueFloatingActionButtonState
                 },
           child: Icon(
             widget.icon ?? Icons.arrow_forward,
-            size: 0.04 * size.height,
+            size: isValid ? 28 : null,
             color: Colors.white,
           ),
         );

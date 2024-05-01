@@ -5,10 +5,10 @@ import '../../models/check_model.dart';
 import '../../services/splits/split_firebase_service.dart';
 import 'check_controller_interface.dart';
 
-enum CheckState {
-  totalPeopleValueValid,
-  idle,
-}
+// enum CheckState {
+//   totalPeopleValueValid,
+//   idle,
+// }
 
 class CheckController extends ChangeNotifier
     implements CheckControllerInterface {
@@ -68,6 +68,7 @@ class CheckController extends ChangeNotifier
     model.totalPeopleDrinking = 0;
     model.individualPriceWhoIsDrinking = 0;
     model.totalPeople = 1;
+    
     CheckControllerErrorMessages.errorMsgEmpty;
     service.createSplit(model);
     notifyListeners();

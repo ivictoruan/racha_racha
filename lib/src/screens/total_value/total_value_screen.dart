@@ -23,8 +23,8 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
 
   void restartData() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.resetTotalCheckPrice();
       checkController.restartSplit();
-      // controller.resetTotalCheckPrice();
     });
   }
 

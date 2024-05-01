@@ -10,9 +10,6 @@ import '../../controllers/total_value_controller.dart';
 import '../../models/check_model.dart';
 import '../../models/user_model.dart';
 
-/// Classe `CustomProvider` que atua como o widget raiz da aplicação.
-/// Fornece vários controladores utilizando `ChangeNotifierProvider`
-/// para o gerenciamento de estado.
 class CustomProvider extends StatelessWidget {
   const CustomProvider({Key? key}) : super(key: key);
 

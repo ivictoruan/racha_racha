@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../core/utils/custom_utils.dart';
 import '../../core/widgets/racha_main_widget.dart';
-import '../home/home_screen.dart';
-import 'starting_screen.dart';
 
 class CheckingRegisterPage extends StatefulWidget {
   const CheckingRegisterPage({super.key});
@@ -23,27 +21,12 @@ class _CheckingRegisterPageState extends State<CheckingRegisterPage> {
     signInUserAnonymously(context);
   }
 
-  // checkIfUserIsRegistered(){
-  //   final user = FirebaseAuth.instance.currentUser;
-  //   if(user?.uid != null){
-  //     log("Usuário já registrado!");
-  //   }else{
-  //     log("Usuário não registrado!");
-  //   }
-  // }
-  // navigateTo(Widget screenWidget) {
-  //   Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => screenWidget),
-  //      );
-  // }
-
   signInUserAnonymously(BuildContext context) async {
     CustomUtils utils = CustomUtils();
     setState(() => loading = true);
     try {
       final user = FirebaseAuth.instance;
-
+      final goToHome = utils.goTo('/home', context);
       if (user.currentUser?.uid == null) {
         final userCredential = await FirebaseAuth.instance.signInAnonymously();
         log(" ID: ${userCredential.user?.uid ?? "ID indisponível!"} - Signed in with temporary account. ");
@@ -51,7 +34,8 @@ class _CheckingRegisterPageState extends State<CheckingRegisterPage> {
         //     context,
         //     MaterialPageRoute(builder: (context) => const StartingScreen()),
         //     (route) => false);
-        utils.goTo('/home', context);
+        // TODO: verificar se está funcionando
+        goToHome;
       } else {
         // Navigator.pushReplacement(
         //     context,
@@ -59,7 +43,6 @@ class _CheckingRegisterPageState extends State<CheckingRegisterPage> {
         //     (route) => false);
         // navigateTo(const StartingScreen());
         utils.goTo('/starting', context);
-
       }
       setState(() => loading = false);
     } on FirebaseAuthException catch (e) {

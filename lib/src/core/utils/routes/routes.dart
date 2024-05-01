@@ -1,6 +1,5 @@
 import 'package:go_router/go_router.dart';
 import 'package:racha_racha/src/screens/home/home_screen.dart';
-import 'package:racha_racha/src/screens/starting/checking_register_page.dart';
 
 import '../../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
 import '../../../screens/result/result_screen.dart';

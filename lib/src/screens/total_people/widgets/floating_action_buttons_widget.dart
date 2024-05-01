@@ -8,7 +8,6 @@ import '../../../core/utils/custom_utils.dart';
 import '../../../core/widgets/confirm_info_widget.dart';
 import '../../../core/widgets/wrong_total_check_value_widget.dart';
 
-
 class FloatingActionButtonsWidget extends StatelessWidget {
   const FloatingActionButtonsWidget({Key? key}) : super(key: key);
 
@@ -40,8 +39,9 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                   : null,
               backgroundColor:
                   isValid ? Colors.deepPurple : const Color(0xFFE0E0E0),
-              child: const Icon(
+              child: Icon(
                 Icons.arrow_forward,
+                size: isValid ? 28 : null,
                 color: Colors.white,
               ),
             ),
@@ -70,12 +70,12 @@ class FloatingActionButtonsWidget extends StatelessWidget {
               "Informações estão corretas?",
               style: TextStyle(
                 color: Colors.deepPurple,
-                fontSize: 18, // Increased font size
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: size.height * 0.03), // Increased height
+            SizedBox(height: size.height * 0.03),
             Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
@@ -86,17 +86,17 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                       endText:
                           "R\$ ${controller.totalCheckPrice.toStringAsFixed(2)}",
                     ),
-                    const SizedBox(height: 12), // Increased height
+                    const SizedBox(height: 12),
                     ConfirmInfoWidget(
                       startText: "Quantidade de pessoas: ",
                       endText: controller.totalPeople.toString(),
                     ),
-                    const SizedBox(height: 12), // Increased height
+                    const SizedBox(height: 12),
                     ConfirmInfoWidget(
                       startText: "Gorjeta/Garçom: ",
                       endText: "${controller.waiterPercentage.toString()} %",
                     ),
-                    const SizedBox(height: 20), // Increased height
+                    const SizedBox(height: 20),
                   ],
                 );
               },
@@ -111,30 +111,28 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                         context.read<IsSomeoneDrinkingController>();
                     checkController.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
-                    customUtils.goTo("/result", context);
+                    customUtils.goTo("/home", context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
                   ),
-                  child: const Text('Sim',
-                      style: TextStyle(fontSize: 16)), // Increased font size
+                  child: const Text('Sim', style: TextStyle(fontSize: 16)),
                 ),
-                const SizedBox(width: 12), // Increased width
+                const SizedBox(width: 12),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Não',
-                      style: TextStyle(fontSize: 16)), // Increased font size
+                  child: const Text('Não', style: TextStyle(fontSize: 16)),
                 ),
-                const SizedBox(width: 12), // Increased width
+                const SizedBox(width: 12),
                 TextButton.icon(
                   onPressed: () {
                     customUtils.goTo("/totalValue", context);
                   },
                   icon: const Icon(Icons.restart_alt_rounded),
-                  label: const Text("Reiniciar",
-                      style: TextStyle(fontSize: 16)), // Increased font size
+                  label:
+                      const Text("Reiniciar", style: TextStyle(fontSize: 16)),
                 ),
               ],
             ),
