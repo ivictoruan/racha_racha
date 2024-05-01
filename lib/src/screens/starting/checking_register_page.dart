@@ -20,7 +20,7 @@ class _CheckingRegisterPageState extends State<CheckingRegisterPage> {
 
   void checkIfUserIsLogged() async {
     final CustomUtils utils = CustomUtils();
-    await Future.delayed(const Duration(seconds: 4));
+    // await Future.delayed(const Duration(seconds: 4));
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         // print('Usuário não está logado!');
