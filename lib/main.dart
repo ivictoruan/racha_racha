@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:racha_racha/firebase_options.dart';
- 
 
 import 'src/core/providers/custom_provider.dart';
 

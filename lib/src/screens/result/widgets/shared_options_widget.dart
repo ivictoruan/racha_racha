@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_share/social_share.dart';
@@ -32,7 +34,6 @@ class SharedOptionsWidget extends StatelessWidget {
             ),
             icon: const Icon(Icons.share, color: Colors.deepPurple),
             label: Text(
-              // "Compartilhe a Divisão",
               "Compartilhar",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleLarge!.copyWith(

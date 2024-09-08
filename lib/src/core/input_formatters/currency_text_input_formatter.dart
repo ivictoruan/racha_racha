@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 
 class CurrencyTextInputFormatter extends TextInputFormatter {
@@ -25,7 +24,6 @@ class CurrencyTextInputFormatter extends TextInputFormatter {
     String newText = "R\$ ${value.toStringAsFixed(2)}";
 
     return newValue.copyWith(
-      
       text: newText,
       selection: TextSelection.collapsed(offset: newText.length),
     );

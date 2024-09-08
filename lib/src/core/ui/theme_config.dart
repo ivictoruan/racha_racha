@@ -3,8 +3,6 @@ import 'package:flutter/services.dart';
 
 class ThemeConfig {
   ThemeConfig._();
-  /// A classe `ThemeConfig` fornece uma configuração para o tema do aplicativo. 
-  /// Define o tema padrão da aplicação, incluindo cores e estilos.
 
   static final ThemeData theme = ThemeData(
     useMaterial3: true,

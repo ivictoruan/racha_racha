@@ -1,4 +1,4 @@
-package com.example.racha_racha
+package com.matopibatech.racharacha
 
 import io.flutter.embedding.android.FlutterActivity
 

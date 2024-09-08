@@ -19,6 +19,7 @@ class CustomProvider extends StatelessWidget {
           create: (_) => CheckController(model: CheckModel()),
         ),
       ],
+      // TODO: desacoplar -> criar propriedade child 
       child: const RachaRachaApp(),
     );
   }
