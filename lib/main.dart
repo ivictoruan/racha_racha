@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -10,20 +9,23 @@ import 'package:flutter/services.dart';
 import 'src/core/providers/custom_provider.dart';
 
 void main() async {
+  await initApp();
+  runApp(
+    const CustomProvider(),
+  );
+}
+
+Future<void> initApp() async {
   log("[Usuário] iniciou app");
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  initCrashlytics();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(
-    const CustomProvider(),
-  );
+  initCrashlytics();
 }
 
 void initCrashlytics() {
