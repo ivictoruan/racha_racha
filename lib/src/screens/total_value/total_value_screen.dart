@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:racha_racha/src/core/widgets/custom_will_pop_scope_widget.dart';
 
+import '../../controllers/total_value_controller.dart';
 import '../../core/widgets/custom_drawer.dart';
 import '../../core/widgets/custom_floating_action_button.dart';
 import '../../core/widgets/custom_subtitle_text_widget.dart';
@@ -17,22 +18,29 @@ class TotalValueScreen extends StatefulWidget {
 }
 
 class _TotalValueScreenState extends State<TotalValueScreen> {
-  late final CheckController controller;
-  // late bool isTotalValueFieldAutoFocusEnable;
+  late final CheckController checkController;
+  late final TotalValueController controller;
+
+  void restartData() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      checkController.restartSplit();
+      controller.resetTotalCheckPrice();
+    });
+  }
+
   @override
   initState() {
     super.initState();
-    controller = context.read<CheckController>();
-    // setState(() {
-    //   // isTotalValueFieldAutoFocusEnable = true;
-    // });
-    controller.restartSplit();
+    checkController = context.read<CheckController>();
+    controller = context.read<TotalValueController>();
+
+    restartData();
   }
 
   @override
   dispose() {
     super.dispose();
-    // isTotalValueFieldAutoFocusEnable = false;
+    // isTotalValueFieldAutoFocusEnable = fDSalse;
     controller.dispose();
   }
 
@@ -45,36 +53,35 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
     const String pathToNextPage = "/totalPeople";
     return CustomWillPopWidget(
       isExitedPaged: true,
-        drawer: const CustomDrawer(),
-        body: Padding(
-          padding: EdgeInsets.all(0.02 * size.height),
-          child: SafeArea(
-            child: Column(
-              children: [
-                const CustomTitleTextWidget(
-                  titleText: titleText,
-                ),
-                SizedBox(height: size.height * 0.04),
-                Column(
-                  children: [
-                    TotalValueField(
-                      controller: controller,
-                      // autofocus: isTotalValueFieldAutoFocusEnable,
-                    ),
-                  ],
-                ),
-                const CustomSubitleTextWidget(
-                  subtitle: subtitleText,
-                ),
-              ],
-            ),
+      drawer: const CustomDrawer(),
+      body: Padding(
+        padding: EdgeInsets.all(0.02 * size.height),
+        child: SafeArea(
+          child: Column(
+            children: [
+              const CustomTitleTextWidget(
+                titleText: titleText,
+              ),
+              SizedBox(height: size.height * 0.04),
+              Column(
+                children: [
+                  TotalValueField(
+                    controller: checkController,
+                    // autofocus: isTotalValueFieldAutoFocusEnable,
+                  ),
+                ],
+              ),
+              const CustomSubitleTextWidget(
+                subtitle: subtitleText,
+              ),
+            ],
           ),
         ),
-         floatingActionButton: const CustomFloatingActionButton(
-          pageToGo: pathToNextPage,
-          state: CheckState.totalCheckValueValid,
-        ),
-  
+      ),
+      floatingActionButton: const CustomFloatingActionButton(
+        pageToGo: pathToNextPage,
+        state: CheckState.totalCheckValueValid,
+      ),
     );
   }
 }

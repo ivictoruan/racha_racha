@@ -10,7 +10,7 @@ class InfoTextAlertWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return Material(
-      elevation: 1,
+      elevation: 0.5,
       borderRadius: BorderRadius.circular(20), // 0.058 * size.width
       color: Colors.white,
       shadowColor: Colors.deepPurpleAccent,
