@@ -10,6 +10,7 @@ import 'src/core/providers/custom_provider.dart';
 
 void main() async {
   await initApp();
+
   runApp(
     const CustomProvider(),
   );
