@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CustomDotSplider extends StatelessWidget {
   final int activeIndex;
-  final CarouselController controller;
+  final carousel.CarouselController controller;
   final int count;
 
   const CustomDotSplider(
@@ -21,7 +21,7 @@ class CustomDotSplider extends StatelessWidget {
             dotWidth: 8,
             dotHeight: 8,
             dotColor: Colors.deepPurple,
-            activeDotColor: Colors.deepPurple),
+            activeDotColor: Colors.deepPurple,),
         activeIndex: activeIndex,
         count: count,
       ),

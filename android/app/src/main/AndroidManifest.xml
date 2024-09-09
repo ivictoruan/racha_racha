@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.racha_racha" xmlns:tools="http://schemas.android.com/tools"> 
+    package="com.matopibatech.racharacha" xmlns:tools="http://schemas.android.com/tools"> 
    <application
         android:label="Racha Racha"
         android:name="${applicationName}"

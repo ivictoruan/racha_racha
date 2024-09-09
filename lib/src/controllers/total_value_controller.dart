@@ -2,8 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import '../models/check_model.dart';
-import '../services/splits/split_firebase_service.dart';
+import '../core/models/check_model.dart';
+// import '../models/check_model.dart';
+// import '../services/splits/split_firebase_service.dart';
 
 enum TotalValueState {
   start,
@@ -13,13 +14,13 @@ enum TotalValueState {
 
 class TotalValueController extends ChangeNotifier {
   final CheckModel model;
-  late final SplitFirebaseService service;
+  // late final SplitFirebaseService service;
 
   TotalValueController({
     required this.model,
   }) : super() {
-    service = SplitFirebaseService();
-    service.createSplit(model);
+    // service = SplitFirebaseService();
+    // service.createSplit(model);
   }
 
   double get totalCheckPrice => model.totalCheckPrice;
@@ -36,9 +37,9 @@ class TotalValueController extends ChangeNotifier {
         model.totalCheckPrice = newDoubleTotalCheckPice;
         log("Novo preço: $newDoubleTotalCheckPice");
         // UPDATE FIREBASE
-        service.updateSplit(model.copyWith(
-          totalCheckPrice: newDoubleTotalCheckPice,
-        ));
+        // service.updateSplit(model.copyWith(
+        //   totalCheckPrice: newDoubleTotalCheckPice,
+        // ));
         if (newDoubleTotalCheckPice == 0) {
           state = TotalValueState.invalid;
         }

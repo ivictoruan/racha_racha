@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:racha_racha/src/core/utils/custom_utils.dart';
 
-import '../../core/widgets/racha_main_widget.dart';
+import '../../core/widgets/custom_subtitle_text_widget.dart';
 
 class CheckingRegisterPage extends StatefulWidget {
   const CheckingRegisterPage({super.key});
@@ -10,7 +12,6 @@ class CheckingRegisterPage extends StatefulWidget {
 }
 
 class _CheckingRegisterPageState extends State<CheckingRegisterPage> {
-  bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -19,25 +20,13 @@ class _CheckingRegisterPageState extends State<CheckingRegisterPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            RachaMainWidget(
-              widthPercentage: 0.4,
-              heightPercentage: 0.4,
-            ),
-            Text(
-              "Rache a conta no rolê!💸",
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ],
+        child: CircularProgressIndicator(),
+      ),
+      bottomSheet: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: CustomSubitleTextWidget(
+          subtitle: "Nunca mais seja enrolado no rolê!",
         ),
       ),
     );

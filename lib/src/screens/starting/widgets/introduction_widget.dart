@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:lottie/lottie.dart';
 
 import 'contents/first_content_widget.dart';
 import 'contents/second_content_widget.dart';
+// import 'contents/third_content_widget.dart';
 import 'dots/custom_dot_slider.dart';
 
 class IntroductionWidget extends StatefulWidget {
@@ -17,7 +18,7 @@ class IntroductionWidget extends StatefulWidget {
 
 class _IntroductionWidgetState extends State<IntroductionWidget> {
   int activeIndex = 0;
-  final controller = CarouselController();
+  final controller = carousel.CarouselController();
 
   setActiveDot(index) {
     setState(() {
@@ -33,6 +34,7 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
     final List<Widget> startingItems = [
       const FirstContentWidget(),
       const SecondContentWidget(),
+      // ThirdContentWidget(), // Login/Registration
     ];
     return Column(
       children: [
@@ -43,9 +45,9 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
         Stack(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           children: [
-            CarouselSlider(
+            carousel.CarouselSlider(
               carouselController: controller,
-              options: CarouselOptions(
+              options: carousel.CarouselOptions(
                 autoPlay: true,
                 height: MediaQuery.sizeOf(context).height * 0.75,
                 autoPlayInterval: const Duration(seconds: 15),
@@ -57,6 +59,7 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
               ),
               items: startingItems,
             ),
+            // const Spacer(),
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(

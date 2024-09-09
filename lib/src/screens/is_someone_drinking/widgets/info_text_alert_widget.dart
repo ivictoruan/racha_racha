@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../controllers/is_someone_drinking_controller.dart';
+import 'package:racha_racha/src/core/controller/check_controller.dart';
 
 class InfoTextAlertWidget extends StatelessWidget {
   const InfoTextAlertWidget({Key? key}) : super(key: key);
@@ -18,54 +18,32 @@ class InfoTextAlertWidget extends StatelessWidget {
         width: size.width * 0.85,
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: size.height * 0.004),
-          child: Center(
-            child: Consumer<IsSomeoneDrinkingController>(
-              builder: (context, controller, child) {
-                bool initialMsg =
-                    controller.msgError == "Digite o valor total da conta";
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 5.0, vertical: 2),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.info,
-                        color: initialMsg == true ? Colors.green : Colors.red,
-                        size: 0.035 * size.width,
-                      ),
-                      SizedBox(
-                        width: 0.015 * size.width,
-                      ),
-                      Expanded(
-                        child: Wrap(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Text(
-                                controller.msgError,
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(
-                                      color: initialMsg == true
-                                          ? Colors.green
-                                          : Colors.red,
-                                    ),
-                                softWrap: true,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+          child: Consumer<CheckController>(
+            builder: (context, controller, child) {
+              bool initialMsg =
+                  controller.msgError == "Digite o valor total da conta";
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.info,
+                    color: initialMsg == true ? Colors.green : Colors.red,
+                    size: 0.035 * size.width,
                   ),
-                );
-              },
-            ),
+                  SizedBox(
+                    width: 0.015 * size.width,
+                  ),
+                  Text(
+                    controller.msgError,
+                    style: TextStyle(
+                      color: initialMsg == true ? Colors.green : Colors.red,
+                      fontSize: 0.025 * size.width,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

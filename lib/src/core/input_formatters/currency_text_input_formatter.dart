@@ -19,14 +19,7 @@ class CurrencyTextInputFormatter extends TextInputFormatter {
       cleanedText = cleanedText.substring(0, maxLength);
     }
 
-    double value = 0.0;
-    if (cleanedText.isNotEmpty) {
-      try {
-        value = double.parse(cleanedText) / 100;
-      } catch (e) {
-        value = 0.0;
-      }
-    }
+    double value = double.parse(cleanedText) / 100;
 
     String newText = "R\$ ${value.toStringAsFixed(2)}";
 
