@@ -5,7 +5,6 @@ import 'package:lottie/lottie.dart';
 
 import '../../core/utils/custom_utils.dart';
 import '../../core/widgets/racha_main_button_widget.dart';
-import '../../services/auth/auth_service.dart';
 import 'widgets/split_history_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,20 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool loading = false;
   List splits = [];
 
-  @override
-  void initState() {
-    super.initState();
-   
-  }
-
-  @override
-  dispose() {
-    super.dispose();
-  }
-
   startSplit() {
     log("[USUÁRIO] Iniciando nova divisão");
-
     CustomUtils().goTo('/totalValue', context);
   }
 

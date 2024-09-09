@@ -25,8 +25,6 @@ class _TotalValueFloatingActionButtonState
     extends State<TotalValueFloatingActionButton> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-
     void goToPage(String page) {
       GoRouter.of(context).push(page);
     }
