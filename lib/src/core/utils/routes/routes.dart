@@ -7,7 +7,6 @@ import '../../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
 import '../../../screens/result/result_screen.dart';
 import '../../../screens/result/widgets/want_donate_widget.dart';
 import '../../../screens/settings/settings_screen.dart';
-import '../../../screens/starting/checking_register_page.dart';
 import '../../../screens/starting/starting_screen.dart';
 import '../../../screens/total_people/total_people_screen.dart';
 import '../../../screens/total_value/total_value_screen.dart';
@@ -15,13 +14,14 @@ import '../../models/check_model.dart';
 
 final GoRouter routes = GoRouter(
   routes: [
+    // TODO: criar rota de checagem
+    // GoRoute(
+    //   path:
+    //       '/', //FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/totalValue',
+    //   builder: (context, state) => const CheckingRegisterPage(),
+    // ),
     GoRoute(
-      path:
-          '/', //FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/totalValue',
-      builder: (context, state) => const CheckingRegisterPage(),
-    ),
-    GoRoute(
-      path: '/starting',
+      path: '/',
       builder: (context, state) => const StartingScreen(),
     ),
     GoRoute(
@@ -58,6 +58,5 @@ final GoRouter routes = GoRouter(
       path: '/wantDonate',
       builder: (context, state) => const WantDonateWidget(),
     ),
-    // WantDonateWidget
   ],
 );
