@@ -81,8 +81,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             icon: settingsItems[index]["icon"] ?? Icons.abc,
             onTap: settingsItems[index]["onTap"] ?? () {},
           ),
-          separatorBuilder: (context, index) => SizedBox(
-            height: size.height * 0.04,
+          separatorBuilder: (context, index) => const SizedBox(
+            height: 16,
           ),
         ),
       ),
@@ -144,27 +144,5 @@ class SettingsButtonWidget extends StatelessWidget {
         ),
       ),
     );
-    // Material(
-    //   elevation: 2,
-    //   borderRadius: BorderRadius.circular(size.height * 0.04),
-    //   shadowColor: Colors.deepPurple,
-    //   color: Colors.white,
-    //   child: SizedBox(
-    //     height: 0.09 * size.height,
-    //     child: InkWell(
-    //       onTap: () {},
-    //       child: Center(
-    //         child: Text(
-    //           text,
-    //           style: const TextStyle(
-    //             fontWeight: FontWeight.bold,
-    //             fontSize: 18,
-    //             color: Colors.deepPurple,
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
