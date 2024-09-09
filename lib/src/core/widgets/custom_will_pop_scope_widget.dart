@@ -82,7 +82,7 @@ class CustomWillPopWidget extends StatelessWidget {
         drawer: drawer,
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(0.01 * size.height),
+            padding: const EdgeInsets.only(top: 10, left: 8, right: 8),
             child: SingleChildScrollView(
               physics: isBodyScrollable == false
                   ? const NeverScrollableScrollPhysics()
