@@ -9,6 +9,7 @@ class CustomFloatingActionButton extends StatefulWidget {
   final String? pageToGo;
   final Function()? onPressed;
   final IconData? icon;
+
   const CustomFloatingActionButton({
     Key? key,
     this.pageToGo,
@@ -26,8 +27,6 @@ class _CustomFloatingActionButtonState
     extends State<CustomFloatingActionButton> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-
     void goToPage(String page) {
       GoRouter.of(context).push(page);
     }
@@ -35,7 +34,6 @@ class _CustomFloatingActionButtonState
     return Consumer<CheckController>(
       builder: (context, controller, child) {
         return FloatingActionButton(
-          // hoverColor: Colors.deepPurple.withOpacity(0.6),
           elevation: controller.state == widget.state ? 2 : 0,
           focusElevation: 2,
           backgroundColor: controller.state == widget.state
@@ -50,7 +48,7 @@ class _CustomFloatingActionButtonState
                 },
           child: Icon(
             widget.icon ?? Icons.arrow_forward,
-            size: 0.04 * size.height,
+            size: 32,
             color: Colors.white,
           ),
         );
