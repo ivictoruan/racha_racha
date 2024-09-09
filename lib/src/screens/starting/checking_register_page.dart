@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:racha_racha/src/core/utils/custom_utils.dart';
 
 import '../../core/widgets/custom_subtitle_text_widget.dart';
 

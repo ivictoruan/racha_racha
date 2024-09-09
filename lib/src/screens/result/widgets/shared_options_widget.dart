@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:social_share/social_share.dart';
@@ -11,7 +9,6 @@ class SharedOptionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.sizeOf(context);
 
     return Consumer<CheckController>(
       builder: (context, controller, child) {
