@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/widgets/custom_subtitle_text_widget.dart';
+import '../../core/widgets/custom_title_text_widget.dart';
 import '../../core/widgets/custom_will_pop_scope_widget.dart';
 import 'package:racha_racha/src/core/controller/check_controller.dart';
 import '../home/view/widgets/custom_slider.dart';
@@ -36,21 +37,20 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
-    // bool showSlider = controller.msgError ==
-    // "❗️ A quantidade de pessoas não pode ser igual a zero!";
 
     return CustomWillPopWidget(
       body: Column(
         children: [
+          const CustomTitleTextWidget(
+            titleText: "Digite a quantidade de pessoas dividindo a conta",
+          ),
           SizedBox(height: size.height * 0.02),
           Consumer<CheckController>(
             builder: (context, controller, child) {
-              // controller.totalPeople = 0;
               return TotalPeopleFieldWidget(controller: controller);
             },
           ),
           SizedBox(height: size.height * 0.015),
-          // MENSAGEM DE INFORMAÇÃO:
           const Column(
             children: [
               CustomSubitleTextWidget(
@@ -60,25 +60,22 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
             ],
           ),
           const Divider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const CustomSubitleTextWidget(
-                  subtitle: "Vai pagar taxa de Serviço/Garçom?",
-                ),
-                Switch(
-                  value: serviceTax,
-                  onChanged: (bool newValue) {
-                    setState(() {
-                      serviceTax = newValue;
-                      controller.waiterPercentage = 0;
-                    });
-                  },
-                ),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const CustomSubitleTextWidget(
+                subtitle: "Vai pagar taxa de Serviço/Garçom?",
+              ),
+              Switch(
+                value: serviceTax,
+                onChanged: (bool newValue) {
+                  setState(() {
+                    serviceTax = newValue;
+                    controller.waiterPercentage = 0;
+                  });
+                },
+              ),
+            ],
           ),
           serviceTax ? const CustomSlider() : const SizedBox.shrink(),
           const Divider(),
@@ -107,5 +104,3 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
     );
   }
 }
-
-// const FloatingActionButtonsWidget()

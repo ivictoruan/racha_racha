@@ -18,9 +18,8 @@ class FloatingActionButtonsWidget extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // SizedBox(height: size.width * 0.05),
             const Padding(
-              padding: EdgeInsets.only(left: 25),
+              padding: EdgeInsets.only(left: 24),
               child: WrongTotalCheckValueWidget(),
             ),
             FloatingActionButton(
@@ -32,7 +31,6 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                       } else {
                         controller.model.totalDrinkPrice = 0;
                         await showModalCustomDialog(context, customUtils);
-                        // customUtils.goTo("/result", context);
                       }
                     }
                   : null,
@@ -41,6 +39,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
               child: const Icon(
                 Icons.arrow_forward,
                 color: Colors.white,
+                size: 32,
               ),
             ),
           ],
