@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:racha_racha/src/core/ui/theme_config.dart';
 
-import 'core/utils/routes/routes.dart';
+import 'presenter/shared/ui/theme_config.dart';
+import 'presenter/shared/utils/routes/routes.dart';
 
 class RachaRachaApp extends StatelessWidget {
   const RachaRachaApp({Key? key}) : super(key: key);
