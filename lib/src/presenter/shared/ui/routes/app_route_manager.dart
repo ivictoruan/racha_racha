@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../../../screens/total_value/controller/total_value_controller.dart';
 import '../../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
-import '../../../screens/result/provider/result_screen_provider.dart';
-import '../../../screens/result/result_screen.dart';
+import '../../../screens/result/provider/check_result_screen_provider.dart';
+import '../../../screens/result/check_result_screen.dart';
 import '../../../screens/result/widgets/want_donate_widget.dart';
 import '../../../screens/settings/settings_screen.dart';
 import '../../../screens/starting/starting_screen.dart';
@@ -40,14 +40,15 @@ class AppRouteManager {
       ),
       GoRoute(
         path: '/result',
-        builder: (_, __) => const ResultScreenProvider(
-          child: ResultScreen(),
+        builder: (_, __) => const CheckResultScreenProvider(
+          child: CheckResultScreen(),
         ),
       ),
       GoRoute(
         path: '/settings',
         builder: (_, __) => const SettingsScreen(),
       ),
+      // TODO: verificar se esta rota é necessaria
       GoRoute(
         path: '/wantDonate',
         builder: (_, __) => const WantDonateWidget(),

@@ -8,16 +8,16 @@ import 'widgets/custom_bottom_nav_bar_widget.dart';
 import 'widgets/result_body_widget.dart';
 import 'widgets/shared_options_widget.dart';
 
-class ResultScreen extends StatefulWidget {
-  const ResultScreen({
+class CheckResultScreen extends StatefulWidget {
+  const CheckResultScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ResultScreen> createState() => _ResultScreenState();
+  State<CheckResultScreen> createState() => _CheckResultScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreen> {
+class _CheckResultScreenState extends State<CheckResultScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomWillPopWidget(
