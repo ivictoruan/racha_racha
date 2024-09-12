@@ -11,11 +11,7 @@ enum TotalValueState {
 }
 
 class TotalValueController extends ChangeNotifier {
-  final CheckModel model;
-
-  TotalValueController({
-    required this.model,
-  });
+  CheckModel model = CheckModel();
 
   double get totalCheckPrice => model.totalValue;
 
