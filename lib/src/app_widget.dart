@@ -7,7 +7,7 @@ import 'presenter/shared/ui/routes/app_route_manager.dart';
 class RachaRachaApp extends StatelessWidget {
   const RachaRachaApp({Key? key}) : super(key: key);
 
-  GoRouter get routes => AppRouteManageranager.routes;
+  GoRouter get routes => AppRouteManager.routes;
 
   String get title => "Racha Racha";
 

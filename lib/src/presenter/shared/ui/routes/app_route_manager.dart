@@ -11,7 +11,7 @@ import '../../../screens/starting/starting_screen.dart';
 import '../../../screens/total_people/total_people_screen.dart';
 import '../../../screens/total_value/total_value_screen.dart';
 
-class AppRouteManageranager {
+class AppRouteManager {
   static final GoRouter routes = GoRouter(
     routes: <RouteBase>[
       GoRoute(
