@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../shared/ui/constants/space_constants.dart';
+import '../../../../shared/constants/space_constants.dart';
 
 class MainContentWidget extends StatelessWidget {
   final String titleContent;

@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     show AnimatedSmoothIndicator, ExpandingDotsEffect;
 
-import '../../../../shared/ui/constants/space_constants.dart';
+import '../../../../shared/constants/space_constants.dart';
 
 class CustomDotSplider extends StatelessWidget {
   final int activeIndex;

@@ -1,15 +1,15 @@
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../screens/total_value/controller/total_value_controller.dart';
-import '../../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
-import '../../../screens/result/provider/check_result_screen_provider.dart';
-import '../../../screens/result/check_result_screen.dart';
-import '../../../screens/result/widgets/want_donate_widget.dart';
-import '../../../screens/settings/settings_screen.dart';
-import '../../../screens/starting/starting_screen.dart';
-import '../../../screens/total_people/total_people_screen.dart';
-import '../../../screens/total_value/total_value_screen.dart';
+import '../../screens/total_value/controller/total_value_controller.dart';
+import '../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
+import '../../screens/result/provider/check_result_screen_provider.dart';
+import '../../screens/result/check_result_screen.dart';
+import '../../screens/result/widgets/want_donate_widget.dart';
+import '../../screens/settings/settings_screen.dart';
+import '../../screens/starting/starting_screen.dart';
+import '../../screens/total_people/total_people_screen.dart';
+import '../../screens/total_value/total_value_screen.dart';
 
 class AppRouteManager {
   static final GoRouter routes = GoRouter(

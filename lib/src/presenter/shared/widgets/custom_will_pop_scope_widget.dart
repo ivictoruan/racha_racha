@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../ui/constants/space_constants.dart';
+import '../constants/space_constants.dart';
 import '../controllers/check_controller.dart';
 import '../utils/custom_utils.dart';
 

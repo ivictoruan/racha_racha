@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/presenter/shared/ui/constants/space_constants.dart';
 
 import 'controller/total_value_controller.dart';
+import '../../shared/constants/space_constants.dart';
 import '../../shared/widgets/custom_floating_action_button.dart';
 import '../../shared/widgets/custom_subtitle_text_widget.dart';
 import '../../shared/widgets/custom_will_pop_scope_widget.dart';

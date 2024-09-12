@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:racha_racha/src/presenter/shared/ui/constants/space_constants.dart';
+import 'package:racha_racha/src/presenter/shared/constants/space_constants.dart';
 
 void main() {
   group('SpaceConstants', () {

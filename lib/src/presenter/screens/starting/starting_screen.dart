@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/widgets/custom_will_pop_scope_widget.dart';
-import '../../shared/ui/constants/space_constants.dart';
+import '../../shared/constants/space_constants.dart';
 import 'widgets/go_to_rachar_button_widget.dart';
 import 'widgets/introduction_widget.dart';
 

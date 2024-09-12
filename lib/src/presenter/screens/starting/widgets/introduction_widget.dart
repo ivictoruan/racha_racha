@@ -4,7 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart' as carousel;
 import 'package:flutter/widgets.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../shared/ui/constants/space_constants.dart';
+import '../../../shared/constants/space_constants.dart';
 import 'contents/first_content_widget.dart';
 import 'contents/second_content_widget.dart';
 import 'dots/custom_dot_slider.dart';
