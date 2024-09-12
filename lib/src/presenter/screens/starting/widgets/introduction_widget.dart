@@ -27,8 +27,6 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
     setState(() {});
   }
 
-  Size get size => MediaQuery.sizeOf(context);
-
   final List<Widget> startingItems = [
     const FirstContentWidget(),
     const SecondContentWidget(),
@@ -40,43 +38,41 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
   double get carouselHeight => 500;
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Lottie.asset(
-          smartphoneLottie,
-          height: 200,
-        ),
-        Stack(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          children: [
-            carousel.CarouselSlider(
-              carouselController: controller,
-              options: carousel.CarouselOptions(
-                autoPlay: true,
-                height: carouselHeight,
-                autoPlayInterval: const Duration(seconds: 15),
-                autoPlayAnimationDuration: const Duration(seconds: 4),
-                autoPlayCurve: Curves.fastLinearToSlowEaseIn,
-                onPageChanged: (int index, _) => setActiveDot(index: index),
-                scrollDirection: Axis.horizontal,
-                viewportFraction: 1.0,
+  Widget build(BuildContext context) => Column(
+        children: [
+          Lottie.asset(
+            smartphoneLottie,
+            height: 200,
+          ),
+          Stack(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            children: [
+              carousel.CarouselSlider(
+                carouselController: controller,
+                options: carousel.CarouselOptions(
+                  autoPlay: true,
+                  height: carouselHeight,
+                  autoPlayInterval: const Duration(seconds: 15),
+                  autoPlayAnimationDuration: const Duration(seconds: 4),
+                  autoPlayCurve: Curves.fastLinearToSlowEaseIn,
+                  onPageChanged: (int index, _) => setActiveDot(index: index),
+                  scrollDirection: Axis.horizontal,
+                  viewportFraction: 1.0,
+                ),
+                items: startingItems,
               ),
-              items: startingItems,
-            ),
-            Positioned(
-              bottom: SpaceConstants.extraLarge,
-              left: 0,
-              right: 0,
-              child: CustomDotSplider(
-                activeIndex: activeIndex,
-                controller: controller,
-                count: startingItems.length,
+              Positioned(
+                bottom: SpaceConstants.extraLarge,
+                left: 0,
+                right: 0,
+                child: CustomDotSplider(
+                  activeIndex: activeIndex,
+                  controller: controller,
+                  count: startingItems.length,
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
+            ],
+          ),
+        ],
+      );
 }
