@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../ui/constants/space_constants.dart';
 import '../controllers/check_controller.dart';
 import '../utils/custom_utils.dart';
 
@@ -24,76 +25,78 @@ class CustomWillPopWidget extends StatelessWidget {
     this.isBodyScrollable,
   }) : super(key: key);
 
+  void onYesPressed(controller, context) {
+    final CustomUtils customUtils = CustomUtils();
+    isExitedPaged ?? false ? customUtils.exitApp() : controller.restartCheck();
+    customUtils.goTo("/totalValue", context);
+  }
+
+  Color get barrierColor => Colors.deepPurple.withOpacity(0.2);
+
+  String get text => isExitedPaged ?? false
+      ? "Gostaria de sair do app?"
+      : 'Gostaria de recomeçar?';
   @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    return WillPopScope(
-      onWillPop: () async {
-        final shouldPop = await showDialog<bool>(
-          context: context,
-          barrierColor: Colors.deepPurple.withOpacity(0.2),
-          builder: (context) {
-            return AlertDialog(
+  Widget build(BuildContext context) => WillPopScope(
+        onWillPop: () async {
+          final bool? shouldPop = await showDialog<bool>(
+            context: context,
+            barrierColor: barrierColor,
+            builder: (_) => AlertDialog(
               title: Center(
                 child: Text(
-                  isExitedPaged ?? false
-                      ? "Gostaria de sair do app?"
-                      : 'Gostaria de recomeçar?',
+                  text,
                   style: const TextStyle(
                     color: Colors.deepPurple,
-                    fontSize: 16,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0.058 * size.width),
+                borderRadius: BorderRadius.circular(
+                  SpaceConstants.extraSmall,
+                ),
               ),
               actionsAlignment: MainAxisAlignment.spaceBetween,
               actions: [
                 Consumer<CheckControllerImpl>(
-                  builder: (context, controller, child) {
-                    return TextButton(
-                      onPressed: () {
-                        final CustomUtils customUtils = CustomUtils();
-                        isExitedPaged ?? false
-                            ? customUtils.exitApp()
-                            : controller.restartCheck();
-                        customUtils.goTo("/totalValue", context);
-                      },
-                      child: const Text('Sim'),
-                    );
-                  },
+                  builder: (_, CheckControllerImpl controller, __) =>
+                      TextButton(
+                    onPressed: () => onYesPressed,
+                    child: const Text('Sim'),
+                  ),
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context, false);
-                  },
+                  onPressed: () => Navigator.pop(context, false),
                   child: const Text('Não'),
                 ),
               ],
-            );
-          },
-        );
-        return shouldPop ?? false;
-      },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: appBar,
-        drawer: drawer,
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 10, left: 8, right: 8),
-            child: SingleChildScrollView(
-              physics: isBodyScrollable == false
-                  ? const NeverScrollableScrollPhysics()
-                  : null,
-              child: body,
+            ),
+          );
+          return shouldPop ?? false;
+        },
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: appBar,
+          drawer: drawer,
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 10,
+                left: SpaceConstants.extraSmall,
+                right: SpaceConstants.extraSmall,
+              ),
+              child: SingleChildScrollView(
+                physics: isBodyScrollable == false
+                    ? const NeverScrollableScrollPhysics()
+                    : null,
+                child: body,
+              ),
             ),
           ),
+          floatingActionButton: floatingActionButton,
+          bottomNavigationBar: bottomNavigationBar,
         ),
-        floatingActionButton: floatingActionButton,
-        bottomNavigationBar: bottomNavigationBar,
-      ),
-    );
-  }
+      );
 }
