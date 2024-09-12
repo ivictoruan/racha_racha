@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/presenter/shared/widgets/custom_will_pop_scope_widget.dart';
+import 'package:racha_racha/src/presenter/shared/ui/constants/space_constants.dart';
 
 import 'controller/total_value_controller.dart';
 import '../../shared/widgets/custom_floating_action_button.dart';
 import '../../shared/widgets/custom_subtitle_text_widget.dart';
+import '../../shared/widgets/custom_will_pop_scope_widget.dart';
 import '../../shared/widgets/custom_title_text_widget.dart';
 import 'package:racha_racha/src/presenter/shared/controllers/check_controller.dart';
 import 'field/total_value_field.dart';
@@ -21,7 +22,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
   late final TotalValueController controller;
 
   void restartData() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       checkController.restartCheck();
       controller.resetTotalCheckPrice();
     });
@@ -56,10 +57,11 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
             const CustomTitleTextWidget(
               titleText: titleText,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: SpaceConstants.medium),
             Column(
               children: [
                 TotalValueField(
+                  // TODO! REMOVER esta dependencia do controlador, passar o que é necessário
                   controller: checkController,
                 ),
               ],
