@@ -3,20 +3,23 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/check/entities/check_model.dart';
+import 'enum/total_value_state_enum.dart';
 
-enum TotalValueState {
-  start,
-  valid,
-  invalid,
+abstract class TotalValueController extends ChangeNotifier {
+  double get totalCheckPrice;
+  set totalCheckPrice(newTotalCheckPrice);
+  void resetTotalCheckPrice();
 }
 
-class TotalValueController extends ChangeNotifier {
+class TotalValueControllerImpl extends TotalValueController {
   CheckModel model = CheckModel();
 
+  @override
   double get totalCheckPrice => model.totalValue;
 
   TotalValueState state = TotalValueState.start;
 
+  @override
   set totalCheckPrice(newTotalCheckPrice) {
     try {
       if (newTotalCheckPrice.isNotEmpty &&
@@ -40,6 +43,7 @@ class TotalValueController extends ChangeNotifier {
     }
   }
 
+  @override
   void resetTotalCheckPrice() {
     state = TotalValueState.start;
     notifyListeners();
