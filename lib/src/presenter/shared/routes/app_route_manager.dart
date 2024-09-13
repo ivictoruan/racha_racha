@@ -1,7 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
-import '../../screens/total_value/controller/total_value_controller.dart';
 import '../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
 import '../../screens/result/provider/check_result_screen_provider.dart';
 import '../../screens/result/check_result_screen.dart';
@@ -20,7 +18,6 @@ class AppRouteManager {
       ),
       GoRoute(
         path: '/totalValue',
-        // TODO: Remover o MuiltiProvider -> utilizar .value ou outro recurso
         builder: (_, __) => const TotalValueScreen(),
       ),
       GoRoute(
