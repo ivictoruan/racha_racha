@@ -3,16 +3,16 @@ import 'package:flutter/services.dart';
 
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/utils/custom_utils.dart';
-import '../../../shared/widgets/custom_text_field_widget.dart';
+import '../../../shared/widgets/text_form_field_widget.dart';
 
 class TotalPeopleFieldWidget extends StatelessWidget {
-  final CheckControllerImpl controller;
+  final CheckController controller;
   const TotalPeopleFieldWidget({Key? key, required this.controller})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CustomTextFieldWidget(
+    return TextFormFieldWidget(
       hintText: "Quantas pessoas?",
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.allow(
@@ -22,9 +22,13 @@ class TotalPeopleFieldWidget extends StatelessWidget {
       labelText: "Quantidade de pessoas",
       icon: Icons.people_outline_sharp,
       keyboardType: const TextInputType.numberWithOptions(decimal: false),
+
+      // TODO: inverter dependência do onChanged
       onChanged: (String newTotalPeople) {
         controller.totalPeople = newTotalPeople;
       },
+      // TODO: inverter dependência do onFieldSubmitted
+
       onFieldSubmitted: (String newTotalPeople) {
         CustomUtils customUtils = CustomUtils();
         controller.totalPeople = newTotalPeople;
