@@ -10,7 +10,7 @@ class WrongTotalCheckValueWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CheckControllerImpl>(
+    return Consumer<CheckController>(
       builder: (context, controller, child) {
         CustomUtils customUtils = CustomUtils();
         return FilledButton.tonalIcon(

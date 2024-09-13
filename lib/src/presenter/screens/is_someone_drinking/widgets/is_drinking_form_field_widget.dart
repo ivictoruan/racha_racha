@@ -13,7 +13,7 @@ class IsDrinkingFormFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     return SizedBox(
-      child: Consumer<CheckControllerImpl>(
+      child: Consumer<CheckController>(
         builder: (context, controller, child) {
           return Column(
             children: [

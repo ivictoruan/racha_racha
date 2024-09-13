@@ -8,7 +8,7 @@ class CustomSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CheckControllerImpl>(
+    return Consumer<CheckController>(
       builder: (context, controller, child) {
         Size size = MediaQuery.sizeOf(context);
         return Material(

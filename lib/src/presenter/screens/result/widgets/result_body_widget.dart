@@ -19,7 +19,7 @@ class ResultBodyWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(0.03125 * size.height),
         child: SingleChildScrollView(
-          child: Consumer<CheckControllerImpl>(
+          child: Consumer<CheckController>(
             builder: (context, controller, child) {
               CheckModel model = controller.check;
               return Column(

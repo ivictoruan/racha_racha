@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../shared/widgets/custom_subtitle_text_widget.dart';
-import '../../shared/widgets/custom_title_text_widget.dart';
 import '../../shared/widgets/custom_will_pop_scope_widget.dart';
-import 'package:racha_racha/src/presenter/shared/controllers/check_controller.dart';
+import '../../shared/controllers/check_controller.dart';
+import '../../shared/widgets/title_text_widget.dart';
 import '../home/view/widgets/custom_slider.dart';
 import 'field/total_people_field_widget.dart';
 import 'widgets/floating_action_buttons_widget.dart';
@@ -17,13 +17,13 @@ class TotalPeopleScreen extends StatefulWidget {
 }
 
 class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
-  late final CheckControllerImpl controller;
+  late final CheckController controller;
   bool serviceTax = false;
 
   @override
   void initState() {
     super.initState();
-    controller = Provider.of<CheckControllerImpl>(context, listen: false);
+    controller = Provider.of<CheckController>(context, listen: false);
     controller.msgError =
         "Incluíndo você, digite a quantidade de pessoas dividindo a conta.";
   }
@@ -41,11 +41,11 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
     return CustomWillPopWidget(
       body: Column(
         children: [
-          const CustomTitleTextWidget(
+          const TitleTextWidget(
             titleText: "Digite a quantidade de pessoas dividindo a conta",
           ),
           SizedBox(height: size.height * 0.02),
-          Consumer<CheckControllerImpl>(
+          Consumer<CheckController>(
             builder: (context, controller, child) {
               return TotalPeopleFieldWidget(controller: controller);
             },

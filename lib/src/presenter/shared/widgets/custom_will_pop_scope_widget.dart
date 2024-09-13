@@ -60,9 +60,8 @@ class CustomWillPopWidget extends StatelessWidget {
               ),
               actionsAlignment: MainAxisAlignment.spaceBetween,
               actions: [
-                Consumer<CheckControllerImpl>(
-                  builder: (_, CheckControllerImpl controller, __) =>
-                      TextButton(
+                Consumer<CheckController>(
+                  builder: (_, CheckController controller, __) => TextButton(
                     onPressed: () => onYesPressed,
                     child: const Text('Sim'),
                   ),

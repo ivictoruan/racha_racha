@@ -4,13 +4,13 @@ import 'package:racha_racha/src/presenter/shared/extentions/monetary_extention.d
 
 import '../../../shared/input_formatters/currency_text_input_formatter.dart';
 import '../../../shared/utils/custom_utils.dart';
-import '../../../shared/widgets/custom_text_field_widget.dart';
 import 'package:racha_racha/src/presenter/shared/controllers/check_controller.dart';
 
 import '../../../../domain/check/entities/check_model.dart';
+import '../../../shared/widgets/text_form_field_widget.dart';
 
 class TotalDrinkValueFieldWidget extends StatelessWidget {
-  final CheckControllerImpl controller;
+  final CheckController controller;
   const TotalDrinkValueFieldWidget({
     Key? key,
     required this.controller,
@@ -19,7 +19,7 @@ class TotalDrinkValueFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CheckModel model = controller.check;
-    return CustomTextFieldWidget(
+    return TextFormFieldWidget(
       enabled: model.isSomeoneDrinking,
       hintText: "Digite o valor total das bebidas R\$",
       // inputFormatters: <TextInputFormatter>[

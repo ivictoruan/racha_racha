@@ -21,14 +21,7 @@ class AppRouteManager {
       GoRoute(
         path: '/totalValue',
         // TODO: Remover o MuiltiProvider -> utilizar .value ou outro recurso
-        builder: (_, __) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider<TotalValueController>(
-              create: (_) => TotalValueControllerImpl(),
-            ),
-          ],
-          child: const TotalValueScreen(),
-        ),
+        builder: (_, __) => const TotalValueScreen(),
       ),
       GoRoute(
         path: '/totalPeople',

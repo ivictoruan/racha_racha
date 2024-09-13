@@ -9,7 +9,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
   const IsDrikingButtonsWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Consumer<CheckControllerImpl>(
+  Widget build(BuildContext context) => Consumer<CheckController>(
         builder: (context, controller, child) {
           bool isResultButtonActivated = controller.totalDrinkPrice > 0 &&
               controller.check.totalPeopleDrinking > 0 &&
@@ -79,7 +79,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.02),
-            Consumer<CheckControllerImpl>(
+            Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
                   children: [
@@ -87,7 +87,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                     ConfirmInfoWidget(
                       startText: "Total da conta: ",
                       endText:
-                          "R\$ ${controller.totalCheckPrice.toStringAsFixed(2)}",
+                          "R\$ ${controller.totalCheckPrice}",
                     ),
                     const SizedBox(height: 8),
                     ConfirmInfoWidget(
@@ -120,7 +120,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
               children: [
                 FilledButton(
                   onPressed: () {
-                    final controller = context.read<CheckControllerImpl>();
+                    final controller = context.read<CheckController>();
                     controller.calculateCheckResult();
                     controller.isSomeoneDrinking = true;
                     customUtils.goTo("/result", context);

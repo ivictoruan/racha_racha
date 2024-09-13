@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/presenter/shared/widgets/wrong_total_check_value_widget.dart';
 
 import '../../../shared/controllers/check_controller.dart';
+import '../../../shared/widgets/wrong_total_check_value_widget.dart';
 import '../../../shared/utils/custom_utils.dart';
 import '../../is_someone_drinking/widgets/is_drinking_buttons_widget.dart';
 
@@ -12,7 +12,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CustomUtils customUtils = CustomUtils();
-    return Consumer<CheckControllerImpl>(
+    return Consumer<CheckController>(
       builder: (context, controller, child) {
         bool isValid = controller.state == CheckState.totalPeopleValueValid;
         return Row(
@@ -73,15 +73,14 @@ class FloatingActionButtonsWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.02),
-            Consumer<CheckControllerImpl>(
+            Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ConfirmInfoWidget(
                       startText: "Total da conta: ",
-                      endText:
-                          "R\$ ${controller.totalCheckPrice.toStringAsFixed(2)}",
+                      endText: "R\$ ${controller.totalCheckPrice}",
                     ),
                     const SizedBox(height: 8),
                     ConfirmInfoWidget(
@@ -103,7 +102,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
               children: [
                 FilledButton(
                   onPressed: () {
-                    final controller = context.read<CheckControllerImpl>();
+                    final controller = context.read<CheckController>();
                     controller.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
                     customUtils.goTo("/result", context);

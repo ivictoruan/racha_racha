@@ -38,7 +38,7 @@ class SharedCheckOptionsWidget extends StatelessWidget {
                 ),
           ),
           onPressed: () async => await _onShareCheck(
-            check: context.read<CheckControllerImpl>().check,
+            check: context.read<CheckController>().check,
           ),
         ),
       );

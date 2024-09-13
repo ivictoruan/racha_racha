@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/presenter/shared/utils/custom_utils.dart';
 
-// import '../../core/wigets/custom_subtitle_text_widget.dart';
-import '../../shared/widgets/custom_title_text_widget.dart';
 import '../../shared/widgets/custom_will_pop_scope_widget.dart';
-import 'package:racha_racha/src/presenter/shared/controllers/check_controller.dart';
+import '../../shared/controllers/check_controller.dart';
+import '../../shared/utils/custom_utils.dart';
+import '../../shared/widgets/title_text_widget.dart';
 import 'widgets/is_drinking_buttons_widget.dart';
 import 'widgets/is_drinking_form_field_widget.dart';
 
@@ -18,15 +17,14 @@ class IsSomeoneDrinkingScreen extends StatefulWidget {
 }
 
 class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
-  late final CheckControllerImpl controller;
+  late final CheckController controller;
   bool? isSomeoneJustDrinking;
 
   @override
   void initState() {
     super.initState();
-    controller = context.read<CheckControllerImpl>();
+    controller = context.read<CheckController>();
     controller.msgError = '';
-    // isSomeoneJustDrinking = false;
   }
 
   @override
@@ -35,7 +33,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
     controller.dispose();
   }
 
-  onChangedIsSomeoneDriking(bool isSomeoneDrinking) {
+  void onChangedIsSomeoneDriking(bool isSomeoneDrinking) {
     controller.isSomeoneDrinking = isSomeoneDrinking;
     controller.isSomeoneDrinking == true
         ? controller.msgError = "Preencha os campos se há alguém bebendo!"
@@ -57,7 +55,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const CustomTitleTextWidget(
+                const TitleTextWidget(
                   titleText: "Alguém está bebendo?",
                 ),
                 Switch(
@@ -141,7 +139,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: size.height * 0.01),
-            Consumer<CheckControllerImpl>(
+            Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +147,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                     ConfirmInfoWidget(
                       startText: "Total da conta: ",
                       endText:
-                          "R\$ ${controller.totalCheckPrice.toStringAsFixed(2)}",
+                          "R\$ ${controller.totalCheckPrice}",
                     ),
                     const SizedBox(height: 8),
                     ConfirmInfoWidget(
@@ -171,7 +169,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
               children: [
                 FilledButton(
                   onPressed: () {
-                    final controller = context.read<CheckControllerImpl>();
+                    final controller = context.read<CheckController>();
                     controller.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
                     customUtils.goTo("/result", context);
