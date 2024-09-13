@@ -33,6 +33,7 @@ class _IntroductionWidgetState extends State<IntroductionWidget> {
   ];
 
   String get smartphoneLottie => "assets/lottie/smartphone.json";
+
   double get lottieHeight => 200;
 
   double get carouselHeight => 500;
