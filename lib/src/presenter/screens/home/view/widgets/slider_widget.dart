@@ -1,23 +1,25 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../shared/controllers/check_controller.dart';
 
-class CustomSlider extends StatelessWidget {
-  const CustomSlider({Key? key}) : super(key: key);
+class SliderWidget extends StatelessWidget {
+  const SliderWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Consumer<CheckController>(
       builder: (context, controller, child) {
         Size size = MediaQuery.sizeOf(context);
+        log('Size: ${(0.05 * size.width)}');
         return Material(
           elevation: 10,
           shadowColor: Colors.deepPurple.withOpacity(0.15),
           borderRadius: BorderRadius.circular(20),
           child: Row(
             children: [
-              // const Icon(Icons.attach_money, ),
               Expanded(
                 child: Slider(
                   value: controller.check.waiterPercentage.toDouble(),
@@ -32,10 +34,10 @@ class CustomSlider extends StatelessWidget {
               ),
               Text(
                 "${controller.waiterPercentage.toStringAsFixed(0)} %  ",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.deepPurple,
-                  fontSize: 0.05 * size.width,
+                  fontSize: 20,
                 ),
               ),
             ],
