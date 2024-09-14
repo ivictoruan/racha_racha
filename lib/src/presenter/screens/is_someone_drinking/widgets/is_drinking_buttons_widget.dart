@@ -59,7 +59,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
   ) async {
     CustomUtils customUtils = CustomUtils();
 
-    showModalBottomSheet(
+    await showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
