@@ -14,14 +14,18 @@ class InfoTextAlertWidget extends StatelessWidget {
       // TODO: remover dependencia do controlador aqui
       child: Consumer<CheckController>(
         builder: (_, CheckController controller, __) {
-          bool initialMsg =
+          final bool initialMsg =
               controller.msgError == "Digite o valor total da conta";
+
+          final Color iconAndTextColor =
+              initialMsg == true ? Colors.green : Colors.red;
+
           return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 Icons.info,
-                color: initialMsg == true ? Colors.green : Colors.red,
+                color: iconAndTextColor,
                 size: 16,
               ),
               const SizedBox(
@@ -30,7 +34,7 @@ class InfoTextAlertWidget extends StatelessWidget {
               Text(
                 controller.msgError,
                 style: TextStyle(
-                  color: initialMsg == true ? Colors.green : Colors.red,
+                  color: iconAndTextColor,
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
                 ),
