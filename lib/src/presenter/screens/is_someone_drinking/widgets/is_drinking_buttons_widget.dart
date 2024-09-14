@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/utils/custom_utils.dart';
 import '../../../shared/widgets/wrong_total_check_value_widget.dart';
 
+// TODO: melhorar legibilidade desta classe.
 class IsDrikingButtonsWidget extends StatelessWidget {
   const IsDrikingButtonsWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Consumer<CheckController>(
-        builder: (context, controller, child) {
-          bool isResultButtonActivated = controller.totalDrinkPrice > 0 &&
+        builder: (_, CheckController controller, __) {
+          final bool isResultButtonActivated = controller.totalDrinkPrice > 0 &&
               controller.check.totalPeopleDrinking > 0 &&
               controller.msgError == "" &&
               controller.check.isSomeoneDrinking;
-          // Size size = MediaQuery.sizeOf(context);
-          CustomUtils customUtils = CustomUtils();
+
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -35,10 +36,9 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                       : const Color(0xFFE0E0E0),
                   onPressed: isResultButtonActivated
                       ? () async => await _showModalIsSomeoneDrinking(
-                          context, customUtils)
+                            context,
+                          )
                       : null,
-                  // : () async =>
-                  //     _showModalWhotIsNotDrinking(context, customUtils),
                   label: const Text(
                     "Resultados",
                     style: TextStyle(color: Colors.white),
@@ -54,10 +54,10 @@ class IsDrikingButtonsWidget extends StatelessWidget {
         },
       );
 
-  // Future _showModalIsSomeoneDrinking(
-  Future _showModalIsSomeoneDrinking(
-      BuildContext context, CustomUtils customUtils) async {
-    final size = MediaQuery.of(context).size;
+  Future<void> _showModalIsSomeoneDrinking(
+    BuildContext context,
+  ) async {
+    CustomUtils customUtils = CustomUtils();
 
     showModalBottomSheet(
       context: context,
@@ -78,39 +78,38 @@ class IsDrikingButtonsWidget extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: size.height * 0.02),
+            const SizedBox(height: SpaceConstants.medium),
             Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
                   children: [
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
                       startText: "Total da conta: ",
-                      endText:
-                          "R\$ ${controller.totalCheckPrice}",
+                      endText: "R\$ ${controller.totalCheckPrice}",
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
                       startText: "Valor das bebidas: ",
                       endText:
                           "R\$ ${controller.check.totalDrinkPrice.toStringAsFixed(2)}",
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
                       startText: "Gorjeta/Garçom: ",
                       endText: "${controller.waiterPercentage.toString()} %",
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
                       startText: "Pessoas bebendo: ",
                       endText: controller.totalPeopleDrinking.toString(),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
                       startText: "Quantidade de pessoas: ",
                       endText: controller.totalPeople.toString(),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SpaceConstants.extraSmall),
                   ],
                 );
               },
@@ -130,18 +129,14 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                   ),
                   child: const Text('Sim'),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: SpaceConstants.extraSmall),
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => Navigator.of(context).pop(),
                   child: const Text('Não'),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: SpaceConstants.extraSmall),
                 TextButton.icon(
-                  onPressed: () {
-                    customUtils.goTo("/totalValue", context);
-                  },
+                  onPressed: () => customUtils.goTo("/totalValue", context),
                   icon: const Icon(Icons.restart_alt_rounded),
                   label: const Text("Reiniciar"),
                 ),
@@ -158,17 +153,21 @@ class ConfirmInfoWidget extends StatelessWidget {
   final String startText;
   final String endText;
 
-  const ConfirmInfoWidget(
-      {Key? key, required this.startText, required this.endText})
-      : super(key: key);
+  const ConfirmInfoWidget({
+    Key? key,
+    required this.startText,
+    required this.endText,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(startText, style: Theme.of(context).textTheme.bodyMedium),
-        Text(endText, style: Theme.of(context).textTheme.bodyMedium),
+        Text(startText, style: style),
+        Text(endText, style: style),
       ],
     );
   }
