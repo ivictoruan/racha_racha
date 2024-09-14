@@ -26,12 +26,12 @@ class CheckController extends ChangeNotifier {
 
   set msgError(String value) {
     _msgError = value;
-    Future.delayed(Duration.zero, () {
-      notifyListeners();
-    });
+    Future.delayed(
+      Duration.zero,
+      () => notifyListeners(),
+    );
   }
 
-  // @override
   void calculateCheckResult() {
     check.totalValue += check.totalWaiterValue;
     if (check.isSomeoneDrinking) {
@@ -42,7 +42,6 @@ class CheckController extends ChangeNotifier {
     calculateCheckResultWithoutDrinkers();
   }
 
-  // @override
   void calculateCheckResultWithoutDrinkers() {
     if (check.waiterPercentage == 0) {
       check.individualPrice = check.totalValue / check.totalPeople;
@@ -53,7 +52,6 @@ class CheckController extends ChangeNotifier {
     notifyListeners();
   }
 
-  // @override
   // TODO: melhorar legibilidade
   void calculateCheckResultWithDrinkers() {
     double individualTotalPriceWhoIsDrinking =
@@ -128,10 +126,10 @@ class CheckController extends ChangeNotifier {
         check.totalValue = 0;
         state = CheckState.totalCheckValueInvalid;
       }
-      notifyListeners();
     } catch (e) {
       log('erro ao alterar o novo preço ');
     }
+    notifyListeners();
   }
 
 // TODO: adicionar tipo aqui
@@ -153,10 +151,10 @@ class CheckController extends ChangeNotifier {
         check.totalPeople = 1;
         msgError = "";
       }
-      notifyListeners();
     } catch (e) {
       log('erro ao alterar quantidade de pessoas');
     }
+    notifyListeners();
   }
 
   // TODO: adicionar tipo aqui
@@ -167,11 +165,11 @@ class CheckController extends ChangeNotifier {
 
       check.totalWaiterValue = aux / 100;
 
-      notifyListeners();
       log("%: ${check.waiterPercentage} e R\$: ${check.totalWaiterValue}");
     } catch (e) {
       log("Não foi possível alterar a porcentagem do garçom!");
     }
+    notifyListeners();
   }
 
   String get peopleDrinking {
@@ -203,23 +201,21 @@ class CheckController extends ChangeNotifier {
         check.totalPeopleDrinking = 0;
         msgError = "O campo não pode ser vazio!";
       }
-
-      notifyListeners();
     } catch (e) {
       msgError = "Os campos devem ser preenchidos";
       check.totalPeopleDrinking = 0;
-      notifyListeners(); // ?
     }
+    notifyListeners();
   }
 
 // TODO: adicionar tipo aqui
   set isSomeoneDrinking(newIsSomeoneDrinking) {
     try {
       check.isSomeoneDrinking = newIsSomeoneDrinking;
-      notifyListeners();
     } catch (e) {
       log("Erro ao setar newIsSomeoneDrinking");
     }
+    notifyListeners();
   }
 
 // TODO: adicionar tipo aqui
@@ -250,19 +246,16 @@ class CheckController extends ChangeNotifier {
         check.totalDrinkPrice = 0;
         msgError = "Prencha os campos corretamente!";
       }
-      notifyListeners();
     } catch (e) {
       log("Erro ao setar valor total de bebida!");
     }
-  }
-
-  void resetCheck() {
-    check = CheckModel();
+    notifyListeners();
   }
 
   Future<void> restartCheck() async {
     state = CheckState.idle;
-    resetCheck();
+    check = CheckModel();
+
     msgError = "";
     await Future.delayed(Duration.zero);
     notifyListeners();
