@@ -37,18 +37,18 @@ class TextFormFieldWidget extends StatelessWidget {
     this.onClearTextPressed,
   }) : super(key: key);
 
+  Color get borderColor => Colors.deepPurple.withOpacity(0.8);
+
+  BorderRadius get borderRadius => const BorderRadius.all(Radius.circular(30));
+
   @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    return SizedBox(
-      width: size.width * 0.85,
-      child: Material(
-        elevation: 3,
-        borderRadius: BorderRadius.all(Radius.circular(size.width * 0.2)),
-        shadowColor: Colors.deepPurpleAccent,
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(.75),
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Material(
+          elevation: 3,
+          borderRadius: borderRadius,
+          shadowColor: Colors.deepPurpleAccent,
+          color: Colors.white,
           child: TextFormField(
             initialValue: initialValue,
             controller: controller,
@@ -59,20 +59,20 @@ class TextFormFieldWidget extends StatelessWidget {
             keyboardType: keyboardType,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colors.deepPurple.withOpacity(0.8)),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(size.width * 0.2)),
+                borderSide: BorderSide(
+                  color: borderColor,
+                ),
+                borderRadius: borderRadius,
               ),
               labelText: labelText,
-              labelStyle: TextStyle(
-                fontSize: 0.035 * size.width,
-                // color: Colors.purple[300],
+              labelStyle: const TextStyle(
+                fontSize: 12,
               ),
               hintText: hintText ?? "Digite o $labelText",
               hintStyle: TextStyle(
-                fontSize: 0.035 * size.width,
-                // color: Colors.purple,
+                fontSize: 16,
+                color: borderColor,
+                fontWeight: FontWeight.bold,
               ),
               prefixIcon: icon == null
                   ? null
@@ -80,14 +80,15 @@ class TextFormFieldWidget extends StatelessWidget {
                       icon,
                       color: Colors.purple,
                     ),
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(size.width * 0.2),
+                  Radius.circular(80),
                 ),
-                borderSide: const BorderSide(
-                    color: Colors.deepPurple,
-                    width: 5,
-                    style: BorderStyle.none),
+                borderSide: BorderSide(
+                  color: Colors.deepPurple,
+                  width: 6,
+                  style: BorderStyle.none,
+                ),
               ),
             ),
             validator: validator,
@@ -97,7 +98,5 @@ class TextFormFieldWidget extends StatelessWidget {
             onFieldSubmitted: onFieldSubmitted,
           ),
         ),
-      ),
-    );
-  }
+      );
 }
