@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/widgets/wrong_total_check_value_widget.dart';
 import '../../../shared/utils/custom_utils.dart';
@@ -50,9 +51,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
 
   Future<void> showModalCustomDialog(
       BuildContext context, CustomUtils customUtils) async {
-    final size = MediaQuery.sizeOf(context);
-
-    showModalBottomSheet(
+    await showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -72,7 +71,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: size.height * 0.02),
+            const SizedBox(height: SpaceConstants.medium),
             Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
@@ -82,17 +81,17 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                       startText: "Total da conta: ",
                       endText: "R\$ ${controller.totalCheckPrice}",
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
                       startText: "Quantidade de pessoas: ",
                       endText: controller.totalPeople.toString(),
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
                       startText: "Gorjeta/Garçom: ",
                       endText: "${controller.waiterPercentage.toString()} %",
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: SpaceConstants.medium),
                   ],
                 );
               },
@@ -112,14 +111,14 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                   ),
                   child: const Text('Sim'),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: SpaceConstants.extraSmall),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                   child: const Text('Não'),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: SpaceConstants.extraSmall),
                 TextButton.icon(
                   onPressed: () {
                     customUtils.goTo("/totalValue", context);
