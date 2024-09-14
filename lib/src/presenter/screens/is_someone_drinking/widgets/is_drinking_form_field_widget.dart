@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:racha_racha/src/presenter/shared/controllers/check_controller.dart';
+import '../../../shared/controllers/check_controller.dart';
+import '../../../shared/constants/space_constants.dart';
 import '../fields/total_drink_value_field_widget.dart';
 import '../fields/total_people_drinking_field_widget.dart';
 import 'info_text_alert_widget.dart';
@@ -11,22 +12,19 @@ class IsDrinkingFormFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
     return SizedBox(
-      child: Consumer<CheckControllerImpl>(
-        builder: (context, controller, child) {
-          return Column(
-            children: [
-              TotalDrinkValueFieldWidget(controller: controller),
-              SizedBox(height: size.height * 0.02),
-              TotalPeopleDrinkingFieldWidget(controller: controller),
-              if (controller.msgError != "") ...{
-                SizedBox(height: size.height * 0.015),
-                const InfoTextAlertWidget(),
-              },
-            ],
-          );
-        },
+      child: Consumer<CheckController>(
+        builder: (context, CheckController controller, child) => Column(
+          children: [
+            TotalDrinkValueFieldWidget(controller: controller),
+            const SizedBox(height: SpaceConstants.medium),
+            TotalPeopleDrinkingFieldWidget(controller: controller),
+            if (controller.msgError != "") ...{
+              const SizedBox(height: SpaceConstants.small),
+              const InfoTextAlertWidget(),
+            },
+          ],
+        ),
       ),
     );
   }

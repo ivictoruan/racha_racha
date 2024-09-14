@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:racha_racha/src/presenter/shared/controllers/check_controller.dart';
 
 class InfoTextModelWidget extends StatelessWidget {
-  final CheckControllerImpl controller;
+  final CheckController controller;
   const InfoTextModelWidget({Key? key, required this.controller})
       : super(key: key);
 

@@ -11,7 +11,7 @@ class CustomProvider extends StatelessWidget {
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (_) => CheckControllerImpl(),
+            create: (_) => CheckController(),
           ),
         ],
         child: child,

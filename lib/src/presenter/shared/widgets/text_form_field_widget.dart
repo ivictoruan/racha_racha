@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CustomTextFieldWidget extends StatelessWidget {
+class TextFormFieldWidget extends StatelessWidget {
   final String labelText;
   final IconData? icon;
   final TextInputType? keyboardType;
@@ -18,7 +18,7 @@ class CustomTextFieldWidget extends StatelessWidget {
   final Function(String)? onFieldSubmitted;
   final Function()? onClearTextPressed;
 
-  const CustomTextFieldWidget({
+  const TextFormFieldWidget({
     Key? key,
     required this.labelText,
     this.icon,
@@ -37,18 +37,18 @@ class CustomTextFieldWidget extends StatelessWidget {
     this.onClearTextPressed,
   }) : super(key: key);
 
+  Color get borderColor => Colors.deepPurple.withOpacity(0.8);
+
+  BorderRadius get borderRadius => const BorderRadius.all(Radius.circular(30));
+
   @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    return SizedBox(
-      width: size.width * 0.85,
-      child: Material(
-        elevation: 3,
-        borderRadius: BorderRadius.all(Radius.circular(size.width * 0.2)),
-        shadowColor: Colors.deepPurpleAccent,
-        color: Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.all(.75),
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: Material(
+          elevation: 3,
+          borderRadius: borderRadius,
+          shadowColor: Colors.deepPurpleAccent,
+          color: Colors.white,
           child: TextFormField(
             initialValue: initialValue,
             controller: controller,
@@ -59,20 +59,20 @@ class CustomTextFieldWidget extends StatelessWidget {
             keyboardType: keyboardType,
             decoration: InputDecoration(
               enabledBorder: OutlineInputBorder(
-                borderSide:
-                    BorderSide(color: Colors.deepPurple.withOpacity(0.8)),
-                borderRadius:
-                    BorderRadius.all(Radius.circular(size.width * 0.2)),
+                borderSide: BorderSide(
+                  color: borderColor,
+                ),
+                borderRadius: borderRadius,
               ),
               labelText: labelText,
-              labelStyle: TextStyle(
-                fontSize: 0.035 * size.width,
-                // color: Colors.purple[300],
+              labelStyle: const TextStyle(
+                fontSize: 12,
               ),
               hintText: hintText ?? "Digite o $labelText",
               hintStyle: TextStyle(
-                fontSize: 0.035 * size.width,
-                // color: Colors.purple,
+                fontSize: 16,
+                color: borderColor,
+                fontWeight: FontWeight.bold,
               ),
               prefixIcon: icon == null
                   ? null
@@ -80,30 +80,23 @@ class CustomTextFieldWidget extends StatelessWidget {
                       icon,
                       color: Colors.purple,
                     ),
-              border: OutlineInputBorder(
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(size.width * 0.2),
+                  Radius.circular(80),
                 ),
-                borderSide: const BorderSide(
-                    color: Colors.deepPurple,
-                    width: 5,
-                    style: BorderStyle.none),
+                borderSide: BorderSide(
+                  color: Colors.deepPurple,
+                  width: 6,
+                  style: BorderStyle.none,
+                ),
               ),
-              // suffixIcon: IconButton(
-              //     icon: const Icon(Icons.clear),
-              //     color: Colors.purple,
-              //     onPressed: () => onClearTextPressed!() ?? () {}),
             ),
             validator: validator,
             onSaved: onSaved,
             onChanged: onChanged,
             maxLines: 1,
             onFieldSubmitted: onFieldSubmitted,
-
-            // maxLength: 15,
           ),
         ),
-      ),
-    );
-  }
+      );
 }
