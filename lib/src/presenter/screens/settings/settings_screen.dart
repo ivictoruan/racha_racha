@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/constants/space_constants.dart';
 import '../../shared/utils/custom_utils.dart';
+import 'widgets/settings_button_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -14,9 +16,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     CustomUtils customUtils = CustomUtils();
 
-    Size size = MediaQuery.sizeOf(context);
-
-    List<Map> settingsItems = [
+    final List<Map<String, dynamic>> settingsItems = [
       {
         "icon": Icons.free_breakfast_outlined,
         "text": "Quer me pagar um café?",
@@ -60,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        toolbarHeight: size.height * 0.06,
+        toolbarHeight: SpaceConstants.extraLarge,
         elevation: 0,
         automaticallyImplyLeading: false,
         leading: IconButton(
@@ -74,72 +74,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: SafeArea(
         child: ListView.separated(
-          padding: EdgeInsets.all(0.02 * size.width),
+          padding: const EdgeInsets.all(SpaceConstants.extraSmall),
           itemCount: settingsItems.length,
-          itemBuilder: (BuildContext context, index) => SettingsButtonWidget(
+          itemBuilder: (BuildContext context, int index) =>
+              SettingsButtonWidget(
             text: settingsItems[index]["text"] ?? "ABC",
             icon: settingsItems[index]["icon"] ?? Icons.abc,
             onTap: settingsItems[index]["onTap"] ?? () {},
           ),
           separatorBuilder: (context, index) => const SizedBox(
             height: 16,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SettingsButtonWidget extends StatelessWidget {
-  final String text;
-  final IconData icon;
-  final Function()? onTap;
-  const SettingsButtonWidget(
-      {Key? key, required this.text, required this.icon, this.onTap})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
-          elevation: 2,
-          shadowColor: Colors.deepPurple,
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(0.02 * size.width),
-          child: SizedBox(
-            height: size.height * 0.08,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  width: 20,
-                ),
-                Icon(
-                  icon,
-                  color: Colors.deepPurple,
-                ),
-                const Spacer(),
-                Text(
-                  text,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                ),
-                const Spacer(),
-                const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Colors.deepPurple,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-              ],
-            ),
           ),
         ),
       ),
