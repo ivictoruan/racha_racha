@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +8,7 @@ class SliderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: remover dependencia do controller abaixo (inverter dependências)
     return Consumer<CheckController>(
       builder: (_, CheckController controller, __) => Material(
         elevation: 4,
