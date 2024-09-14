@@ -5,7 +5,7 @@ import '../../shared/utils/custom_utils.dart';
 import '../../shared/widgets/title_text_widget.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/widgets/floating_action_button_widget.dart';
-import '../../shared/widgets/custom_subtitle_text_widget.dart';
+import '../../shared/widgets/subtitle_text_widget.dart';
 import '../../shared/widgets/custom_will_pop_scope_widget.dart';
 import '../../shared/controllers/check_controller.dart';
 import 'field/total_value_field_widget.dart';
@@ -82,7 +82,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
               ],
             ),
             // TODO: implantar CustomSubitleTextWidget em TotalValueFieldWidget de e expor ´titleText´ como parâmetro
-            CustomSubitleTextWidget(
+            SubitleTextWidget(
               subtitle: subtitleText,
             ),
           ],
