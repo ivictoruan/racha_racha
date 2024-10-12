@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import 'presenter/shared/ui/theme_config.dart';
-import 'presenter/shared/utils/routes/routes.dart';
+import 'presenter/shared/extentions/theme/theme_config.dart';
+import 'presenter/shared/routes/app_route_manager.dart';
 
 class RachaRachaApp extends StatelessWidget {
   const RachaRachaApp({Key? key}) : super(key: key);
+
+  GoRouter get routes => AppRouteManager.routes;
+
+  String get title => "Racha Racha";
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
@@ -12,7 +17,7 @@ class RachaRachaApp extends StatelessWidget {
         routeInformationParser: routes.routeInformationParser,
         routeInformationProvider: routes.routeInformationProvider,
         debugShowCheckedModeBanner: false,
-        title: "Racha Racha",
+        title: title,
         theme: ThemeConfig.theme,
       );
 }

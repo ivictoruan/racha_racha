@@ -1,10 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
+import 'package:flutter/foundation.dart';
 
 import '../../../domain/check/entities/check_model.dart';
-import 'package:flutter/foundation.dart';
 
 enum CheckState {
   totalCheckValueInvalid,
@@ -16,30 +16,22 @@ enum CheckState {
   formInValid,
 }
 
-abstract class CheckController extends ChangeNotifier {
-  void calculateCheckResult();
-  void calculateCheckResultWithDrinkers();
-  void calculateCheckResultWithoutDrinkers();
-  Future<void> restartCheck();
-}
-
-class CheckControllerImpl extends CheckController {
+class CheckController extends ChangeNotifier {
   CheckModel check = CheckModel();
 
   CheckState state = CheckState.idle;
-
   String _msgError = "Digite o valor total da conta";
 
   String get msgError => _msgError;
 
   set msgError(String value) {
     _msgError = value;
-    Future.delayed(Duration.zero, () {
-      notifyListeners();
-    });
+    Future.delayed(
+      Duration.zero,
+      () => notifyListeners(),
+    );
   }
 
-  @override
   void calculateCheckResult() {
     check.totalValue += check.totalWaiterValue;
     if (check.isSomeoneDrinking) {
@@ -50,7 +42,6 @@ class CheckControllerImpl extends CheckController {
     calculateCheckResultWithoutDrinkers();
   }
 
-  @override
   void calculateCheckResultWithoutDrinkers() {
     if (check.waiterPercentage == 0) {
       check.individualPrice = check.totalValue / check.totalPeople;
@@ -61,7 +52,6 @@ class CheckControllerImpl extends CheckController {
     notifyListeners();
   }
 
-  @override
   // TODO: melhorar legibilidade
   void calculateCheckResultWithDrinkers() {
     double individualTotalPriceWhoIsDrinking =
@@ -110,24 +100,25 @@ class CheckControllerImpl extends CheckController {
     return check.individualPriceWhoIsDrinking;
   }
 
-  double get totalCheckPrice => check.totalValue;
+  String get totalCheckPrice => check.totalValue.toStringAsFixed(2);
 
-  String trataValor(var valor) {
-    FilteringTextInputFormatter.allow(
-      RegExp(r'^\d{1,9}$|(?=^.{1,9}$)^\d+\.\d{0,2}$'),
-    );
-    return "";
+  double? parseCurrency(String formattedText) {
+    String cleanedText = formattedText
+        .replaceAll(RegExp(r'[^\d,]'), '')
+        .replaceAll(',', '.')
+        .trim();
+
+    return double.tryParse(cleanedText);
   }
 
-  set totalCheckPrice(newTotalCheckPrice) {
+  set totalCheckPrice(String newTotalCheckPrice) {
     try {
       if (newTotalCheckPrice.isNotEmpty &&
           !newTotalCheckPrice.startsWith(' ')) {
-        var newDoubleTotalCheckPice = double.parse(newTotalCheckPrice);
         state = CheckState.totalCheckValueValid;
-        check.totalValue = newDoubleTotalCheckPice;
+        check.totalValue = parseCurrency(newTotalCheckPrice) ?? 0;
         msgError = "";
-        if (newDoubleTotalCheckPice == 0) {
+        if (check.totalValue == 0) {
           msgError = "Digite o valor total da conta";
           state = CheckState.totalCheckValueInvalid;
         }
@@ -135,10 +126,10 @@ class CheckControllerImpl extends CheckController {
         check.totalValue = 0;
         state = CheckState.totalCheckValueInvalid;
       }
-      notifyListeners();
     } catch (e) {
       log('erro ao alterar o novo preço ');
     }
+    notifyListeners();
   }
 
 // TODO: adicionar tipo aqui
@@ -160,10 +151,10 @@ class CheckControllerImpl extends CheckController {
         check.totalPeople = 1;
         msgError = "";
       }
-      notifyListeners();
     } catch (e) {
       log('erro ao alterar quantidade de pessoas');
     }
+    notifyListeners();
   }
 
   // TODO: adicionar tipo aqui
@@ -174,19 +165,18 @@ class CheckControllerImpl extends CheckController {
 
       check.totalWaiterValue = aux / 100;
 
-      notifyListeners();
       log("%: ${check.waiterPercentage} e R\$: ${check.totalWaiterValue}");
     } catch (e) {
       log("Não foi possível alterar a porcentagem do garçom!");
     }
+    notifyListeners();
   }
 
-  int get peopleDrinking {
-    return check.totalPeopleDrinking;
+  String get peopleDrinking {
+    return check.totalPeopleDrinking.toString();
   }
 
-  // TODO: adicionar tipo aqui
-  set peopleDrinking(newValuePeopleDriking) {
+  set peopleDrinking(String newValuePeopleDriking) {
     try {
       int intNewValuePeopleDriking = int.parse(newValuePeopleDriking);
       bool isTotalPeopleDrinkingSmallerThanTotalPeople =
@@ -211,23 +201,21 @@ class CheckControllerImpl extends CheckController {
         check.totalPeopleDrinking = 0;
         msgError = "O campo não pode ser vazio!";
       }
-
-      notifyListeners();
     } catch (e) {
       msgError = "Os campos devem ser preenchidos";
       check.totalPeopleDrinking = 0;
-      notifyListeners(); // ?
     }
+    notifyListeners();
   }
 
 // TODO: adicionar tipo aqui
   set isSomeoneDrinking(newIsSomeoneDrinking) {
     try {
       check.isSomeoneDrinking = newIsSomeoneDrinking;
-      notifyListeners();
     } catch (e) {
       log("Erro ao setar newIsSomeoneDrinking");
     }
+    notifyListeners();
   }
 
 // TODO: adicionar tipo aqui
@@ -258,28 +246,16 @@ class CheckControllerImpl extends CheckController {
         check.totalDrinkPrice = 0;
         msgError = "Prencha os campos corretamente!";
       }
-      notifyListeners();
     } catch (e) {
       log("Erro ao setar valor total de bebida!");
     }
+    notifyListeners();
   }
 
-  void resetCheck() {
-    check.totalValue = 0;
-    check.individualPrice = 0;
-    check.waiterPercentage = 0;
-    check.totalWaiterValue = 0;
-    check.isSomeoneDrinking = false;
-    check.totalDrinkPrice = 0;
-    check.totalPeopleDrinking = 0;
-    check.individualPriceWhoIsDrinking = 0;
-    check.totalPeople = 1;
-  }
-
-  @override
   Future<void> restartCheck() async {
     state = CheckState.idle;
-    resetCheck();
+    check = CheckModel();
+
     msgError = "";
     await Future.delayed(Duration.zero);
     notifyListeners();

@@ -9,23 +9,32 @@ import 'package:flutter/services.dart';
 class AppStarter {
   static Future<void> initApp() async {
     log("[Usuário] iniciou app");
+
     WidgetsFlutterBinding.ensureInitialized();
+
     await Firebase.initializeApp();
 
+    SystemChrome.setPreferredOrientations(
+      <DeviceOrientation>[
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ],
+    );
     void initCrashlytics() {
-      FlutterError.onError = (errorDetails) {
-        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-      };
-      PlatformDispatcher.instance.onError = (error, stack) {
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      FlutterError.onError = (errorDetails) =>
+          FirebaseCrashlytics.instance.recordFlutterFatalError(
+            errorDetails,
+          );
+
+      PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+        FirebaseCrashlytics.instance.recordError(
+          error,
+          stack,
+          fatal: true,
+        );
         return true;
       };
     }
-
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
 
     initCrashlytics();
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/constants/space_constants.dart';
 import '../../../shared/utils/custom_utils.dart';
 
 class CustomBottomNavBarWidget extends StatelessWidget {
@@ -7,11 +8,12 @@ class CustomBottomNavBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CustomUtils customUtils = CustomUtils();
     int selectedIndex = 1;
     return BottomNavigationBar(
       currentIndex: selectedIndex,
       onTap: (int index) {
+        CustomUtils customUtils = CustomUtils();
+
         switch (index) {
           case 0:
             customUtils.goTo("/settings", context);
@@ -22,19 +24,27 @@ class CustomBottomNavBarWidget extends StatelessWidget {
         }
       },
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.menu_rounded), label: "Menu"),
-        BottomNavigationBarItem(icon: Icon(Icons.receipt), label: "Resultado"),
         BottomNavigationBarItem(
-            icon: Icon(Icons.restart_alt_rounded), label: "Recomeçar"),
+          icon: Icon(Icons.menu_rounded),
+          label: "Menu",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.receipt),
+          label: "Resultado",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.restart_alt_rounded),
+          label: "Recomeçar",
+        ),
       ],
     );
   }
 
   Future<void> _showModalRestartCheck(
-      BuildContext context, CustomUtils customUtils) async {
-    final size = MediaQuery.sizeOf(context);
-
-    showModalBottomSheet(
+    BuildContext context,
+    CustomUtils customUtils,
+  ) async {
+    await showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -54,7 +64,7 @@ class CustomBottomNavBarWidget extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: size.height * 0.01),
+            const SizedBox(height: SpaceConstants.extraSmall),
             Text(
               "Se você não quer reiniciar toque em \"Não\"",
               style: TextStyle(
@@ -64,30 +74,26 @@ class CustomBottomNavBarWidget extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: size.height * 0.01),
+            const SizedBox(height: SpaceConstants.extraSmall),
             const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 16),
+                SizedBox(height: SpaceConstants.medium),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FilledButton(
-                  onPressed: () {
-                    customUtils.goTo("/totalValue", context);
-                  },
+                  onPressed: () => customUtils.goTo("/totalValue", context),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
                   ),
                   child: const Text('Sim'),
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: SpaceConstants.extraSmall),
                 TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => Navigator.of(context).pop(),
                   child: const Text('Não'),
                 ),
               ],
