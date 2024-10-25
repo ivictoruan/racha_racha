@@ -1,5 +1,5 @@
 class CheckModel {
-  // TODO: verificar a necessidade de colocar uma data
+  DateTime? creationDate;
   // TODO: verificar a necessidade de colocar uma localização
   double totalValue;
   double individualPrice;
@@ -12,6 +12,7 @@ class CheckModel {
   int totalPeople;
 
   CheckModel({
+    this.creationDate,
     this.totalValue = 0,
     this.individualPrice = 0,
     this.waiterPercentage = 0,
