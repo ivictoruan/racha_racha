@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 
+import '../../screens/history/history_screen.dart';
 import '../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
+import '../../screens/redirect/redirect_screen.dart';
 import '../../screens/result/provider/check_result_screen_provider.dart';
 import '../../screens/result/check_result_screen.dart';
 import '../../screens/result/widgets/want_donate_widget.dart';
@@ -15,6 +17,14 @@ class AppRouteManager {
       GoRoute(
         path: '/',
         builder: (_, __) => const StartingScreen(),
+      ),
+      GoRoute(
+        path: '/redirect',
+        builder: (_, __) => const RedirectScreen(),
+      ),
+      GoRoute(
+        path: '/history',
+        builder: (_, __) => const HistoryScreen(),
       ),
       GoRoute(
         path: '/totalValue',
