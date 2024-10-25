@@ -144,7 +144,6 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                     controller.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
                     customUtils.goTo("/result", context);
-                    
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
@@ -161,6 +160,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                   child: const Text('Não'),
                 ),
                 const SizedBox(width: 8),
+                // TODO: componentizar como SecondaryIconButtonWidget
                 TextButton.icon(
                   onPressed: () {
                     customUtils.goTo("/totalValue", context);
@@ -175,10 +175,4 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
       ),
     );
   }
-}
-
-class _IsSomeoneDrinkingScreenStateController {
-  final BuildContext context;
-
-  _IsSomeoneDrinkingScreenStateController({required this.context});
 }
