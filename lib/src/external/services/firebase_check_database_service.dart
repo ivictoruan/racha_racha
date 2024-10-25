@@ -27,7 +27,7 @@ class FirebaseCheckDatabaseService extends CheckDatabaseService {
   }
 
   @override
-  Future<void> createCheck(CheckModel check) async {
+  Future<void> createCheck({required CheckModel check}) async {
     try {
       await _checksCollection.add(
         CheckFirestoreDatabaseAdapter.toMap(check),
@@ -39,7 +39,7 @@ class FirebaseCheckDatabaseService extends CheckDatabaseService {
   }
 
   @override
-  Future<CheckModel?> getCheckById(String checkId) async {
+  Future<CheckModel?> getCheckById({required String checkId}) async {
     try {
       DocumentSnapshot doc = await _checksCollection.doc(checkId).get();
       if (doc.exists) {
@@ -70,7 +70,8 @@ class FirebaseCheckDatabaseService extends CheckDatabaseService {
   }
 
   @override
-  Future<void> updateCheck(String checkId, CheckModel check) async {
+  Future<void> updateCheck(
+      {required String checkId, required CheckModel check}) async {
     try {
       await _checksCollection.doc(checkId).update(
             CheckFirestoreDatabaseAdapter.toMap(check),
@@ -82,7 +83,7 @@ class FirebaseCheckDatabaseService extends CheckDatabaseService {
   }
 
   @override
-  Future<void> deleteCheck(String checkId) async {
+  Future<void> deleteCheck({required String checkId}) async {
     try {
       await _checksCollection.doc(checkId).delete();
       log('Check excluído com sucesso!');
