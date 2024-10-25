@@ -1,4 +1,6 @@
 class CheckModel {
+  // TODO: verificar a necessidade de colocar uma data
+  // TODO: verificar a necessidade de colocar uma localização
   double totalValue;
   double individualPrice;
   double waiterPercentage;
