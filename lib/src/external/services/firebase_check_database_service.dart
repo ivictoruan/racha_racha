@@ -7,18 +7,13 @@ import '../../infra/check/model/check_firestore_database_adapter.dart';
 import '../../infra/services/database/check_database_service.dart';
 
 class FirebaseCheckDatabaseService extends CheckDatabaseService {
-  final FirebaseFirestore firestore;
-  final CollectionReference _checksCollection;
+  final CollectionReference _checksCollection =
+      FirebaseFirestore.instance.collection('checks');
 
-  FirebaseCheckDatabaseService({
-    required this.firestore,
-    CollectionReference? checksCollection,
-  }) : _checksCollection = checksCollection ??
-            FirebaseFirestore.instance.collection('checks') {
+  FirebaseCheckDatabaseService() {
     _setupDatabase();
   }
 
-  // Configura a persistência offline e outras configurações
   void _setupDatabase() {
     FirebaseFirestore.instance.settings = const Settings(
       persistenceEnabled: true,
@@ -57,7 +52,12 @@ class FirebaseCheckDatabaseService extends CheckDatabaseService {
   Future<List<CheckModel>> getAllChecks() async {
     List<CheckModel> checks = [];
     try {
-      QuerySnapshot snapshot = await _checksCollection.get();
+      QuerySnapshot snapshot = await _checksCollection
+          .orderBy(
+            'creationDate',
+            descending: true,
+          )
+          .get();
       for (var doc in snapshot.docs) {
         checks.add(CheckFirestoreDatabaseAdapter.fromMap(
           doc.data() as Map<String, dynamic>,
