@@ -43,6 +43,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
     final CheckController controller = context.watch<CheckController>();
 
     return CustomWillPopWidget(
+      // TODO: remover WillPop?
       isExitedPaged: true,
       body: SafeArea(
         child: Column(
@@ -57,22 +58,9 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
               children: [
                 TotalValueFieldWidget(
                   onChanged: (String newTotalCheckValue) {
-                    // final double? parsedValue =
-                    //     parsedNewTotalCheckValue(newTotalCheckValue);
-
-                    // if (parsedValue == null) {
-                    //   return;
-                    // }
-
                     controller.totalCheckPrice = newTotalCheckValue;
                   },
                   onFieldSubmitted: (String newTotalCheckValue) {
-                    // final double? parsedValue =
-                    //     parsedNewTotalCheckValue(newTotalCheckValue);
-
-                    // if (parsedValue == null || parsedValue > 0) {
-                    //   return;
-                    // }
                     CustomUtils customUtils = CustomUtils();
                     controller.totalCheckPrice = newTotalCheckValue;
                     bool isValid = controller.check.totalValue > 0;
