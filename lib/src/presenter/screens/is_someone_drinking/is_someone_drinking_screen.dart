@@ -34,13 +34,15 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
     controller.dispose();
   }
 
-  void onChangedIsSomeoneDriking(bool isSomeoneDrinking) {
+  Future<void> onChangedIsSomeoneDriking({
+    required bool isSomeoneDrinking,
+  }) async {
     controller.isSomeoneDrinking = isSomeoneDrinking;
     controller.isSomeoneDrinking == true
         ? controller.msgError = "Preencha os campos se há alguém bebendo!"
         : {
             controller.msgError = "Preencha os campos se há alguém bebendo!",
-            _showModalWhotIsNotDrinking(context, CustomUtils()),
+            await _showModalWhotIsNotDrinking(context, CustomUtils())
           };
     setState(() {});
   }
@@ -59,51 +61,27 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                   ),
                   Switch(
                     value: controller.isSomeoneDrinking,
-                    onChanged: (bool isSomeoneDrinking) =>
-                        onChangedIsSomeoneDriking(isSomeoneDrinking),
+                    onChanged: (bool isSomeoneDrinking) async =>
+                        await onChangedIsSomeoneDriking(
+                            isSomeoneDrinking: isSomeoneDrinking),
                   ),
                 ],
               ),
             ),
             controller.isSomeoneDrinking
                 ? const IsDrinkingFormFieldWidget()
-                : const SizedBox(),
-
-            // TODO: Desenvolver funcionalidade para pessoas que estão apenas bebendo
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 10),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //     children: [
-            //       const CustomSubitleTextWidget(
-            //         subtitle: "Alguém está apenas bebendo?",
-            //       ),
-            //       Switch(
-            //           value: isSomeoneJustDrinking ?? false,
-            //           onChanged: (bool newValue) {
-            //             setState(() {
-            //               isSomeoneJustDrinking = newValue;
-            //             });
-            //           }),
-            //     ],
-            //   ),
-            // ),
-            // isSomeoneJustDrinking ?? false
-            //     ? const CustomTextFieldWidget(
-            //         labelText: 'Quantas pessoas apenas bebendo?')
-            //     : const SizedBox.shrink(),
+                : const SizedBox.shrink(),
           ],
         ),
         floatingActionButton: const IsDrikingButtonsWidget(),
       );
 
-  Future<void> _showModalWhotIsNotDrinking(
+  Future _showModalWhotIsNotDrinking(
     BuildContext context,
     CustomUtils customUtils,
   ) async {
     await showModalBottomSheet(
       context: context,
-      isDismissible: false,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -114,7 +92,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              "Informações estão corretas?",
+              "Todas informações estão corretas?",
               style: TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 16,
@@ -166,6 +144,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                     controller.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
                     customUtils.goTo("/result", context);
+                    
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
@@ -196,4 +175,10 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
       ),
     );
   }
+}
+
+class _IsSomeoneDrinkingScreenStateController {
+  final BuildContext context;
+
+  _IsSomeoneDrinkingScreenStateController({required this.context});
 }
