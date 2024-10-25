@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../../../domain/check/entities/check_model.dart';
 
 class CheckFirestoreDatabaseAdapter {
@@ -11,6 +13,7 @@ class CheckFirestoreDatabaseAdapter {
         'totalPeopleDrinking': check.totalPeopleDrinking,
         'individualPriceWhoIsDrinking': check.individualPriceWhoIsDrinking,
         'totalPeople': check.totalPeople,
+        'creationDate': check.creationDate ?? DateTime.now(),
       };
 
   static CheckModel fromMap(Map<String, dynamic> map) => CheckModel(
@@ -23,5 +26,6 @@ class CheckFirestoreDatabaseAdapter {
         totalPeopleDrinking: map['totalPeopleDrinking'] ?? 0,
         individualPriceWhoIsDrinking: map['individualPriceWhoIsDrinking'] ?? 0,
         totalPeople: map['totalPeople'] ?? 1,
+        creationDate: (map['creationDate'] as Timestamp?)?.toDate(),
       );
 }
