@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter/foundation.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../external/services/firebase_check_database_service.dart';
 import '../../../domain/check/entities/check_model.dart';
 
 enum CheckState {
@@ -32,17 +34,24 @@ class CheckController extends ChangeNotifier {
     );
   }
 
-  void calculateCheckResult() {
+  Future<void> calculateCheckResult() async {
+    final db = FirebaseCheckDatabaseService(
+      firestore: FirebaseFirestore.instance,
+    );
+
     check.totalValue += check.totalWaiterValue;
     if (check.isSomeoneDrinking) {
-      calculateCheckResultWithDrinkers();
+      _calculateCheckResultWithDrinkers();
+      await db.createCheck(check: check);
+
       return;
     }
 
-    calculateCheckResultWithoutDrinkers();
+    _calculateCheckResultWithoutDrinkers();
+    await db.createCheck(check: check);
   }
 
-  void calculateCheckResultWithoutDrinkers() {
+  void _calculateCheckResultWithoutDrinkers() {
     if (check.waiterPercentage == 0) {
       check.individualPrice = check.totalValue / check.totalPeople;
     } else {
@@ -53,7 +62,7 @@ class CheckController extends ChangeNotifier {
   }
 
   // TODO: melhorar legibilidade
-  void calculateCheckResultWithDrinkers() {
+  void _calculateCheckResultWithDrinkers() {
     double individualTotalPriceWhoIsDrinking =
         check.totalDrinkPrice / check.totalPeopleDrinking;
     check.individualPrice =
@@ -102,7 +111,7 @@ class CheckController extends ChangeNotifier {
 
   String get totalCheckPrice => check.totalValue.toStringAsFixed(2);
 
-  double? parseCurrency(String formattedText) {
+  double? _parseCurrency(String formattedText) {
     String cleanedText = formattedText
         .replaceAll(RegExp(r'[^\d,]'), '')
         .replaceAll(',', '.')
@@ -116,7 +125,7 @@ class CheckController extends ChangeNotifier {
       if (newTotalCheckPrice.isNotEmpty &&
           !newTotalCheckPrice.startsWith(' ')) {
         state = CheckState.totalCheckValueValid;
-        check.totalValue = parseCurrency(newTotalCheckPrice) ?? 0;
+        check.totalValue = _parseCurrency(newTotalCheckPrice) ?? 0;
         msgError = "";
         if (check.totalValue == 0) {
           msgError = "Digite o valor total da conta";
