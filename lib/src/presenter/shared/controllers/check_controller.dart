@@ -35,9 +35,7 @@ class CheckController extends ChangeNotifier {
   }
 
   Future<void> calculateCheckResult() async {
-    final db = FirebaseCheckDatabaseService(
-      firestore: FirebaseFirestore.instance,
-    );
+    final db = FirebaseCheckDatabaseService();
 
     check.totalValue += check.totalWaiterValue;
     if (check.isSomeoneDrinking) {
