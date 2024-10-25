@@ -13,7 +13,7 @@ class _GoToRacharButtonWidgetState extends State<GoToRacharButtonWidget> {
   CustomUtils get customUtils => CustomUtils();
 
   void get onPressed => customUtils.goTo(
-        "/totalValue",
+        "/redirect",
         context,
       );
 
