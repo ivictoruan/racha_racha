@@ -7,7 +7,7 @@ import '../../../../shared/constants/space_constants.dart';
 
 class CustomDotSplider extends StatelessWidget {
   final int activeIndex;
-  final carousel.CarouselController controller;
+  final carousel.CarouselSliderController controller;
   final int count;
 
   const CustomDotSplider({

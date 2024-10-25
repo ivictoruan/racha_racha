@@ -20,7 +20,7 @@ class IntroductionWidget extends StatefulWidget {
 
 class _IntroductionWidgetState extends State<IntroductionWidget> {
   int activeIndex = 0;
-  final carousel.CarouselController controller = carousel.CarouselController();
+  final carousel.CarouselSliderController controller = carousel.CarouselSliderController();
 
   void setActiveDot({required int index}) {
     activeIndex = index;
