@@ -63,7 +63,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              "Informações estão corretas?",
+              "Todas informações estão corretas?",
               style: TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 16,
