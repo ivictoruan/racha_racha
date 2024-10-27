@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import 'package:social_share/social_share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CustomUtils {
@@ -34,25 +33,6 @@ class CustomUtils {
     }
   }
 
-  void shareRachaRacha() {
-    try {
-      SocialShare.shareWhatsapp(
-        '* Faça o download do Racha Racha: https://play.google.com/store/apps/details?id=com.matopibatech.racharacha',
-      );
-    } catch (e) {
-      log("Não foi possível compartilhar o app :( ");
-    }
-  }
-
-  // void sendEmail() {
-  //   try {
-  //     SocialShare.shareOptions(
-  //       '* Faça o download do Racha Racha: https://play.google.com/store/apps/details?id=com.matopibatech.racharacha',
-  //     );
-  //   } catch (e) {
-  //     log("Não foi possível compartilhar o app :( ");
-  //   }
-  // }
 
   Future goToUrl(String url) async {
     try {

@@ -50,11 +50,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               "https://github.com/ivictoruan/invictoruan-privacy/blob/main/privacy-policy.md",
             ),
       },
-      {
-        "icon": Icons.share,
-        "text": "Compartilhar o app",
-        "onTap": customUtils.shareRachaRacha,
-      },
+      // TODO: reativar compartilhamento de app
+      // {
+      //   "icon": Icons.share,
+      //   "text": "Compartilhar o app",
+      //   "onTap": customUtils.shareRachaRacha,
+      // },
     ];
 
     return Scaffold(
