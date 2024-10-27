@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import '../../../external/services/firebase_check_database_service.dart';
 import '../../../domain/check/entities/check_model.dart';
 
