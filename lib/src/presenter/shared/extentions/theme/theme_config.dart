@@ -7,7 +7,13 @@ class ThemeConfig {
   static final ThemeData theme = ThemeData(
     useMaterial3: true,
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    colorSchemeSeed: Colors.deepPurple,
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: Colors.deepPurple,
+      surface: Colors.white,
+      primary: Colors.deepPurple,
+      primaryContainer: const Color(0xFFD1C4E9),
+      onSurface: Colors.black87,
+    ),
     appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark,
