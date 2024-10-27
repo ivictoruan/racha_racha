@@ -1,38 +1,47 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/utils/custom_utils.dart';
 
 class CustomBottomNavBarWidget extends StatelessWidget {
-  const CustomBottomNavBarWidget({Key? key}) : super(key: key);
+  final bool isFinishingCheck;
+  const CustomBottomNavBarWidget({
+    Key? key,
+    this.isFinishingCheck = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 1;
     return BottomNavigationBar(
       currentIndex: selectedIndex,
-      onTap: (int index) {
-        CustomUtils customUtils = CustomUtils();
-
+      onTap: (int index) async {
         switch (index) {
           case 0:
-            customUtils.goTo("/settings", context);
+            CustomUtils().goTo("/settings", context);
             break;
           case 2:
-            customUtils.goTo("/history", context);
+            if (isFinishingCheck) {
+              await context.read<CheckController>().restartCheck();
+              context.go('/history', extra: null);
+            }
 
             break;
         }
       },
-      items: const [
-        BottomNavigationBarItem(
+      items: [
+        const BottomNavigationBarItem(
           icon: Icon(Icons.menu_rounded),
           label: "Menu",
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.receipt),
-          label: "Resultado",
-        ),
-        BottomNavigationBarItem(
+        if (isFinishingCheck)
+          BottomNavigationBarItem(
+            icon: Icon(isFinishingCheck ? Icons.receipt : Icons.abc),
+            label: isFinishingCheck ? "Resultado Final" : "Rachar",
+          ),
+        const BottomNavigationBarItem(
           icon: Icon(Icons.history),
           label: "Histórico",
         ),
