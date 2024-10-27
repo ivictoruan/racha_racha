@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class FloatingActionButtonWidget extends StatefulWidget {
   final void Function()? onPressed;
   final bool isActivated;
+  final IconData? icon;
 
   const FloatingActionButtonWidget({
     Key? key,
     required this.onPressed,
     required this.isActivated,
+    this.icon,
   }) : super(key: key);
 
   @override
@@ -37,7 +39,7 @@ class _FloatingActionButtonWidgetState
   Color get backgroundColor =>
       widget.isActivated ? Colors.deepPurple : disabledButtonColor;
 
-  IconData get icon => Icons.arrow_forward;
+  IconData get icon => widget.icon ?? Icons.arrow_forward;
 
   double get elevation => widget.isActivated ? 2 : 0;
 
