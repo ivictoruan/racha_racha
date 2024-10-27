@@ -9,7 +9,7 @@ import '../../shared/widgets/custom_will_pop_scope_widget.dart';
 import '../../shared/controllers/check_controller.dart';
 import '../../shared/widgets/text_form_field_widget.dart';
 import '../../shared/widgets/title_text_widget.dart';
-import '../home/view/widgets/slider_widget.dart';
+import '../../shared/widgets/slider_widget.dart';
 import 'widgets/floating_action_buttons_widget.dart';
 
 class TotalPeopleScreen extends StatefulWidget {
@@ -62,7 +62,17 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
                 ),
               ],
             ),
-            serviceTax ? const SliderWidget() : const SizedBox.shrink(),
+            serviceTax
+                ? ListenableBuilder(
+                    listenable: controller,
+                    builder: (_, __) => SliderWidget(
+                      value: controller.check.waiterPercentage,
+                      onChanged: (double newWaiterPercentage) =>
+                          controller.waiterPercentage = newWaiterPercentage,
+                      label: controller.waiterPercentage.toStringAsFixed(0),
+                    ),
+                  )
+                : const SizedBox.shrink(),
             const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(
