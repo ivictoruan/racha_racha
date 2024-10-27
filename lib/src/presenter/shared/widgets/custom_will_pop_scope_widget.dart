@@ -76,7 +76,7 @@ class CustomWillPopWidget extends StatelessWidget {
           return shouldPop ?? false;
         },
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           appBar: appBar,
           drawer: drawer,
           body: SafeArea(
