@@ -15,7 +15,7 @@ class GoToRacharButtonWidget extends StatelessWidget {
         color: Colors.deepPurple[100],
         child: FloatingActionButton.extended(
           backgroundColor: Colors.deepPurple,
-          onPressed: () => onPressed,
+          onPressed: onPressed,
           icon: const Icon(
             Icons.arrow_forward_ios,
             size: 16,
