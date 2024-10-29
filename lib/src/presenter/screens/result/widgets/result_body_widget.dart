@@ -38,13 +38,14 @@ class ResultBodyWidget extends StatelessWidget {
                       endText: model.individualPrice.toStringAsFixed(2),
                     ),
                     const SizedBox(height: SpaceConstants.medium),
-                    if (model.waiterPercentage > 0)
+                    if (model.waiterPercentage > 0) ...{
                       ResultInfoWidget(
                         startText: "Valor total sem gorjeta:",
                         endText: (model.totalValue - model.totalWaiterValue)
                             .toStringAsFixed(2),
                       ),
-                    const SizedBox(height: SpaceConstants.medium),
+                      const SizedBox(height: SpaceConstants.medium),
+                    },
                     ResultInfoWidget(
                       startText: "Valor total:",
                       endText: model.totalValue.toStringAsFixed(2),
