@@ -21,6 +21,7 @@ class CheckItemWidget extends StatelessWidget {
           horizontal: SpaceConstants.medium,
         ),
         child: Card(
+          shadowColor: Colors.deepPurpleAccent,
           color: Theme.of(context).colorScheme.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(SpaceConstants.medium),
@@ -45,7 +46,7 @@ class CheckItemWidget extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: SpaceConstants.extraSmall),
-                Divider(color: Colors.grey[300]),
+                Divider(color: Colors.deepPurple[200]),
                 const SizedBox(height: SpaceConstants.extraSmall),
                 _buildRow(
                   icon: Icons.attach_money,
@@ -67,7 +68,7 @@ class CheckItemWidget extends StatelessWidget {
                 ),
                 if (check.isSomeoneDrinking) ...[
                   const SizedBox(height: SpaceConstants.extraSmall),
-                  Divider(color: Colors.grey[300]),
+                  Divider(color: Colors.deepPurple[200]),
                   const SizedBox(height: SpaceConstants.extraSmall),
                   _buildRow(
                     icon: Icons.local_drink,
