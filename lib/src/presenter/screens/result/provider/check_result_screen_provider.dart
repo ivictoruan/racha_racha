@@ -14,10 +14,10 @@ class CheckResultScreenProvider extends StatelessWidget {
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           Provider<GenerateCheckService>(
-            create: (context) => GenerateCheckServiceImpl(),
+            create: (_) => GenerateCheckServiceImpl(),
           ),
           Provider<ShareCheckService>(
-            create: (context) => SharePlusCheckServiceImpl(),
+            create: (_) => SharePlusCheckServiceImpl(),
           ),
         ],
         child: child,
