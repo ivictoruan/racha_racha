@@ -5,6 +5,7 @@ import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/widgets/wrong_total_check_value_widget.dart';
 import '../../../shared/utils/custom_utils.dart';
+import '../../../shared/widgets/floating_action_button_widget.dart';
 import '../../is_someone_drinking/widgets/is_drinking_buttons_widget.dart';
 
 class FloatingActionButtonsWidget extends StatelessWidget {
@@ -12,7 +13,6 @@ class FloatingActionButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CustomUtils customUtils = CustomUtils();
     return Consumer<CheckController>(
       builder: (context, controller, child) {
         bool isValid = controller.state == CheckState.totalPeopleValueValid;
@@ -23,25 +23,16 @@ class FloatingActionButtonsWidget extends StatelessWidget {
               padding: EdgeInsets.only(left: 24),
               child: WrongTotalCheckValueWidget(),
             ),
-            FloatingActionButton(
-              elevation: isValid ? 5 : 0,
-              onPressed: isValid
-                  ? () async {
-                      if (controller.isSomeoneDrinking) {
-                        customUtils.goTo("/isSomeoneDrinking", context);
-                      } else {
-                        controller.check.totalDrinkPrice = 0;
-                        await showModalCustomDialog(context, customUtils);
-                      }
-                    }
-                  : null,
-              backgroundColor:
-                  isValid ? Colors.deepPurple : const Color(0xFFE0E0E0),
-              child: const Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-                size: 32,
-              ),
+            FloatingActionButtonWidget(
+              onPressed: () async {
+                if (controller.isSomeoneDrinking) {
+                  CustomUtils().goTo("/isSomeoneDrinking", context);
+                } else {
+                  controller.check.totalDrinkPrice = 0;
+                  await showModalCustomDialog(context);
+                }
+              },
+              isEnabled: isValid,
             ),
           ],
         );
@@ -49,32 +40,30 @@ class FloatingActionButtonsWidget extends StatelessWidget {
     );
   }
 
-  Future<void> showModalCustomDialog(
-      BuildContext context, CustomUtils customUtils) async {
-    await showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (context) => Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              "Todas informações estão corretas?",
-              style: TextStyle(
-                color: Colors.deepPurple,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+  Future<void> showModalCustomDialog(BuildContext context) async =>
+      await showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        builder: (context) => Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                "Todas informações estão corretas?",
+                style: TextStyle(
+                  color: Colors.deepPurple,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: SpaceConstants.medium),
-            Consumer<CheckController>(
-              builder: (context, controller, child) {
-                return Column(
+              const SizedBox(height: SpaceConstants.medium),
+              Consumer<CheckController>(
+                builder: (context, controller, child) => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ConfirmInfoWidget(
@@ -93,44 +82,38 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: SpaceConstants.medium),
                   ],
-                );
-              },
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FilledButton(
-                  onPressed: () {
-                    final controller = context.read<CheckController>();
-                    controller.calculateCheckResult();
-                    controller.isSomeoneDrinking = false;
-                    customUtils.goTo("/result", context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FilledButton(
+                    onPressed: () {
+                      final controller = context.read<CheckController>();
+                      controller.calculateCheckResult();
+                      controller.isSomeoneDrinking = false;
+                      CustomUtils().goTo("/result", context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                    ),
+                    child: const Text('Sim'),
                   ),
-                  child: const Text('Sim'),
-                ),
-                const SizedBox(width: SpaceConstants.extraSmall),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Não'),
-                ),
-                const SizedBox(width: SpaceConstants.extraSmall),
-                TextButton.icon(
-                  onPressed: () {
-                    customUtils.goTo("/totalValue", context);
-                  },
-                  icon: const Icon(Icons.restart_alt_rounded),
-                  label: const Text("Reiniciar"),
-                ),
-              ],
-            ),
-          ],
+                  const SizedBox(width: SpaceConstants.extraSmall),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Não'),
+                  ),
+                  const SizedBox(width: SpaceConstants.extraSmall),
+                  TextButton.icon(
+                    onPressed: () => CustomUtils().goTo("/totalValue", context),
+                    icon: const Icon(Icons.restart_alt_rounded),
+                    label: const Text("Reiniciar"),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
