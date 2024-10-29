@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 
 import '../../screens/history/history_screen.dart';
+import '../../screens/history/provider/history_screen_provider.dart';
 import '../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
 import '../../screens/result/provider/check_result_screen_provider.dart';
 import '../../screens/result/check_result_screen.dart';
@@ -19,7 +20,9 @@ class AppRouteManager {
       ),
       GoRoute(
         path: '/history',
-        builder: (_, __) => const HistoryScreen(),
+        builder: (_, __) => const HistoryScreenProvider(
+          child: HistoryScreen(),
+        ),
       ),
       GoRoute(
         path: '/totalValue',
