@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../constants/space_constants.dart';
+
 class TextFormFieldWidget extends StatelessWidget {
   final String labelText;
   final IconData? icon;
@@ -66,7 +68,7 @@ class TextFormFieldWidget extends StatelessWidget {
               ),
               labelText: labelText,
               labelStyle: const TextStyle(
-                fontSize: 12,
+                fontSize: SpaceConstants.small + 2,
               ),
               hintText: hintText ?? "Digite o $labelText",
               hintStyle: TextStyle(
