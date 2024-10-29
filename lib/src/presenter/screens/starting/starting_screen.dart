@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../shared/widgets/will_pop_scope_widget.dart';
 import '../../shared/constants/space_constants.dart';
@@ -20,7 +21,9 @@ class _StartingScreenState extends State<StartingScreen>
         appBar: buildAppBar,
         body: const IntroductionWidget(),
         isBodyScrollable: false,
-        floatingActionButton: const GoToRacharButtonWidget(),
+        floatingActionButton: GoToRacharButtonWidget(
+          onPressed: () => context.go("/history"),
+        ),
         mustShowDialog: false,
       );
 

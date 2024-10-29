@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/utils/custom_utils.dart';
-
-class GoToRacharButtonWidget extends StatefulWidget {
-  const GoToRacharButtonWidget({super.key});
-
-  @override
-  State<GoToRacharButtonWidget> createState() => _GoToRacharButtonWidgetState();
-}
-
-class _GoToRacharButtonWidgetState extends State<GoToRacharButtonWidget> {
-  CustomUtils get customUtils => CustomUtils();
-
-  void get onPressed => customUtils.goTo(
-        "/history",
-        context,
-      );
+class GoToRacharButtonWidget extends StatelessWidget {
+  final void Function()? onPressed;
+  const GoToRacharButtonWidget({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) => Material(
