@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../shared/widgets/will_pop_scope_widget.dart';
 import '../../shared/constants/space_constants.dart';
@@ -22,7 +21,11 @@ class _StartingScreenState extends State<StartingScreen>
         body: const IntroductionWidget(),
         isBodyScrollable: false,
         floatingActionButton: GoToRacharButtonWidget(
-          onPressed: () => context.go("/history"),
+          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+            context,
+            '/history',
+            (route) => false,
+          ),
         ),
         mustShowDialog: false,
       );

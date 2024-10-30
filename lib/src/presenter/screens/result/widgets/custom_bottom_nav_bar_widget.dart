@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/controllers/check_controller.dart';
-import '../../../shared/utils/custom_utils.dart';
+import '../../../shared/routes/app_route_manager.dart';
 
 class CustomBottomNavBarWidget extends StatelessWidget {
   final bool isFinishingCheck;
@@ -20,12 +19,15 @@ class CustomBottomNavBarWidget extends StatelessWidget {
       onTap: (int index) async {
         switch (index) {
           case 0:
-            CustomUtils().goTo("/settings", context);
+            Navigator.of(context).pushNamed(AppRouteManager.settings);
             break;
           case 2:
             if (isFinishingCheck) {
               await context.read<CheckController>().restartCheck();
-              context.go('/history', extra: null);
+              Navigator.of(context).pushNamed(
+                AppRouteManager.history,
+                arguments: true,
+              );
             }
 
             break;

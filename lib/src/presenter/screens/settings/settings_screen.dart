@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../shared/constants/space_constants.dart';
+import '../../shared/routes/app_route_manager.dart';
 import '../../shared/utils/custom_utils.dart';
 import 'widgets/settings_button_widget.dart';
 
@@ -20,7 +21,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       {
         "icon": Icons.free_breakfast_outlined,
         "text": "Quer me pagar um café?",
-        "onTap": () => customUtils.goTo("/wantDonate", context),
+        "onTap": () =>
+            Navigator.of(context).pushNamed(AppRouteManager.wantDonate),
       },
       {
         "icon": Icons.feedback_outlined,
@@ -69,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Icons.close,
             color: Colors.deepPurple,
           ),
-          onPressed: () => customUtils.goToBack(context),
+          onPressed: () => Navigator.of(context).pop(),
         ),
         backgroundColor: Colors.white,
       ),

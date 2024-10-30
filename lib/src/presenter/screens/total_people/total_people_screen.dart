@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../shared/constants/space_constants.dart';
-import '../../shared/utils/custom_utils.dart';
+import '../../shared/routes/app_route_manager.dart';
 import '../../shared/widgets/subtitle_text_widget.dart';
-import '../../shared/widgets/custom_will_pop_scope_widget.dart';
+import '../../shared/widgets/will_pop_scope_widget.dart';
 import '../../shared/controllers/check_controller.dart';
 import '../../shared/widgets/text_form_field_widget.dart';
 import '../../shared/widgets/title_text_widget.dart';
@@ -32,7 +32,8 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => CustomWillPopWidget(
+  Widget build(BuildContext context) => WillPopScopeWidget(
+        onYesPressed: () async => await controller.restartCheck(),
         body: Column(
           children: [
             const TitleTextWidget(
@@ -119,8 +120,7 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
           if (!isValid) {
             return;
           }
-
-          CustomUtils().goTo("/isSomeoneDrinking", context);
+          Navigator.of(context).pushNamed(AppRouteManager.isSomeoneDrinking);
         },
         onClearTextPressed: () => controller.totalPeople = '1',
       );
