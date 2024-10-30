@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FloatingActionButtonWidget extends StatelessWidget {
+class FloatingActionButtonWidget extends StatefulWidget {
   final void Function()? onPressed;
   final bool isEnabled;
   final IconData? icon;
@@ -13,6 +13,13 @@ class FloatingActionButtonWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<FloatingActionButtonWidget> createState() =>
+      _FloatingActionButtonWidgetState();
+}
+
+class _FloatingActionButtonWidgetState
+    extends State<FloatingActionButtonWidget> {
+  @override
   Widget build(BuildContext context) => AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
@@ -21,7 +28,7 @@ class FloatingActionButtonWidget extends StatelessWidget {
           color: backgroundColor,
           boxShadow: [
             BoxShadow(
-              color: isEnabled
+              color: widget.isEnabled
                   ? Colors.deepPurple.withOpacity(0.5)
                   : Colors.transparent,
               blurRadius: elevation,
@@ -36,7 +43,7 @@ class FloatingActionButtonWidget extends StatelessWidget {
           splashColor: Colors.white70,
           elevation: 0,
           backgroundColor: Colors.transparent,
-          onPressed: isEnabled ? onPressed : null,
+          onPressed: widget.isEnabled ? widget.onPressed : null,
           child: Icon(
             iconData,
             size: 32,
@@ -50,11 +57,11 @@ class FloatingActionButtonWidget extends StatelessWidget {
   Color get activatedButtonColor => Colors.deepPurple;
 
   Color get backgroundColor =>
-      isEnabled ? Colors.deepPurple : disabledButtonColor;
+      widget.isEnabled ? Colors.deepPurple : disabledButtonColor;
 
-  IconData get iconData => icon ?? Icons.arrow_forward;
+  IconData get iconData => widget.icon ?? Icons.arrow_forward;
 
-  double get elevation => isEnabled ? 2 : 0;
+  double get elevation => widget.isEnabled ? 2 : 0;
 
   double get focusElevation => 2;
 }
