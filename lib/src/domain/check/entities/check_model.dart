@@ -24,4 +24,5 @@ class CheckModel {
     this.individualPriceWhoIsDrinking = 0,
     this.totalPeople = 1,
   });
+  factory CheckModel.reseted() => CheckModel();
 }

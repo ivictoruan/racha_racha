@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 import '../../../external/services/firebase_check_database_service.dart';
 import '../../../domain/check/entities/check_model.dart';
@@ -33,6 +32,7 @@ class CheckController extends ChangeNotifier {
   }
 
   Future<void> calculateCheckResult() async {
+    // TODO: injetar esse serviço
     final db = FirebaseCheckDatabaseService();
 
     check.totalValue += check.totalWaiterValue;
@@ -259,8 +259,7 @@ class CheckController extends ChangeNotifier {
 
   Future<void> restartCheck() async {
     state = CheckState.idle;
-    check = CheckModel();
-
+    check = CheckModel.reseted();
     msgError = "";
     await Future.delayed(Duration.zero);
     notifyListeners();
