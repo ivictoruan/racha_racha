@@ -16,13 +16,10 @@ class ThemeConfig {
     ),
     appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness
-            .light, // Altera a cor do texto da barra de status para branco
+        statusBarIconBrightness: Brightness.light,
         systemNavigationBarIconBrightness: Brightness.dark,
         statusBarColor: Colors.deepPurple,
-        statusBarBrightness:
-            Brightness.light, // Define a barra de status como clara
-        systemNavigationBarColor: Colors.white,
+        statusBarBrightness: Brightness.light,
       ),
     ),
     textTheme: const TextTheme(
