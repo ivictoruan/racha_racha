@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../utils/custom_utils.dart';
-
-class WrongTotalCheckValueWidget extends StatelessWidget {
-  const WrongTotalCheckValueWidget({
+class RestartCheckWidget extends StatelessWidget {
+  final void Function()? onPressed;
+  const RestartCheckWidget({
     Key? key,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => FilledButton.tonalIcon(
-        onPressed: () => CustomUtils().goTo('/totalValue', context),
+        onPressed: onPressed,
         icon: const Icon(
           Icons.restart_alt_rounded,
           size: 16,
