@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 
 import '../../../../domain/check/entities/check_model.dart';
 import '../../../shared/constants/space_constants.dart';
-import '../../../shared/routes/app_route_manager.dart';
 
 class CheckItemWidget extends StatelessWidget {
   final CheckModel check;
@@ -28,7 +27,6 @@ class CheckItemWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(SpaceConstants.medium),
           ),
           elevation: 2,
-          
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(15)),
             // TODO: ajustar tela de resultado para receber um check (aproveitar isFinishing)
