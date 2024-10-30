@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../shared/input_formatters/currency_text_input_formatter.dart';
-import '../../../shared/utils/custom_utils.dart';
 import '../../../shared/extentions/monetary_extention.dart';
 import '../../../shared/controllers/check_controller.dart';
+import '../../../shared/routes/app_route_manager.dart';
 import '../../../shared/widgets/text_form_field_widget.dart';
 
 class TotalDrinkValueFieldWidget extends StatelessWidget {
@@ -36,7 +36,7 @@ class TotalDrinkValueFieldWidget extends StatelessWidget {
                   controller.check.isSomeoneDrinking;
 
           isContinueButtonActivated
-              ? CustomUtils().goTo("/result", context)
+              ? Navigator.of(context).pushNamed(AppRouteManager.result)
               : null;
         },
       );
