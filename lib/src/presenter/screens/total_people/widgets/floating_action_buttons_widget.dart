@@ -3,10 +3,10 @@ import 'package:provider/provider.dart';
 
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
-import '../../../shared/widgets/wrong_total_check_value_widget.dart';
-import '../../../shared/utils/custom_utils.dart';
+import '../../../shared/routes/app_route_manager.dart';
 import '../../../shared/widgets/floating_action_button_widget.dart';
-import '../../is_someone_drinking/widgets/is_drinking_buttons_widget.dart';
+import '../../../shared/widgets/restart_check_widget.dart';
+import '../../is_someone_drinking/widgets/confirm_info_widget.dart';
 
 class FloatingActionButtonsWidget extends StatelessWidget {
   const FloatingActionButtonsWidget({Key? key}) : super(key: key);
@@ -19,14 +19,20 @@ class FloatingActionButtonsWidget extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(left: 24),
-              child: WrongTotalCheckValueWidget(),
+            Padding(
+              padding: const EdgeInsets.only(left: 24),
+              child: RestartCheckWidget(
+                onPressed: () {
+                  controller.restartCheck();
+                  Navigator.of(context).pop();
+                },
+              ),
             ),
             FloatingActionButtonWidget(
               onPressed: () async {
                 if (controller.isSomeoneDrinking) {
-                  CustomUtils().goTo("/isSomeoneDrinking", context);
+                  Navigator.of(context)
+                      .pushNamed(AppRouteManager.isSomeoneDrinking);
                 } else {
                   controller.check.totalDrinkPrice = 0;
                   await showModalCustomDialog(context);
@@ -92,7 +98,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                       final controller = context.read<CheckController>();
                       controller.calculateCheckResult();
                       controller.isSomeoneDrinking = false;
-                      CustomUtils().goTo("/result", context);
+                      Navigator.of(context).pushNamed(AppRouteManager.result);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurple,
@@ -105,11 +111,6 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                     child: const Text('Não'),
                   ),
                   const SizedBox(width: SpaceConstants.extraSmall),
-                  TextButton.icon(
-                    onPressed: () => CustomUtils().goTo("/totalValue", context),
-                    icon: const Icon(Icons.restart_alt_rounded),
-                    label: const Text("Reiniciar"),
-                  ),
                 ],
               ),
             ],
