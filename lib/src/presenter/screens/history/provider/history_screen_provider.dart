@@ -16,7 +16,7 @@ class HistoryScreenProvider extends StatelessWidget {
             create: (context) => FirebaseCheckDatabaseService(),
           ),
           ChangeNotifierProvider(
-            create: (context) => HistoryController(
+            create: (context) => HistoryScreenController(
               checkService: context.read<CheckDatabaseService>(),
             ),
           ),
