@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
-import '../../../shared/utils/custom_utils.dart';
-import '../../../shared/widgets/wrong_total_check_value_widget.dart';
+import '../../../shared/routes/app_route_manager.dart';
+import '../../../shared/widgets/restart_check_widget.dart';
+import 'confirm_info_widget.dart';
 
 // TODO: melhorar legibilidade desta classe.
 class IsDrikingButtonsWidget extends StatelessWidget {
@@ -21,9 +23,15 @@ class IsDrikingButtonsWidget extends StatelessWidget {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 25.0),
-                child: WrongTotalCheckValueWidget(),
+              Padding(
+                padding: const EdgeInsets.only(left: 25.0),
+                child: RestartCheckWidget(
+                  onPressed: () {
+                    controller.restartCheck();
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                ),
               ),
               Material(
                 elevation: 2,
@@ -57,13 +65,12 @@ class IsDrikingButtonsWidget extends StatelessWidget {
   Future<void> _showModalIsSomeoneDrinking(
     BuildContext context,
   ) async {
-    CustomUtils customUtils = CustomUtils();
-
     await showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
+      // TODO! componentizar este widget (ver a mesma função em _showModalWhotIsNotDrinking na tela de alguém bebendo)
       builder: (context) => Container(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -74,6 +81,17 @@ class IsDrikingButtonsWidget extends StatelessWidget {
               "Todas informações estão corretas?",
               style: TextStyle(
                 color: Colors.deepPurple,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: SpaceConstants.extraSmall),
+            Text(
+              "Se há alguém bebendo toque em \"Não\"",
+              style: TextStyle(
+                color: Colors.deepPurple[200],
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -109,7 +127,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                       startText: "Quantidade de pessoas: ",
                       endText: controller.totalPeople.toString(),
                     ),
-                    const SizedBox(height: SpaceConstants.extraSmall),
+                    const SizedBox(height: SpaceConstants.large),
                   ],
                 );
               },
@@ -122,7 +140,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                     final controller = context.read<CheckController>();
                     controller.calculateCheckResult();
                     controller.isSomeoneDrinking = true;
-                    customUtils.goTo("/result", context);
+                    Navigator.of(context).pushNamed(AppRouteManager.result);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
@@ -136,7 +154,13 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: SpaceConstants.extraSmall),
                 TextButton.icon(
-                  onPressed: () => customUtils.goTo("/totalValue", context),
+                  onPressed: () {
+                    context.read<CheckController>().restartCheck();
+                    // TODO! rever essa forma de voltar para tela de valor total
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                  },
                   icon: const Icon(Icons.restart_alt_rounded),
                   label: const Text("Reiniciar"),
                 ),
@@ -145,30 +169,6 @@ class IsDrikingButtonsWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class ConfirmInfoWidget extends StatelessWidget {
-  final String startText;
-  final String endText;
-
-  const ConfirmInfoWidget({
-    Key? key,
-    required this.startText,
-    required this.endText,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final TextStyle? style = Theme.of(context).textTheme.bodyMedium;
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(startText, style: style),
-        Text(endText, style: style),
-      ],
     );
   }
 }
