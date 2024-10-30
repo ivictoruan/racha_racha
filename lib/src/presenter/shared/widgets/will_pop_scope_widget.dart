@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../constants/space_constants.dart';
 
@@ -49,7 +46,7 @@ class WillPopScopeWidget extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => context.pop(false),
+            onPressed: () => Navigator.of(context).pop(false),
             child: const Text(
               'Não',
               style: TextStyle(
@@ -58,7 +55,10 @@ class WillPopScopeWidget extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () => onYesPressed(),
+            onPressed: () {
+              onYesPressed();
+              Navigator.of(context).pop(true);
+            },
             child: const Text(
               'Sim',
               style: TextStyle(
