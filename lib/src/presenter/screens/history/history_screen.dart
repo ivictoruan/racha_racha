@@ -1,12 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
+import 'dart:async';
 
-import '../../../domain/check/entities/check_model.dart';
-import '../../../external/services/firebase_check_database_service.dart';
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
+
+import '../../shared/routes/app_route_manager.dart';
 import '../../shared/widgets/floating_action_button_widget.dart';
 import '../../shared/widgets/loading_screen.dart';
 import '../result/widgets/custom_bottom_nav_bar_widget.dart';
+import 'controller/history_screen_controller.dart';
 import 'widgets/check_item_widget.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -17,60 +19,106 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  late Future<List<CheckModel>> _checksFuture;
+  init() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<HistoryScreenController>(context, listen: false)
+          .fetchChecks();
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    _checksFuture = _fetchChecks();
-  }
-
-  Future<List<CheckModel>> _fetchChecks() async {
-    final checkService = FirebaseCheckDatabaseService();
-    return await checkService.getAllChecks();
+    init();
   }
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        body: FutureBuilder<List<CheckModel>>(
-          future: _checksFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const LoadingScreen();
-            } else if (snapshot.hasError) {
-              return Center(
-                  child: Text('Erro ao carregar os checks: ${snapshot.error}'));
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return _buildEmptyWidget(context);
-            }
+  Widget build(BuildContext context) {
+    final historyController = Provider.of<HistoryScreenController>(context);
 
-            final checks = snapshot.data!.toList();
+    return RefreshIndicator(
+      onRefresh: historyController.reloadChecks,
+      child: WillPopScope(
+        onWillPop: () => onWillPop(context),
+        child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          body: historyController.loading
+              ? const LoadingScreen()
+              : historyController.checks.isEmpty
+                  ? _buildEmptyWidget(context)
+                  : ListView.builder(
+                      itemCount: historyController.checks.length,
+                      itemBuilder: (context, index) {
+                        final check = historyController.checks[index];
+                        final checkIndex =
+                            historyController.checks.length - index;
+                        return CheckItemWidget(
+                          check: check,
+                          index: checkIndex,
+                        );
+                      },
+                    ),
+          floatingActionButton: FloatingActionButtonWidget(
+            onPressed: () async {
+              await Navigator.of(context).pushNamed(AppRouteManager.totalValue);
+            },
+            isEnabled: !historyController.loading,
+            icon: Icons.add,
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: const CustomBottomNavBarWidget(
+            isFinishingCheck: false,
+          ),
+        ),
+      ),
+    );
+  }
 
-            return ListView.builder(
-              itemCount: checks.length,
-              itemBuilder: (context, index) {
-                final check = checks[index];
-                final checkIndex = checks.length - index;
-                return CheckItemWidget(
-                  check: check,
-                  index: checkIndex,
-                );
-              },
-            );
-          },
+  Future<bool> onWillPop(BuildContext context) async {
+    final shouldPop = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: const Text(
+          'Deseja sair?',
+          style: TextStyle(
+            color: Colors.deepPurple,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
-        floatingActionButton: FloatingActionButtonWidget(
-          onPressed: () => context.go('/totalValue'),
-          // TODO: desativar o botão quando estiver em loading
-          isActivated: true,
-          icon: Icons.add,
+        content: Text(
+          'Você realmente deseja sair do aplicativo?',
+          style: TextStyle(
+            color: Colors.deepPurple[500],
+            fontSize: 16,
+          ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: const CustomBottomNavBarWidget(
-          isFinishingCheck: false,
-        ),
-      );
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text(
+              'Não',
+              style: TextStyle(
+                color: Colors.deepPurple,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text(
+              'Sim',
+              style: TextStyle(
+                color: Colors.deepPurple,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    return shouldPop ?? false;
+  }
 
   Column _buildEmptyWidget(BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
