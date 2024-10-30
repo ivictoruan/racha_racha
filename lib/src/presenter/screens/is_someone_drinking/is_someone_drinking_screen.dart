@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../shared/widgets/custom_will_pop_scope_widget.dart';
+import '../../shared/routes/app_route_manager.dart';
+import '../../shared/widgets/will_pop_scope_widget.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/controllers/check_controller.dart';
-import '../../shared/utils/custom_utils.dart';
 import '../../shared/widgets/title_text_widget.dart';
+import 'widgets/confirm_info_widget.dart';
 import 'widgets/is_drinking_buttons_widget.dart';
 import 'widgets/is_drinking_form_field_widget.dart';
 
@@ -29,26 +30,8 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    controller.dispose();
-  }
-
-  Future<void> onChangedIsSomeoneDriking({
-    required bool isSomeoneDrinking,
-  }) async {
-    controller.isSomeoneDrinking = isSomeoneDrinking;
-    controller.isSomeoneDrinking == true
-        ? controller.msgError = "Preencha os campos se há alguém bebendo!"
-        : {
-            controller.msgError = "Preencha os campos se há alguém bebendo!",
-            await _showModalWhotIsNotDrinking(context, CustomUtils())
-          };
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) => CustomWillPopWidget(
+  Widget build(BuildContext context) => WillPopScopeWidget(
+        onYesPressed: onYesPressed,
         body: Column(
           children: [
             Padding(
@@ -62,8 +45,9 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                   Switch(
                     value: controller.isSomeoneDrinking,
                     onChanged: (bool isSomeoneDrinking) async =>
-                        await onChangedIsSomeoneDriking(
-                            isSomeoneDrinking: isSomeoneDrinking),
+                        await onChangedWhenIsSomeoneDriking(
+                      isSomeoneDrinking: isSomeoneDrinking,
+                    ),
                   ),
                 ],
               ),
@@ -76,15 +60,36 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
         floatingActionButton: const IsDrikingButtonsWidget(),
       );
 
+  Future<void> onChangedWhenIsSomeoneDriking({
+    required bool isSomeoneDrinking,
+  }) async {
+    controller.isSomeoneDrinking = isSomeoneDrinking;
+    controller.isSomeoneDrinking == true
+        ? controller.msgError = "Preencha os campos se há alguém bebendo!"
+        : {
+            controller.msgError = "Preencha os campos se há alguém bebendo!",
+            await _showModalWhotIsNotDrinking(context)
+          };
+    setState(() {});
+  }
+
+  void onYesPressed() async {
+    await controller.restartCheck();
+
+    if (mounted) {
+      Navigator.pop(context, true);
+    }
+  }
+
   Future _showModalWhotIsNotDrinking(
     BuildContext context,
-    CustomUtils customUtils,
   ) async {
     await showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
+      // TODO: componentizar este "Modal"
       builder: (context) => Container(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -95,7 +100,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
               "Todas informações estão corretas?",
               style: TextStyle(
                 color: Colors.deepPurple,
-                fontSize: 16,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -105,7 +110,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
               "Se há alguém bebendo toque em \"Não\"",
               style: TextStyle(
                 color: Colors.deepPurple[200],
-                fontSize: 10,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -143,7 +148,7 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                     final controller = context.read<CheckController>();
                     controller.calculateCheckResult();
                     controller.isSomeoneDrinking = false;
-                    customUtils.goTo("/result", context);
+                    Navigator.of(context).pushNamed(AppRouteManager.result);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
@@ -154,16 +159,18 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                 TextButton(
                   onPressed: () {
                     controller.isSomeoneDrinking = true;
-                    setState(() {});
                     Navigator.of(context).pop();
                   },
                   child: const Text('Não'),
                 ),
                 const SizedBox(width: 8),
-                // TODO: componentizar como SecondaryIconButtonWidget
                 TextButton.icon(
                   onPressed: () {
-                    customUtils.goTo("/totalValue", context);
+                    controller.restartCheck();
+                    // TODO! rever essa forma de voltar para tela de valor total!
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   icon: const Icon(Icons.restart_alt_rounded),
                   label: const Text("Reiniciar"),
