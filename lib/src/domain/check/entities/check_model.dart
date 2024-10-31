@@ -2,6 +2,7 @@ class CheckModel {
   DateTime? creationDate;
   // TODO: verificar a necessidade de colocar uma localização
   // TODO: verificar a necessidade de colocar um título
+  // TODO: verificar a necessidade de colocar uma lista de participantes
   double totalValue;
   double individualPrice;
   double waiterPercentage;
