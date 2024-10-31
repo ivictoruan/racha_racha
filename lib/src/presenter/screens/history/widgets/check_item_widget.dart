@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 import '../../../../domain/check/entities/check_model.dart';
 import '../../../shared/constants/space_constants.dart';
+import '../../../shared/routes/app_route_manager.dart';
+import '../../../shared/widgets/divider_with_padding_widget.dart';
 
 class CheckItemWidget extends StatelessWidget {
   final CheckModel check;
@@ -24,37 +26,21 @@ class CheckItemWidget extends StatelessWidget {
           shadowColor: Colors.deepPurpleAccent,
           color: Theme.of(context).colorScheme.surface,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(SpaceConstants.medium),
+            borderRadius: BorderRadius.circular(
+              SpaceConstants.medium,
+            ),
           ),
           elevation: 2,
           child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(15)),
-            // TODO: ajustar tela de resultado para receber um check (aproveitar isFinishing)
-            // onTap: () {
-            //   Navigator.of(context).pushNamed(AppRouteManager.result);
-            // },
+            onTap: () => onCheckPressed(context),
             child: Padding(
               padding: const EdgeInsets.all(SpaceConstants.medium),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.date_range_outlined),
-                      const SizedBox(width: SpaceConstants.small),
-                      Text(
-                        'Divisão $index - $dateFormatted',
-                        style:
-                            Theme.of(context).textTheme.titleMedium?.copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: SpaceConstants.extraSmall),
-                  Divider(color: Colors.deepPurple[200]),
-                  const SizedBox(height: SpaceConstants.extraSmall),
+                  _buildHeader(context),
+                  const DividerWithPaddingWidget(),
                   _buildRow(
                     icon: Icons.attach_money,
                     label: 'Total:',
@@ -91,12 +77,38 @@ class CheckItemWidget extends StatelessWidget {
         ),
       );
 
+  void onCheckPressed(BuildContext context) {
+    final Map<String, Object> argumentsToHistoryScreen = {
+      'isFinishing': false,
+      'check': check,
+    };
+
+    Navigator.of(context).pushNamed(
+      AppRouteManager.result,
+      arguments: argumentsToHistoryScreen,
+    );
+  }
+
   String get dateFormatted {
     final dateFormatted = check.creationDate != null
         ? DateFormat('dd/MM/yyyy, HH:mm').format(check.creationDate!)
         : 'Data não disponível';
     return dateFormatted;
   }
+
+  Widget _buildHeader(BuildContext context) => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.date_range_outlined),
+          const SizedBox(width: SpaceConstants.small),
+          Text(
+            'Divisão $index - $dateFormatted',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+        ],
+      );
 
   Widget _buildRow({
     required IconData icon,
