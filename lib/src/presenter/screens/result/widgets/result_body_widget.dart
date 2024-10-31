@@ -1,66 +1,112 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../../shared/constants/space_constants.dart';
-import '../../../shared/controllers/check_controller.dart';
-
 import '../../../../domain/check/entities/check_model.dart';
+import '../../../shared/constants/space_constants.dart';
 import 'result_info_widget.dart';
 
 class ResultBodyWidget extends StatelessWidget {
-  const ResultBodyWidget({Key? key}) : super(key: key);
+  final CheckModel check;
+
+  const ResultBodyWidget({
+    Key? key,
+    required this.check,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: SpaceConstants.screenBorder,
-          ),
-          child: SingleChildScrollView(
-            child: Consumer<CheckController>(
-              builder: (context, controller, child) {
-                CheckModel model = controller.check;
-                return Column(
-                  children: [
-                    if (model.isSomeoneDrinking) ...{
-                      const SizedBox(height: SpaceConstants.medium),
-                      ResultInfoWidget(
-                        startText: "Se bebeu, paga:",
-                        endText: model.individualPriceWhoIsDrinking
-                            .toStringAsFixed(2),
-                      ),
-                    },
-                    const SizedBox(height: SpaceConstants.medium),
-                    ResultInfoWidget(
-                      startText: model.isSomeoneDrinking
-                          ? "Não bebeu, paga:"
-                          : "Valor individual: ",
-                      endText: model.individualPrice.toStringAsFixed(2),
-                    ),
-                    const SizedBox(height: SpaceConstants.medium),
-                    if (model.waiterPercentage > 0) ...{
-                      ResultInfoWidget(
-                        startText: "Valor total sem gorjeta:",
-                        endText: (model.totalValue - model.totalWaiterValue)
-                            .toStringAsFixed(2),
-                      ),
-                      const SizedBox(height: SpaceConstants.medium),
-                    },
-                    ResultInfoWidget(
-                      startText: "Valor total:",
-                      endText: model.totalValue.toStringAsFixed(2),
-                    ),
-                    const SizedBox(height: SpaceConstants.medium),
-                    ResultInfoWidget(
-                      startText: "Gorjeta:",
-                      endText: model.totalWaiterValue.toStringAsFixed(2),
-                    ),
-                    const SizedBox(height: SpaceConstants.medium),
-                  ],
-                );
-              },
-            ),
+  Widget build(BuildContext context) {
+    TextStyle headerStyle = Theme.of(context).textTheme.headlineSmall!.copyWith(
+          color: Colors.deepPurple[600],
+          fontWeight: FontWeight.bold,
+        );
+
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: SpaceConstants.screenBorder,
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Detalhes da Divisão",
+                style: headerStyle,
+              ),
+              const SizedBox(height: SpaceConstants.medium),
+              _buildInfoCard(
+                context,
+                icon: Icons.attach_money,
+                label: "Total:",
+                value: check.totalValue.toStringAsFixed(2),
+              ),
+              _buildInfoCard(
+                context,
+                icon: Icons.monetization_on,
+                label: "Valor sem gorjeta:",
+                value: (check.totalValue - check.totalWaiterValue)
+                    .toStringAsFixed(2),
+                isVisible: check.waiterPercentage > 0,
+              ),
+              _buildInfoCard(
+                context,
+                icon: Icons.percent,
+                label: "Gorjeta:",
+                value:
+                    '${check.totalWaiterValue.toStringAsFixed(2)} (${check.waiterPercentage.toStringAsFixed(0)})%',
+              ),
+              _buildInfoCard(
+                context,
+                icon: Icons.local_drink,
+                label: "Se bebeu, paga:",
+                value: check.individualPriceWhoIsDrinking.toStringAsFixed(2),
+                isVisible: check.isSomeoneDrinking,
+              ),
+              _buildInfoCard(
+                context,
+                icon: Icons.person,
+                label: check.isSomeoneDrinking
+                    ? "Não bebeu, paga:"
+                    : "Valor individual:",
+                value: check.individualPrice.toStringAsFixed(2),
+              ),
+              _buildInfoCard(
+                context,
+                icon: Icons.people_outline_sharp,
+                label: "Pessoas:",
+                isWithDollarSign: false,
+                value: check.totalPeople.toString(),
+              ),
+              const SizedBox(height: SpaceConstants.medium),
+              Text(
+                "Resumo Final",
+                style: headerStyle.copyWith(
+                  color: Colors.deepPurple[300],
+                  fontSize: 18,
+                ),
+              ),
+            ],
           ),
         ),
-      );
+      ),
+    );
+  }
+
+  Widget _buildInfoCard(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required String value,
+    bool isVisible = true,
+    bool isWithDollarSign = true,
+  }) {
+    if (!isVisible) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: SpaceConstants.small),
+      child: ResultInfoWidget(
+        icon: icon,
+        isWithDollarSign: isWithDollarSign,
+        startText: label,
+        endText: value,
+      ),
+    );
+  }
 }
