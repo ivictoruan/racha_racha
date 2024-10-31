@@ -59,10 +59,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/lottie/receipt.json
-    - assets/lottie/question.json
     - assets/lottie/smartphone.json
     - assets/lottie/empty.json
-    - assets/lottie/register.json
     - assets/images/app/icon.png
     - assets/images/app/splash.png
