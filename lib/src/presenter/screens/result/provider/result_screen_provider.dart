@@ -6,9 +6,9 @@ import '../../../../external/services/share_plus_service_impl.dart';
 import '../../../../infra/services/generate_check_service.dart';
 import '../../../../infra/services/share_check_service.dart';
 
-class CheckResultScreenProvider extends StatelessWidget {
+class ResultScreenProvider extends StatelessWidget {
   final Widget child;
-  const CheckResultScreenProvider({super.key, required this.child});
+  const ResultScreenProvider({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) => MultiProvider(

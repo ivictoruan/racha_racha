@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../../domain/check/entities/check_model.dart';
 import '../../shared/routes/app_route_manager.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/controllers/check_controller.dart';
@@ -12,16 +14,21 @@ import 'widgets/custom_bottom_nav_bar_widget.dart';
 import 'widgets/result_body_widget.dart';
 import 'widgets/shared_options_widget.dart';
 
-class CheckResultScreen extends StatefulWidget {
-  const CheckResultScreen({
+class ResultScreen extends StatefulWidget {
+  final bool isFinishingCheck;
+  final CheckModel check;
+
+  const ResultScreen({
     Key? key,
+    this.isFinishingCheck = true,
+    required this.check,
   }) : super(key: key);
 
   @override
-  State<CheckResultScreen> createState() => _CheckResultScreenState();
+  State<ResultScreen> createState() => _ResultScreenState();
 }
 
-class _CheckResultScreenState extends State<CheckResultScreen> {
+class _ResultScreenState extends State<ResultScreen> {
   void onYesPressed() async {
     await context.read<CheckController>().restartCheck();
     if (mounted) {
@@ -46,12 +53,37 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
 
   @override
   Widget build(BuildContext context) => WillPopScopeWidget(
-        onYesPressed: onYesPressed,
-        body: const ResultBodyWidget(),
+        appBar: _buildAppBar(),
+        onYesPressed: widget.isFinishingCheck ? onYesPressed : () {},
+        mustShowDialog: widget.isFinishingCheck,
+        body: ResultBodyWidget(check: widget.check),
+        floatingActionButton: _buildFAB(),
         bottomNavigationBar: const CustomBottomNavBarWidget(),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
+      );
+
+  AppBar? _buildAppBar() => !widget.isFinishingCheck
+      ? AppBar(
+          leading: IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(Icons.close),
+          ),
+          centerTitle: true,
+          title: Text(
+            dateFormatted,
+            style: const TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+            ),
+          ),
+        )
+      : null;
+
+  Widget _buildFAB() => Row(
+        mainAxisAlignment: widget.isFinishingCheck
+            ? MainAxisAlignment.spaceAround
+            : MainAxisAlignment.center,
+        children: [
+          if (widget.isFinishingCheck) ...[
             const SizedBox(width: SpaceConstants.small),
             FilledButton.tonalIcon(
               onPressed: onAddCheckPressed,
@@ -68,11 +100,20 @@ class _CheckResultScreenState extends State<CheckResultScreen> {
               ),
             ),
             const SizedBox(width: SpaceConstants.small),
-            SharedCheckOptionsWidget(
-              generateImageService: context.read<GenerateCheckService>(),
-              shareService: context.read<ShareCheckService>(),
-            ),
+          ] else ...[
+            const Spacer(),
           ],
-        ),
+          SharedCheckOptionsWidget(
+            generateImageService: context.read<GenerateCheckService>(),
+            shareService: context.read<ShareCheckService>(),
+          ),
+        ],
       );
+
+  String get dateFormatted {
+    final dateFormatted = widget.check.creationDate != null
+        ? DateFormat('dd/MM/yyyy, HH:mm').format(widget.check.creationDate!)
+        : 'Data não disponível';
+    return dateFormatted;
+  }
 }
