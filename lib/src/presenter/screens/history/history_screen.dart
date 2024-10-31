@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
+import '../../shared/constants/app_assets.dart';
 import '../../shared/routes/app_route_manager.dart';
 import '../../shared/widgets/floating_action_button_widget.dart';
 import '../../shared/widgets/loading_screen.dart';
@@ -121,7 +122,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         children: [
           Center(
             child: Lottie.asset(
-              'assets/lottie/empty.json',
+              AppAssets.empty,
               height: MediaQuery.sizeOf(context).height * 0.45,
             ),
           ),

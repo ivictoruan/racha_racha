@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../shared/constants/app_assets.dart';
 import '../../shared/widgets/will_pop_scope_widget.dart';
 import '../../shared/constants/space_constants.dart';
 import 'widgets/go_to_rachar_button_widget.dart';
@@ -34,7 +35,7 @@ class _StartingScreenState extends State<StartingScreen>
         title: Padding(
           padding: const EdgeInsets.only(top: SpaceConstants.large),
           child: Image.asset(
-            "assets/images/app/splash.png",
+            AppAssets.splash,
             width: 240,
             height: 120,
           ),
