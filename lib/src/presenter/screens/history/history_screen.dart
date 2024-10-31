@@ -36,40 +36,36 @@ class _HistoryScreenState extends State<HistoryScreen> {
   Widget build(BuildContext context) {
     final historyController = Provider.of<HistoryScreenController>(context);
 
-    return RefreshIndicator(
-      onRefresh: historyController.reloadChecks,
-      child: WillPopScope(
-        onWillPop: () => onWillPop(context),
-        child: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          body: historyController.loading
-              ? const LoadingScreen()
-              : historyController.checks.isEmpty
-                  ? _buildEmptyWidget(context)
-                  : ListView.builder(
-                      itemCount: historyController.checks.length,
-                      itemBuilder: (context, index) {
-                        final check = historyController.checks[index];
-                        final checkIndex =
-                            historyController.checks.length - index;
-                        return CheckItemWidget(
-                          check: check,
-                          index: checkIndex,
-                        );
-                      },
-                    ),
-          floatingActionButton: FloatingActionButtonWidget(
-            onPressed: () async {
-              await Navigator.of(context).pushNamed(AppRouteManager.totalValue);
-            },
-            isEnabled: !historyController.loading,
-            icon: Icons.add,
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: const CustomBottomNavBarWidget(
-            isFinishingCheck: false,
-          ),
+    return WillPopScope(
+      onWillPop: () => onWillPop(context),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: historyController.loading
+            ? const LoadingScreen()
+            : historyController.checks.isEmpty
+                ? _buildEmptyWidget(context)
+                : ListView.builder(
+                    itemCount: historyController.checks.length,
+                    itemBuilder: (context, index) {
+                      final check = historyController.checks[index];
+                      final checkIndex =
+                          historyController.checks.length - index;
+                      return CheckItemWidget(
+                        check: check,
+                        index: checkIndex,
+                      );
+                    },
+                  ),
+        floatingActionButton: FloatingActionButtonWidget(
+          onPressed: () async {
+            await Navigator.of(context).pushNamed(AppRouteManager.totalValue);
+          },
+          isEnabled: !historyController.loading,
+          icon: Icons.add,
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: const CustomBottomNavBarWidget(
+          isFinishingCheck: false,
         ),
       ),
     );
