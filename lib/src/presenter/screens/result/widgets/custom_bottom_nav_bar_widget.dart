@@ -41,7 +41,9 @@ class CustomBottomNavBarWidget extends StatelessWidget {
         if (isFinishingCheck)
           BottomNavigationBarItem(
             icon: Icon(isFinishingCheck ? Icons.receipt : Icons.abc),
-            label: isFinishingCheck ? "Resultado Final" : "Rachar",
+            label: isFinishingCheck
+                ? "Resultado ${!isFinishingCheck ? "Final" : ''}"
+                : "Rachar",
           ),
         const BottomNavigationBarItem(
           icon: Icon(Icons.history),

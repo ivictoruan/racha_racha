@@ -35,9 +35,17 @@ class TotalDrinkValueFieldWidget extends StatelessWidget {
                   controller.msgError == "" &&
                   controller.check.isSomeoneDrinking;
 
-          isContinueButtonActivated
-              ? Navigator.of(context).pushNamed(AppRouteManager.result)
-              : null;
+          if (isContinueButtonActivated) {
+            final Map<String, Object> argumentsToHistoryScreen = {
+              'isFinishing': true,
+              'check': controller.check,
+            };
+
+            Navigator.of(context).pushNamed(
+              AppRouteManager.result,
+              arguments: argumentsToHistoryScreen,
+            );
+          }
         },
       );
 }

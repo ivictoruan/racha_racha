@@ -140,7 +140,16 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                     final controller = context.read<CheckController>();
                     controller.calculateCheckResult();
                     controller.isSomeoneDrinking = true;
-                    Navigator.of(context).pushNamed(AppRouteManager.result);
+
+                    final Map<String, Object> argumentsToHistoryScreen = {
+                      'isFinishing': true,
+                      'check': controller.check,
+                    };
+
+                    Navigator.of(context).pushNamed(
+                      AppRouteManager.result,
+                      arguments: argumentsToHistoryScreen,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,

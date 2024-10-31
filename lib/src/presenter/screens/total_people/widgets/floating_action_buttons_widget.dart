@@ -98,7 +98,15 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                       final controller = context.read<CheckController>();
                       controller.calculateCheckResult();
                       controller.isSomeoneDrinking = false;
-                      Navigator.of(context).pushNamed(AppRouteManager.result);
+                      final Map<String, Object> argumentsToHistoryScreen = {
+                        'isFinishing': true,
+                        'check': controller.check,
+                      };
+
+                      Navigator.of(context).pushNamed(
+                        AppRouteManager.result,
+                        arguments: argumentsToHistoryScreen,
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurple,
