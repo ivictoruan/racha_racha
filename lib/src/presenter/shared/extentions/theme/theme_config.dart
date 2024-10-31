@@ -15,6 +15,7 @@ class ThemeConfig {
       onSurface: Colors.black87,
     ),
     appBarTheme: const AppBarTheme(
+      foregroundColor: Colors.deepPurple,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarIconBrightness: Brightness.dark,
