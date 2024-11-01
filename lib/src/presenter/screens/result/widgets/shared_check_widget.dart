@@ -1,19 +1,19 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../shared/controllers/check_controller.dart';
 import '../../../../domain/check/entities/check_model.dart';
 import '../../../../infra/services/generate_check_service.dart';
 import '../../../../infra/services/share_check_service.dart';
 
-class SharedCheckOptionsWidget extends StatelessWidget {
+class SharedCheckWidget extends StatelessWidget {
   final ShareCheckService shareService;
   final GenerateCheckService generateImageService;
+  final CheckModel check;
 
-  const SharedCheckOptionsWidget({
+  const SharedCheckWidget({
     Key? key,
+    required this.check,
     required this.shareService,
     required this.generateImageService,
   }) : super(key: key);
@@ -38,7 +38,7 @@ class SharedCheckOptionsWidget extends StatelessWidget {
                 ),
           ),
           onPressed: () async => await _onShareCheck(
-            check: context.read<CheckController>().check,
+            check: check,
           ),
         ),
       );

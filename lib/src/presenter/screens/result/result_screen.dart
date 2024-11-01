@@ -12,7 +12,7 @@ import '../../../infra/services/generate_check_service.dart';
 import '../../../infra/services/share_check_service.dart';
 import 'widgets/custom_bottom_nav_bar_widget.dart';
 import 'widgets/result_body_widget.dart';
-import 'widgets/shared_options_widget.dart';
+import 'widgets/shared_check_widget.dart';
 
 class ResultScreen extends StatefulWidget {
   final bool isFinishingCheck;
@@ -103,9 +103,10 @@ class _ResultScreenState extends State<ResultScreen> {
           ] else ...[
             const Spacer(),
           ],
-          SharedCheckOptionsWidget(
+          SharedCheckWidget(
             generateImageService: context.read<GenerateCheckService>(),
             shareService: context.read<ShareCheckService>(),
+            check: widget.check,
           ),
         ],
       );
