@@ -100,12 +100,6 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
 
     _drawText('Baixe o Racha Racha', 30, _size.height - 70,
         color: Colors.white, fontSize: 20);
-    _drawText(
-        'play.google.com/store/apps/details?id=com.matopibatech.racharacha',
-        30,
-        _size.height - 40,
-        color: Colors.white,
-        fontSize: 16);
   }
 
   void _drawText(
