@@ -106,16 +106,6 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: SpaceConstants.extraSmall),
-            Text(
-              "Se há alguém bebendo toque em \"Não\"",
-              style: TextStyle(
-                color: Colors.deepPurple[200],
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: SpaceConstants.extraSmall),
             Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
