@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../domain/check/entities/check_model.dart';
-import '../../infra/check/model/check_firestore_database_adapter.dart';
-import '../../infra/services/database/check_database_service.dart';
-import '../../presenter/shared/controllers/user_controller.dart';
+import '../../../domain/check/entities/check_model.dart';
+import '../../../infra/check/model/check_firestore_database_adapter.dart';
+import '../../../infra/services/database/check_database_service.dart';
+import '../../../presenter/shared/controllers/user_controller.dart';
 
 class FirestoreCheckDatabaseService implements CheckDatabaseService {
   late final FirebaseFirestore _firestore;
