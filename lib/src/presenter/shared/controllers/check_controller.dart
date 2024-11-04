@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import '../../../external/services/firebase_check_database_service.dart';
 import '../../../domain/check/entities/check_model.dart';
+import '../../../infra/services/database/check_database_service.dart';
 
 enum CheckState {
   totalCheckValueInvalid,
@@ -16,6 +16,11 @@ enum CheckState {
 }
 
 class CheckController extends ChangeNotifier {
+  final CheckDatabaseService _dbService;
+
+  CheckController({required CheckDatabaseService dbService})
+      : _dbService = dbService;
+
   CheckModel check = CheckModel();
 
   CheckState state = CheckState.idle;
@@ -32,19 +37,16 @@ class CheckController extends ChangeNotifier {
   }
 
   Future<void> calculateCheckResult() async {
-    // TODO: injetar esse serviço
-    final db = FirebaseCheckDatabaseService();
-
     check.totalValue += check.totalWaiterValue;
     if (check.isSomeoneDrinking) {
       _calculateCheckResultWithDrinkers();
-      await db.createCheck(check: check);
+      await _dbService.createCheck(check: check);
 
       return;
     }
 
     _calculateCheckResultWithoutDrinkers();
-    await db.createCheck(check: check);
+    await _dbService.createCheck(check: check);
   }
 
   void _calculateCheckResultWithoutDrinkers() {
