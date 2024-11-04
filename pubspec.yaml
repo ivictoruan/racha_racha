@@ -28,6 +28,8 @@ dependencies:
   dartz: ^0.10.1
   firebase_core_platform_interface: ^5.3.0
   intl: ^0.19.0
+  firebase_auth: ^5.3.1
+  shared_preferences: ^2.3.2
 
 flutter_native_splash:
   color: "#FFFFFF"
