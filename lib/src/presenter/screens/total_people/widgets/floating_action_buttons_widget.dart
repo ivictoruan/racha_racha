@@ -94,20 +94,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FilledButton(
-                    onPressed: () {
-                      final controller = context.read<CheckController>();
-                      controller.calculateCheckResult();
-                      controller.isSomeoneDrinking = false;
-                      final Map<String, Object> argumentsToHistoryScreen = {
-                        'isFinishing': true,
-                        'check': controller.check,
-                      };
-
-                      Navigator.of(context).pushNamed(
-                        AppRouteManager.result,
-                        arguments: argumentsToHistoryScreen,
-                      );
-                    },
+                    onPressed: () => onYesPressed(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurple,
                     ),
@@ -125,4 +112,19 @@ class FloatingActionButtonsWidget extends StatelessWidget {
           ),
         ),
       );
+
+  void onYesPressed(BuildContext context) {
+    final controller = context.read<CheckController>();
+    controller.calculateCheckResult();
+    controller.isSomeoneDrinking = false;
+    final Map<String, Object> argumentsToHistoryScreen = {
+      'isFinishing': true,
+      'check': controller.check,
+    };
+
+    Navigator.of(context).pushNamed(
+      AppRouteManager.result,
+      arguments: argumentsToHistoryScreen,
+    );
+  }
 }
