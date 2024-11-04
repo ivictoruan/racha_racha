@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppStarter {
-  static Future initFirebase() async {
+  static Future _initFirebase() async {
     await Firebase.initializeApp();
 
     _initCrashlytics();
   }
 
   static Future<void> initApp() async {
-    log("[Usuário] iniciou app");
+    log("[User] starts app");
 
     WidgetsFlutterBinding.ensureInitialized();
 
@@ -24,7 +24,7 @@ class AppStarter {
         DeviceOrientation.portraitDown,
       ],
     );
-    await initFirebase();
+    await _initFirebase();
   }
 
   static void _initCrashlytics() {
