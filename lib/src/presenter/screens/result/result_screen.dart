@@ -10,7 +10,7 @@ import '../../shared/controllers/check_controller.dart';
 import '../../shared/widgets/will_pop_scope_widget.dart';
 import '../../../infra/services/generate_check_service.dart';
 import '../../../infra/services/share_check_service.dart';
-import 'widgets/custom_bottom_nav_bar_widget.dart';
+import 'widgets/bottom_nav_bar_widget.dart';
 import 'widgets/result_body_widget.dart';
 import 'widgets/shared_check_widget.dart';
 
@@ -58,7 +58,7 @@ class _ResultScreenState extends State<ResultScreen> {
         mustShowDialog: widget.isFinishingCheck,
         body: ResultBodyWidget(check: widget.check),
         floatingActionButton: _buildFAB(),
-        bottomNavigationBar: const CustomBottomNavBarWidget(),
+        bottomNavigationBar: const BottomNavBarWidget(),
       );
 
   AppBar? _buildAppBar() => !widget.isFinishingCheck
