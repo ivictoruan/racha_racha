@@ -87,21 +87,10 @@ class IsDrikingButtonsWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: SpaceConstants.extraSmall),
-            Text(
-              "Se há alguém bebendo toque em \"Não\"",
-              style: TextStyle(
-                color: Colors.deepPurple[200],
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: SpaceConstants.medium),
             Consumer<CheckController>(
               builder: (context, controller, child) {
                 return Column(
                   children: [
-                    const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
                       startText: "Total da conta: ",
                       endText: "R\$ ${controller.totalCheckPrice}",
