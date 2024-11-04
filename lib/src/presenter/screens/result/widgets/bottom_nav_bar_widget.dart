@@ -4,13 +4,18 @@ import 'package:provider/provider.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/routes/app_route_manager.dart';
 
-class CustomBottomNavBarWidget extends StatelessWidget {
+class BottomNavBarWidget extends StatefulWidget {
   final bool isFinishingCheck;
-  const CustomBottomNavBarWidget({
+  const BottomNavBarWidget({
     Key? key,
     this.isFinishingCheck = true,
   }) : super(key: key);
 
+  @override
+  State<BottomNavBarWidget> createState() => _BottomNavBarWidgetState();
+}
+
+class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 1;
@@ -22,12 +27,14 @@ class CustomBottomNavBarWidget extends StatelessWidget {
             Navigator.of(context).pushNamed(AppRouteManager.settings);
             break;
           case 2:
-            if (isFinishingCheck) {
+            if (widget.isFinishingCheck) {
               await context.read<CheckController>().restartCheck();
-              Navigator.of(context).pushNamed(
-                AppRouteManager.history,
-                arguments: true,
-              );
+              if (mounted) {
+                Navigator.of(context).pushNamed(
+                  AppRouteManager.history,
+                  arguments: true,
+                );
+              }
             }
 
             break;
@@ -38,11 +45,12 @@ class CustomBottomNavBarWidget extends StatelessWidget {
           icon: Icon(Icons.menu_rounded),
           label: "Menu",
         ),
-        if (isFinishingCheck)
+        
+        if (widget.isFinishingCheck)
           BottomNavigationBarItem(
-            icon: Icon(isFinishingCheck ? Icons.receipt : Icons.abc),
-            label: isFinishingCheck
-                ? "Resultado ${!isFinishingCheck ? "Final" : ''}"
+            icon: Icon(widget.isFinishingCheck ? Icons.receipt : Icons.abc),
+            label: widget.isFinishingCheck
+                ? "Resultado ${!widget.isFinishingCheck ? "Final" : ''}"
                 : "Rachar",
           ),
         const BottomNavigationBarItem(
