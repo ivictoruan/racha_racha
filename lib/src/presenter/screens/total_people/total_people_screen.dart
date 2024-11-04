@@ -21,7 +21,7 @@ class TotalPeopleScreen extends StatefulWidget {
 
 class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
   late final CheckController controller;
-  bool serviceTax = false;
+  bool serviceTax = true;
 
   @override
   void initState() {
@@ -57,7 +57,6 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
                   value: serviceTax,
                   onChanged: (bool newValue) {
                     serviceTax = newValue;
-                    controller.waiterPercentage = 0;
                     setState(() {});
                   },
                 ),
