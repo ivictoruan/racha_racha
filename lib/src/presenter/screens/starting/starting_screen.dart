@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../infra/services/database/auth_service.dart';
 import '../../shared/constants/app_assets.dart';
+import '../../shared/controllers/user_controller.dart';
 import '../../shared/widgets/will_pop_scope_widget.dart';
 import '../../shared/constants/space_constants.dart';
 import 'widgets/go_to_rachar_button_widget.dart';
@@ -15,6 +18,22 @@ class StartingScreen extends StatefulWidget {
 
 class _StartingScreenState extends State<StartingScreen>
     with SingleTickerProviderStateMixin {
+  void init() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final userId = await context.read<AuthService>().signInAnonymously();
+
+      if (mounted) {
+        context.read<UserController>().id = userId;
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
   @override
   Widget build(BuildContext context) => WillPopScopeWidget(
         onYesPressed: () => Navigator.pop(context, true),
