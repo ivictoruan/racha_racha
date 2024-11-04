@@ -19,7 +19,7 @@ class CheckFirestoreDatabaseAdapter {
   static CheckModel fromMap(Map<String, dynamic> map) => CheckModel(
         totalValue: map['totalValue'] ?? 0,
         individualPrice: map['individualPrice'] ?? 0,
-        waiterPercentage: map['waiterPercentage'] ?? 0,
+        waiterPercentage: map['waiterPercentage'] ?? 10,
         totalWaiterValue: map['totalWaiterValue'] ?? 0,
         isSomeoneDrinking: map['isSomeoneDrinking'] ?? false,
         totalDrinkPrice: map['totalDrinkPrice'] ?? 0,
