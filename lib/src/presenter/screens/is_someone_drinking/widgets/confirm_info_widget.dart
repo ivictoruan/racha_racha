@@ -12,7 +12,8 @@ class ConfirmInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+    final TextStyle? style =
+        Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
