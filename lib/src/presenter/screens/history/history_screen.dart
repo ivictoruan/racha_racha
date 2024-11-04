@@ -8,7 +8,7 @@ import '../../shared/constants/app_assets.dart';
 import '../../shared/routes/app_route_manager.dart';
 import '../../shared/widgets/floating_action_button_widget.dart';
 import '../../shared/widgets/loading_screen.dart';
-import '../result/widgets/custom_bottom_nav_bar_widget.dart';
+import '../result/widgets/bottom_nav_bar_widget.dart';
 import 'controller/history_screen_controller.dart';
 import 'widgets/check_item_widget.dart';
 
@@ -58,14 +58,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     },
                   ),
         floatingActionButton: FloatingActionButtonWidget(
-          onPressed: () async {
-            await Navigator.of(context).pushNamed(AppRouteManager.totalValue);
-          },
+          onPressed: () async => await Navigator.of(context).pushNamed(
+            AppRouteManager.totalValue,
+          ),
           isEnabled: !historyController.loading,
           icon: Icons.add,
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: const CustomBottomNavBarWidget(
+        bottomNavigationBar: const BottomNavBarWidget(
           isFinishingCheck: false,
         ),
       ),
