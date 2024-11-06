@@ -27,7 +27,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 25.0),
                 child: RestartCheckWidget(
                   onPressed: () {
-                    controller.restartCheck();
+                    () async => await controller.restartCheck();
                     Navigator.pop(context);
                     Navigator.pop(context);
                   },
@@ -93,7 +93,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
                   children: [
                     ConfirmInfoWidget(
                       startText: "Total da conta: ",
-                      endText: "R\$ ${controller.totalCheckPrice}",
+                      endText: "R\$ ${controller.totalValue}",
                     ),
                     const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
