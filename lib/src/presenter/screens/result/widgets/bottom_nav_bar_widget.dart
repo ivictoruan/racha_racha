@@ -16,6 +16,21 @@ class BottomNavBarWidget extends StatefulWidget {
 }
 
 class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
+  void onHistoryPressed() async {
+    if (widget.isFinishingCheck) {
+      final navigator = Navigator.of(context);
+
+      await context.read<CheckController>().restartCheck();
+
+      if (mounted) {
+        navigator.pushNamedAndRemoveUntil(
+          AppRouteManager.history,
+          (route) => false,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 1;
@@ -26,17 +41,9 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
           case 0:
             Navigator.of(context).pushNamed(AppRouteManager.settings);
             break;
-          case 2:
-            if (widget.isFinishingCheck) {
-              await context.read<CheckController>().restartCheck();
-              if (mounted) {
-                Navigator.of(context).pushNamed(
-                  AppRouteManager.history,
-                  arguments: true,
-                );
-              }
-            }
 
+          case 2:
+            onHistoryPressed();
             break;
         }
       },
@@ -45,7 +52,6 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
           icon: Icon(Icons.menu_rounded),
           label: "Menu",
         ),
-        
         if (widget.isFinishingCheck)
           BottomNavigationBarItem(
             icon: Icon(widget.isFinishingCheck ? Icons.receipt : Icons.abc),
