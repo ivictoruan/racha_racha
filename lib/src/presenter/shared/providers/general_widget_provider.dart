@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../external/services/cache/shared_preferences_cache_service.dart';
 import '../../../external/services/database/firebase_auth_service.dart';
 import '../../../external/services/database/firestore_check_database_service.dart';
+import '../../../infra/services/cache/cache_service.dart';
 import '../../../infra/services/database/auth_service.dart';
 import '../../../infra/services/database/check_database_service.dart';
 import '../controllers/check_controller.dart';
@@ -18,6 +20,9 @@ class GeneralWidgetProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MultiProvider(
         providers: [
+          Provider<CacheService>(
+            create: (_) => SharedPreferencesCacheService(),
+          ),
           Provider<FirebaseAuth>(
             create: (_) => FirebaseAuth.instance,
           ),
@@ -38,8 +43,6 @@ class GeneralWidgetProvider extends StatelessWidget {
               firestore: context.read<FirebaseFirestore>(),
             ),
           ),
-          // UserController
-
           ChangeNotifierProvider(
             create: (context) => CheckController(
               dbService: context.read<CheckDatabaseService>(),
@@ -49,4 +52,3 @@ class GeneralWidgetProvider extends StatelessWidget {
         child: child,
       );
 }
-
