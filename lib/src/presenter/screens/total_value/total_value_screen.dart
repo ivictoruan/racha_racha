@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../shared/extentions/monetary_extention.dart';
+import '../../shared/input_formatters/currency_text_input_formatter.dart';
 import '../../shared/routes/app_route_manager.dart';
+import '../../shared/widgets/text_form_field_widget.dart';
 import '../../shared/widgets/title_text_widget.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/widgets/floating_action_button_widget.dart';
 import '../../shared/widgets/subtitle_text_widget.dart';
 import '../../shared/widgets/will_pop_scope_widget.dart';
 import '../../shared/controllers/check_controller.dart';
-import 'field/total_value_field_widget.dart';
 
 class TotalValueScreen extends StatefulWidget {
   const TotalValueScreen({Key? key}) : super(key: key);
@@ -20,70 +23,43 @@ class TotalValueScreen extends StatefulWidget {
 
 class _TotalValueScreenState extends State<TotalValueScreen> {
   late TextEditingController _textController;
-  void init() {
-    _textController = TextEditingController();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        final controller = context.read<CheckController>();
-
-        _textController.text = controller.totalCheckPrice;
-
-        controller.restartCheck();
-
-        controller.addListener(() {
-          if (mounted) {
-            _textController.text = controller.totalCheckPrice;
-          }
-        });
-      }
-    });
-  }
+  final _currencyFormatter = CurrencyTextInputFormatter();
 
   @override
   void initState() {
     super.initState();
-    init();
+    _textController = TextEditingController();
+
+    _textController.addListener(() {
+      final formattedText = _currencyFormatter
+          .formatEditUpdate(
+            TextEditingValue.empty,
+            TextEditingValue(text: _textController.text),
+          )
+          .text;
+
+      if (formattedText != _textController.text) {
+        _textController.value = TextEditingValue(
+          text: formattedText,
+          selection: TextSelection.collapsed(offset: formattedText.length),
+        );
+      }
+    });
   }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
-  }
-
-  String get titleText => 'Para começar, digite o valor total da sua conta.';
-
-  String get subtitleText =>
-      '* Precisamos do valor do recibo para dar início à divisão da sua conta.';
 
   @override
   Widget build(BuildContext context) {
     final CheckController controller = context.watch<CheckController>();
 
     return WillPopScopeWidget(
-      onYesPressed: () => controller.restartCheck(),
+      onYesPressed: () async => await onYesPressed(),
       body: Column(
         children: [
           TitleTextWidget(
             titleText: titleText,
           ),
           const SizedBox(height: SpaceConstants.medium),
-          TotalValueFieldWidget(
-            controller: _textController,
-            onChanged: (String newTotalCheckValue) {
-              controller.totalCheckPrice = newTotalCheckValue;
-            },
-            onFieldSubmitted: (String newTotalCheckValue) {
-              controller.totalCheckPrice = newTotalCheckValue;
-              bool isValid = controller.check.totalValue > 0;
-              isValid
-                  ? Navigator.of(context).pushNamed(
-                      AppRouteManager.totalPeople,
-                    )
-                  : null;
-            },
-          ),
+          _buildTextFormField(controller: controller, context: context),
           SubitleTextWidget(subtitle: subtitleText),
         ],
       ),
@@ -91,8 +67,54 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
         onPressed: () => Navigator.of(context).pushNamed(
           AppRouteManager.totalPeople,
         ),
-        isEnabled: controller.state == CheckState.totalCheckValueValid,
+        isEnabled: (controller.totalValue > 0),
       ),
     );
+  }
+
+  TextFormFieldWidget _buildTextFormField({
+    required CheckController controller,
+    required BuildContext context,
+  }) =>
+      TextFormFieldWidget(
+        hintText: 'R\$ 0,00',
+        controller: _textController,
+        inputFormatters: <TextInputFormatter>[
+          CurrencyTextInputFormatter(),
+        ],
+        labelText: "Valor total da conta",
+        icon: Icons.price_change_outlined,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        onChanged: (String newTotalCheckValue) {
+          controller.totalValue = newTotalCheckValue.parseCurrency();
+        },
+        onFieldSubmitted: (String newTotalCheckValue) {
+          controller.totalValue = newTotalCheckValue.parseCurrency();
+
+          bool isValid = controller.check.totalValue > 0;
+          if (isValid) {
+            Navigator.of(context).pushNamed(
+              AppRouteManager.totalPeople,
+            );
+          }
+        },
+      );
+
+  String get titleText => 'Para começar, digite o valor total da sua conta.';
+
+  String get subtitleText =>
+      'Precisamos do valor do recibo para dar início à divisão da sua conta.';
+
+  Future<void> onYesPressed() async {
+    final navigator = Navigator.of(context);
+
+    await context.read<CheckController>().restartCheck();
+
+    if (mounted) {
+      navigator.pushNamedAndRemoveUntil(
+        AppRouteManager.history,
+        (route) => false,
+      );
+    }
   }
 }
