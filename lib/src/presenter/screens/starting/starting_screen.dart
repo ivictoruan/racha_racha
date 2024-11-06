@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:racha_racha/src/infra/services/cache/cache_service.dart';
+import 'package:racha_racha/src/presenter/shared/routes/app_route_manager.dart';
 
 import '../../../infra/services/database/auth_service.dart';
 import '../../shared/constants/app_assets.dart';
@@ -18,20 +21,64 @@ class StartingScreen extends StatefulWidget {
 
 class _StartingScreenState extends State<StartingScreen>
     with SingleTickerProviderStateMixin {
-  void init() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final userId = await context.read<AuthService>().signInAnonymously();
+  void _initializeUserSession() {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
 
-      if (mounted) {
-        context.read<UserController>().id = userId;
-      }
+      final userController = context.read<UserController>();
+      final authService = context.read<AuthService>();
+      final cacheService = context.read<CacheService>();
+
+      await _setUserId(
+        userController: userController,
+        authService: authService,
+        cacheService: cacheService,
+      );
+
+      await _handleAppStart(cacheService: cacheService);
     });
+  }
+
+  Future<void> _setUserId({
+    required UserController userController,
+    required AuthService authService,
+    required CacheService cacheService,
+  }) async {
+    final userId = await cacheService.getData<String>('userId');
+
+    if (userId == null || userId.isEmpty) {
+      userController.id = await authService.signInAnonymously();
+      await cacheService.saveData<String>('userId', userController.id);
+    } else {
+      userController.id = userId;
+    }
+  }
+
+  Future<void> _handleAppStart({required CacheService cacheService}) async {
+    final alreadyStarted =
+        await cacheService.getData<bool>('alreadyStartsApp') ?? false;
+
+    if (!alreadyStarted) {
+      await cacheService.saveData<bool>('alreadyStartsApp', true);
+    } else {
+      _navigateToHistory();
+    }
+  }
+
+  void _navigateToHistory() {
+    if (mounted) {
+      Navigator.pushReplacementNamed(context, AppRouteManager.history);
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    init();
+
+    /// TODO: esta inicialização deve estar em outra tela (como FirstRoute ou FirstScreen)
+    /// TODO: levar essa função para essa tela e ela deve levar para a tela de histórico ou para esta te starting
+    /// !FIX: está aparecendo por alguns ms na tela ao redirecionar!
+    _initializeUserSession();
   }
 
   @override
@@ -43,7 +90,7 @@ class _StartingScreenState extends State<StartingScreen>
         floatingActionButton: GoToRacharButtonWidget(
           onPressed: () => Navigator.pushNamedAndRemoveUntil(
             context,
-            '/history',
+            AppRouteManager.history,
             (route) => false,
           ),
         ),
