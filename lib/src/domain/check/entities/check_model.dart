@@ -17,7 +17,7 @@ class CheckModel {
     this.creationDate,
     this.totalValue = 0,
     this.individualPrice = 0,
-    this.waiterPercentage = 10,
+    this.waiterPercentage = 0,
     this.totalWaiterValue = 0,
     this.isSomeoneDrinking = false,
     this.totalDrinkPrice = 0,
