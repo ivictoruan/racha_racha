@@ -14,6 +14,7 @@ import 'widgets/bottom_nav_bar_widget.dart';
 import 'widgets/result_body_widget.dart';
 import 'widgets/shared_check_widget.dart';
 
+// TODO: verificar se CheckDetailsScreen não seria um nome melhor
 class ResultScreen extends StatefulWidget {
   final bool isFinishingCheck;
   final CheckModel check;
@@ -34,7 +35,7 @@ class _ResultScreenState extends State<ResultScreen> {
     if (mounted) {
       Navigator.pushNamedAndRemoveUntil(
         context,
-        '/history',
+        AppRouteManager.history,
         (route) => false,
       );
     }
