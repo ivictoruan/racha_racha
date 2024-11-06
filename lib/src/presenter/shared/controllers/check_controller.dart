@@ -21,9 +21,11 @@ class CheckController extends ChangeNotifier {
   CheckController({required CheckDatabaseService dbService})
       : _dbService = dbService;
 
+// deixar isso como privado?
   CheckModel check = CheckModel();
 
   CheckState state = CheckState.idle;
+
   String _msgError = "Digite o valor total da conta";
 
   String get msgError => _msgError;
@@ -40,12 +42,14 @@ class CheckController extends ChangeNotifier {
     check.totalValue += check.totalWaiterValue;
     if (check.isSomeoneDrinking) {
       _calculateCheckResultWithDrinkers();
+
       await _dbService.createCheck(check: check);
 
       return;
     }
 
     _calculateCheckResultWithoutDrinkers();
+
     await _dbService.createCheck(check: check);
   }
 
@@ -107,28 +111,24 @@ class CheckController extends ChangeNotifier {
     return check.individualPriceWhoIsDrinking;
   }
 
-  String get totalCheckPrice => check.totalValue.toStringAsFixed(2);
+  double get totalValue => check.totalValue;
 
-  double? _parseCurrency(String formattedText) {
-    String cleanedText = formattedText
-        .replaceAll(RegExp(r'[^\d,]'), '')
-        .replaceAll(',', '.')
-        .trim();
-
-    return double.tryParse(cleanedText);
-  }
-
-  set totalCheckPrice(String newTotalCheckPrice) {
+  set totalValue(double? newTotalCheckPrice) {
+    if (newTotalCheckPrice == null) return;
     try {
-      if (newTotalCheckPrice.isNotEmpty &&
-          !newTotalCheckPrice.startsWith(' ')) {
+      if (newTotalCheckPrice == 0) {
+        msgError = "Digite o valor total da conta";
+        state = CheckState.totalCheckValueInvalid;
+        notifyListeners();
+        log('newTotalCheckPrice: $newTotalCheckPrice');
+
+        return;
+      }
+
+      if (newTotalCheckPrice != 0) {
         state = CheckState.totalCheckValueValid;
-        check.totalValue = _parseCurrency(newTotalCheckPrice) ?? 0;
+        check.totalValue = newTotalCheckPrice;
         msgError = "";
-        if (check.totalValue == 0) {
-          msgError = "Digite o valor total da conta";
-          state = CheckState.totalCheckValueInvalid;
-        }
       } else {
         check.totalValue = 0;
         state = CheckState.totalCheckValueInvalid;
@@ -184,6 +184,7 @@ class CheckController extends ChangeNotifier {
   }
 
   set peopleDrinking(String newValuePeopleDriking) {
+    if (newValuePeopleDriking.isEmpty) return;
     try {
       int intNewValuePeopleDriking = int.parse(newValuePeopleDriking);
       bool isTotalPeopleDrinkingSmallerThanTotalPeople =
