@@ -21,10 +21,11 @@ class CurrencyTextInputFormatter extends TextInputFormatter {
 
     final double value = double.parse(cleanedText) / 100;
 
-    final String newText =
-        "R\$ ${value.toStringAsFixed(2).replaceAll('.', ',')}";
+    // Formata o texto final com o símbolo R$
+    final String newText = "R\$ ${value.toStringAsFixed(2).replaceAll('.', ',')}";
 
-    return newValue.copyWith(
+    // Atualiza o valor no campo de texto e posiciona o cursor no final
+    return TextEditingValue(
       text: newText,
       selection: TextSelection.collapsed(offset: newText.length),
     );
