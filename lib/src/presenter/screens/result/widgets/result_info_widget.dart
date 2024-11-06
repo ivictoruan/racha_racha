@@ -20,6 +20,7 @@ class ResultInfoWidget extends StatelessWidget {
     TextStyle textStyle = Theme.of(context).textTheme.bodyLarge!.copyWith(
           color: Colors.deepPurple[700],
           fontSize: 16,
+          overflow: TextOverflow.ellipsis,
         );
 
     return Material(
@@ -49,6 +50,7 @@ class ResultInfoWidget extends StatelessWidget {
               style: textStyle.copyWith(
                 fontWeight: FontWeight.w600,
                 color: Colors.deepPurple[800],
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
