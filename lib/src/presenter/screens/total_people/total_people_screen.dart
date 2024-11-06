@@ -21,7 +21,7 @@ class TotalPeopleScreen extends StatefulWidget {
 
 class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
   late final CheckController controller;
-  bool serviceTax = true;
+  bool serviceTax = false;
 
   @override
   void initState() {
@@ -31,9 +31,11 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
         "Incluíndo você, digite a quantidade de pessoas dividindo a conta.";
   }
 
+  Future<void> onYesPressed() async {}
+
   @override
   Widget build(BuildContext context) => WillPopScopeWidget(
-        onYesPressed: () async => await controller.restartCheck(),
+        onYesPressed: () async => await onYesPressed(),
         body: Column(
           children: [
             const TitleTextWidget(
@@ -44,35 +46,27 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
             const SizedBox(height: SpaceConstants.small),
             const SubitleTextWidget(
               subtitle:
-                  "* Incluíndo você, digite a quantidade de pessoas dividindo a conta.",
+                  "Incluíndo você, digite a quantidade de pessoas dividindo a conta.",
             ),
             const Divider(),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const SubitleTextWidget(
+                SubitleTextWidget(
                   subtitle: "Vai pagar taxa de Serviço/Garçom?",
-                ),
-                Switch(
-                  value: serviceTax,
-                  onChanged: (bool newValue) {
-                    serviceTax = newValue;
-                    setState(() {});
-                  },
                 ),
               ],
             ),
-            serviceTax
-                ? ListenableBuilder(
-                    listenable: controller,
-                    builder: (_, __) => SliderWidget(
-                      value: controller.check.waiterPercentage,
-                      onChanged: (double newWaiterPercentage) =>
-                          controller.waiterPercentage = newWaiterPercentage,
-                      label: controller.waiterPercentage.toStringAsFixed(0),
-                    ),
-                  )
-                : const SizedBox.shrink(),
+            ListenableBuilder(
+              listenable: controller,
+              builder: (_, __) => SliderWidget(
+                value: controller.check.waiterPercentage,
+                onChanged: (double newWaiterPercentage) {
+                  controller.waiterPercentage = newWaiterPercentage;
+                },
+                label: controller.waiterPercentage.toStringAsFixed(0),
+              ),
+            ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -84,12 +78,14 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
                   const SubitleTextWidget(
                     subtitle: "Alguém está bebendo?",
                   ),
-                  Switch(
-                    value: controller.isSomeoneDrinking,
-                    onChanged: (bool isSomeoneDrinking) {
-                      controller.isSomeoneDrinking = isSomeoneDrinking;
-                      setState(() {});
-                    },
+                  ListenableBuilder(
+                    listenable: controller,
+                    builder: (_, __) => Switch(
+                      value: controller.isSomeoneDrinking,
+                      onChanged: (bool isSomeoneDrinking) {
+                        controller.isSomeoneDrinking = isSomeoneDrinking;
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -101,6 +97,11 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
 
   Widget buildTextFormWidget() => TextFormFieldWidget(
         hintText: "Quantas pessoas?",
+        controller: TextEditingController.fromValue(
+          TextEditingValue(
+            text: controller.totalPeople.toString(),
+          ),
+        ),
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(
             RegExp(r'^\d{1,2}$|(?=^.{1,2}$)^\d+\$'),
