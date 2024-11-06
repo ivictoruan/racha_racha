@@ -80,7 +80,7 @@ class TextFormFieldWidget extends StatelessWidget {
                   ? null
                   : Icon(
                       icon,
-                      color: Colors.purple,
+                      color: Colors.deepPurple,
                     ),
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
@@ -98,6 +98,10 @@ class TextFormFieldWidget extends StatelessWidget {
             onChanged: onChanged,
             maxLines: 1,
             onFieldSubmitted: onFieldSubmitted,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       );
