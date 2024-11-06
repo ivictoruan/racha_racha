@@ -12,39 +12,34 @@ class FloatingActionButtonsWidget extends StatelessWidget {
   const FloatingActionButtonsWidget({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<CheckController>(
-      builder: (context, controller, child) {
-        bool isValid = controller.state == CheckState.totalPeopleValueValid;
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 24),
-              child: RestartCheckWidget(
-                onPressed: () {
-                  controller.restartCheck();
-                  Navigator.of(context).pop();
-                },
+  Widget build(BuildContext context) => Consumer<CheckController>(
+        builder: (context, controller, child) {
+          bool isValid = controller.state == CheckState.totalPeopleValueValid;
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 24),
+                child: RestartCheckWidget(
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
               ),
-            ),
-            FloatingActionButtonWidget(
-              onPressed: () async {
-                if (controller.isSomeoneDrinking) {
-                  Navigator.of(context)
-                      .pushNamed(AppRouteManager.isSomeoneDrinking);
-                } else {
-                  controller.check.totalDrinkPrice = 0;
-                  await showModalCustomDialog(context);
-                }
-              },
-              isEnabled: isValid,
-            ),
-          ],
-        );
-      },
-    );
-  }
+              FloatingActionButtonWidget(
+                onPressed: () async {
+                  if (controller.isSomeoneDrinking) {
+                    Navigator.of(context)
+                        .pushNamed(AppRouteManager.isSomeoneDrinking);
+                  } else {
+                    controller.check.totalDrinkPrice = 0;
+                    await showModalCustomDialog(context);
+                  }
+                },
+                isEnabled: isValid,
+              ),
+            ],
+          );
+        },
+      );
 
   Future<void> showModalCustomDialog(BuildContext context) async =>
       await showModalBottomSheet(
@@ -74,7 +69,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
                   children: [
                     ConfirmInfoWidget(
                       startText: "Total da conta: ",
-                      endText: "R\$ ${controller.totalCheckPrice}",
+                      endText: "R\$ ${controller.totalValue}",
                     ),
                     const SizedBox(height: SpaceConstants.extraSmall),
                     ConfirmInfoWidget(
