@@ -4,7 +4,7 @@ description: Com o Racha Racha, você pode dividir facilmente as contas entre am
 
 publish_to: 'none'
 
-version: 1.5.10+10
+version: 1.6.0+11
 
 environment:
   sdk: ">=3.3.4 <4.0.0"
