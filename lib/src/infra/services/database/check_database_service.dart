@@ -1,5 +1,6 @@
 import '../../../domain/check/entities/check_model.dart';
 
+// TODO: alterar para repository
 abstract class CheckDatabaseService {
   Future<void> createCheck({required CheckModel check});
 

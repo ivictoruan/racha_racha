@@ -7,6 +7,7 @@ import '../../../infra/check/model/check_firestore_database_adapter.dart';
 import '../../../infra/services/database/check_database_service.dart';
 import '../../../presenter/shared/controllers/user_controller.dart';
 
+// TODO: alterar para repository
 class FirestoreCheckDatabaseService implements CheckDatabaseService {
   late final FirebaseFirestore _firestore;
   late final UserController _user;
