@@ -3,7 +3,8 @@ class CheckModel {
   // TODO: verificar a necessidade de adicionar uma localização
   // TODO: verificar a necessidade de adicionar um título
   // TODO: verificar a necessidade de adicionar uma lista de participantes
-  // TODO: verificar a necessidade de adicionar uma foto para armazenar a foto 
+  // TODO: verificar a necessidade de adicionar uma foto para armazenar a foto
+  // TODO: verificar a necessidade de adicionar uma descrição
   double totalValue;
   double individualPrice;
   double waiterPercentage;
