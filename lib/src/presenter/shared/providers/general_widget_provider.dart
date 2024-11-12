@@ -32,7 +32,7 @@ class GeneralWidgetProvider extends StatelessWidget {
             ),
           ),
           ChangeNotifierProvider(
-            create: (context) => UserController(),
+            create: (_) => UserController(),
           ),
           Provider<FirebaseFirestore>(
             create: (_) => FirebaseFirestore.instance,
