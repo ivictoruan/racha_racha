@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/infra/services/cache/cache_service.dart';
-import 'package:racha_racha/src/presenter/shared/routes/app_route_manager.dart';
 
 import '../../../infra/services/database/auth_service.dart';
+import '../../../infra/services/cache/cache_service.dart';
+import '../../shared/routes/app_route_manager.dart';
 import '../../shared/constants/app_assets.dart';
 import '../../shared/controllers/user_controller.dart';
 import '../../shared/widgets/will_pop_scope_widget.dart';
