@@ -22,16 +22,4 @@ class FirebaseAuthService extends AuthService {
 
     return user.uid;
   }
-  // TODO: avaliar quando utilizar esta função (deve ser chamada toda vez que o app é iniciado?)
-  // Future<void> refreshCurrentUser() async {
-  //   final user = _auth.currentUser;
-  //   if (user != null) {
-  //     try {
-  //       await user.reload();
-  //       log('RefreshCurretUser: ${user.uid}');
-  //     } catch (e) {
-  //       log('RefreshCurretUser:  $e');
-  //     }
-  //   }
-  // }
 }
