@@ -1,10 +1,12 @@
 class CheckModel {
   DateTime? creationDate;
+  String? id;
   // TODO: verificar a necessidade de adicionar uma localização
   // TODO: verificar a necessidade de adicionar um título
   // TODO: verificar a necessidade de adicionar uma lista de participantes
   // TODO: verificar a necessidade de adicionar uma foto para armazenar a foto
   // TODO: verificar a necessidade de adicionar uma descrição
+  // TODO: verificar a necessidade de adicionar uma uid
   double totalValue;
   double individualPrice;
   double waiterPercentage;
@@ -17,6 +19,7 @@ class CheckModel {
 
   CheckModel({
     this.creationDate,
+    this.id,
     this.totalValue = 0,
     this.individualPrice = 0,
     this.waiterPercentage = 0,
@@ -26,6 +29,7 @@ class CheckModel {
     this.totalPeopleDrinking = 0,
     this.individualPriceWhoIsDrinking = 0,
     this.totalPeople = 1,
-  });
+  }) {
+  }
   factory CheckModel.reseted() => CheckModel();
 }

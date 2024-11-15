@@ -4,6 +4,7 @@ import '../../../domain/check/entities/check_model.dart';
 
 class CheckFirestoreDatabaseAdapter {
   static Map<String, dynamic> toMap(CheckModel check) => {
+        'id': check.id,
         'totalValue': check.totalValue,
         'individualPrice': check.individualPrice,
         'waiterPercentage': check.waiterPercentage,
@@ -17,6 +18,7 @@ class CheckFirestoreDatabaseAdapter {
       };
 
   static CheckModel fromMap(Map<String, dynamic> map) => CheckModel(
+        id: map['id'] ?? '',
         totalValue: map['totalValue'] ?? 0,
         individualPrice: map['individualPrice'] ?? 0,
         waiterPercentage: map['waiterPercentage'] ?? 0,
