@@ -14,22 +14,21 @@ import 'widgets/bottom_nav_bar_widget.dart';
 import 'widgets/result_body_widget.dart';
 import 'widgets/shared_check_widget.dart';
 
-// TODO: verificar se CheckDetailsScreen não seria um nome melhor
-class ResultScreen extends StatefulWidget {
+class CheckDetailsScreen extends StatefulWidget {
   final bool isFinishingCheck;
   final CheckModel check;
 
-  const ResultScreen({
+  const CheckDetailsScreen({
     Key? key,
     this.isFinishingCheck = true,
     required this.check,
   }) : super(key: key);
 
   @override
-  State<ResultScreen> createState() => _ResultScreenState();
+  State<CheckDetailsScreen> createState() => _CheckDetailsScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreen> {
+class _CheckDetailsScreenState extends State<CheckDetailsScreen> {
   void onYesPressed() async {
     await context.read<CheckController>().restartCheck();
     if (mounted) {
