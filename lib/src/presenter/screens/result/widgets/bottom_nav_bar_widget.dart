@@ -34,23 +34,38 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
   @override
   Widget build(BuildContext context) {
     int selectedIndex = 1;
+    if (!widget.isFinishingCheck) {
+      selectedIndex = 0;
+    }
     return BottomNavigationBar(
       currentIndex: selectedIndex,
       onTap: (int index) async {
         switch (index) {
           case 0:
-            Navigator.of(context).pushNamed(AppRouteManager.settings);
-            break;
+            {
+              onHistoryPressed();
+              break;
+            }
+
+          case 1:
+            {
+              if (!widget.isFinishingCheck) {
+                Navigator.of(context).pushNamed(AppRouteManager.settings);
+              }
+              break;
+            }
 
           case 2:
-            onHistoryPressed();
-            break;
+            {
+              Navigator.of(context).pushNamed(AppRouteManager.settings);
+              break;
+            }
         }
       },
       items: [
         const BottomNavigationBarItem(
-          icon: Icon(Icons.menu_rounded),
-          label: "Menu",
+          icon: Icon(Icons.history),
+          label: "Divisões",
         ),
         if (widget.isFinishingCheck)
           BottomNavigationBarItem(
@@ -60,8 +75,8 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                 : "Rachar",
           ),
         const BottomNavigationBarItem(
-          icon: Icon(Icons.history),
-          label: "Histórico",
+          icon: Icon(Icons.menu_rounded),
+          label: "Menu",
         ),
       ],
     );
