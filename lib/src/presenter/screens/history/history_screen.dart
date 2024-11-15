@@ -40,22 +40,32 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return WillPopScope(
       onWillPop: () => onWillPop(context),
       child: Scaffold(
+        appBar: AppBar(
+          titleTextStyle: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                color: Colors.deepPurple[600],
+                fontWeight: FontWeight.w600,
+              ),
+          title: const Text('Histórico'),
+        ),
         backgroundColor: Theme.of(context).colorScheme.surface,
         body: historyController.loading
             ? const LoadingScreen()
             : historyController.checks.isEmpty
                 ? _buildEmptyWidget(context)
-                : ListView.builder(
-                    itemCount: historyController.checks.length,
-                    itemBuilder: (context, index) {
-                      final check = historyController.checks[index];
-                      final checkIndex =
-                          historyController.checks.length - index;
-                      return CheckItemWidget(
-                        check: check,
-                        index: checkIndex,
-                      );
-                    },
+                : ListenableBuilder(
+                    listenable: historyController,
+                    builder: (context, child) => ListView.builder(
+                      itemCount: historyController.checks.length,
+                      itemBuilder: (context, index) {
+                        final check = historyController.checks[index];
+                        final checkIndex =
+                            historyController.checks.length - index;
+                        return CheckItemWidget(
+                          check: check,
+                          index: checkIndex,
+                        );
+                      },
+                    ),
                   ),
         floatingActionButton: FloatingActionButtonWidget(
           onPressed: () async => await Navigator.of(context).pushNamed(
