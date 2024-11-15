@@ -44,6 +44,7 @@ class SharedCheckWidget extends StatelessWidget {
       );
 
   Future<void> _onShareCheck({required CheckModel check}) async {
+    // TODO: gerar essa imagem diretamente no ShareService
     await generateImageService
         .generateImage(
           check: check,
