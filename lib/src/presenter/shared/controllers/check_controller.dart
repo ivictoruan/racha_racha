@@ -267,4 +267,8 @@ class CheckController extends ChangeNotifier {
     await Future.delayed(Duration.zero);
     notifyListeners();
   }
+
+  Future<void> delete(CheckModel check) async {
+    _dbService.deleteCheck(checkId: check.id!);
+  }
 }
