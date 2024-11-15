@@ -33,9 +33,15 @@ class FirestoreCheckDatabaseService implements CheckDatabaseService {
   @override
   Future<void> createCheck({required CheckModel check}) async {
     try {
-      await _userChecksCollection.add(
-        CheckFirestoreDatabaseAdapter.toMap(check),
+      String checkId = check.id ?? _userChecksCollection.doc().id;
+
+      await _userChecksCollection.doc(checkId).set(
+        {
+          ...CheckFirestoreDatabaseAdapter.toMap(check),
+          'id': checkId,
+        },
       );
+
       log('Check criado com sucesso para o usuário ${_user.id}!');
     } catch (e) {
       log('Erro ao criar check para o usuário ${_user.id}: $e');
@@ -88,13 +94,13 @@ class FirestoreCheckDatabaseService implements CheckDatabaseService {
   //   }
   // }
 
-  // @override
-  // Future<void> deleteCheck({required String checkId}) async {
-  //   try {
-  //     await _userChecksCollection.doc(checkId).delete();
-  //     log('Check excluído com sucesso para o usuário $_userId!');
-  //   } catch (e) {
-  //     log('Erro ao excluir check do usuário $_userId: $e');
-  //   }
-  // }
+  @override
+  Future<void> deleteCheck({required String checkId}) async {
+    try {
+      await _userChecksCollection.doc(checkId).delete();
+      log('Check excluído com sucesso para o usuário ${_user.id}!');
+    } catch (e) {
+      log('Erro ao excluir check do usuário ${_user.id}: $e');
+    }
+  }
 }

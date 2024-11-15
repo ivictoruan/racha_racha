@@ -13,5 +13,5 @@ abstract class CheckDatabaseService {
   //   required CheckModel check,
   // });
 
-  // Future<void> deleteCheck({required String checkId});
+  Future<void> deleteCheck({required String checkId});
 }
