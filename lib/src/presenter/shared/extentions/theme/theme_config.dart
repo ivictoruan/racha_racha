@@ -11,7 +11,7 @@ class ThemeConfig {
       seedColor: Colors.deepPurple,
       surface: Colors.white,
       primary: Colors.deepPurple,
-      primaryContainer: const Color(0xFFD1C4E9),
+      primaryContainer: Colors.deepPurple[50],
       onSurface: Colors.black87,
     ),
     appBarTheme: const AppBarTheme(
