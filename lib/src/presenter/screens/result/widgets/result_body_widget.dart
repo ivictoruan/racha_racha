@@ -15,7 +15,7 @@ class ResultBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle headerStyle = Theme.of(context).textTheme.headlineSmall!.copyWith(
           color: Colors.deepPurple[600],
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
         );
 
     return SafeArea(
