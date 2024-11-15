@@ -4,8 +4,8 @@ import '../../../domain/check/entities/check_model.dart';
 import '../../screens/history/history_screen.dart';
 import '../../screens/history/provider/history_screen_provider.dart';
 import '../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
-import '../../screens/result/provider/result_screen_provider.dart';
-import '../../screens/result/result_screen.dart';
+import '../../screens/result/provider/check_details_screen_provider.dart';
+import '../../screens/result/check_details_screen.dart';
 import '../../screens/result/widgets/want_donate_widget.dart';
 import '../../screens/settings/settings_screen.dart';
 import '../../screens/starting/starting_screen.dart';
@@ -53,8 +53,8 @@ class AppRouteManager {
 
             final check = arguments['check'] as CheckModel;
 
-            return ResultScreenProvider(
-              child: ResultScreen(
+            return CheckDetailsScreenProvider(
+              child: CheckDetailsScreen(
                 isFinishingCheck: isFinishingCheck,
                 check: check,
               ),
