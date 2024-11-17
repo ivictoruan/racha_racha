@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/check/entities/check_model.dart';
 import '../../screens/history/history_screen.dart';
+import '../../screens/first/first_screen.dart';
 import '../../screens/history/provider/history_screen_provider.dart';
 import '../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
 import '../../screens/result/provider/check_details_screen_provider.dart';
@@ -13,7 +14,8 @@ import '../../screens/total_people/total_people_screen.dart';
 import '../../screens/total_value/total_value_screen.dart';
 
 class AppRouteManager {
-  static const String starting = '/';
+  static const String firstScreen = '/';
+  static const String starting = '/starting';
   static const String history = '/history';
   static const String totalValue = '/totalValue';
   static const String totalPeople = '/totalPeople';
@@ -24,12 +26,14 @@ class AppRouteManager {
 
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+      case firstScreen:
+        return MaterialPageRoute(builder: (_) => const FirstScreen());
       case starting:
         return MaterialPageRoute(builder: (_) => const StartingScreen());
       case history:
         return MaterialPageRoute(
           builder: (_) => const HistoryScreenProvider(
-            child: HistoryScreen(),
+            child: HistoryScreenWrapper(),
           ),
         );
       case totalValue:
