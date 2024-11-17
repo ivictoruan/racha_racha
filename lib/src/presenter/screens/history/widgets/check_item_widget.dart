@@ -103,6 +103,7 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
           child: Padding(
             padding: const EdgeInsets.all(SpaceConstants.medium),
             child: ListTile(
+              minVerticalPadding: 0,
               dense: true,
               title: Row(
                 children: [
