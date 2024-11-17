@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../shared/widgets/box_shadow_widget.dart';
 
 class GoToRacharButtonWidget extends StatelessWidget {
   final void Function()? onPressed;
@@ -8,11 +9,7 @@ class GoToRacharButtonWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Material(
-        elevation: 5,
-        borderRadius: BorderRadius.circular(14),
-        shadowColor: Colors.deepPurple,
-        color: Colors.deepPurple[100],
+  Widget build(BuildContext context) => BoxShadowWidget(
         child: FloatingActionButton.extended(
           backgroundColor: Colors.deepPurple,
           onPressed: onPressed,
@@ -22,7 +19,7 @@ class GoToRacharButtonWidget extends StatelessWidget {
             color: Colors.white,
           ),
           label: const Text(
-            "Rachar",
+            "Começar",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
