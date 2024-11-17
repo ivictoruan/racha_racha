@@ -8,19 +8,19 @@ class HistoryScreenController with ChangeNotifier {
 
   HistoryScreenController({required this.checkService});
 
-  bool _loading = false;
-  bool get loading => _loading;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
 
   List<CheckModel> _checks = [];
   List<CheckModel> get checks => _checks;
 
   Future<void> fetchChecks() async {
-    _loading = true;
+    _isLoading = true;
     notifyListeners();
     try {
       _checks = await checkService.getAllChecks()!;
     } finally {
-      _loading = false;
+      _isLoading = false;
       notifyListeners();
     }
   }
