@@ -4,7 +4,7 @@ class CheckModel {
   // TODO: verificar a necessidade de adicionar uma localização
   // TODO: verificar a necessidade de adicionar um título
   // TODO: verificar a necessidade de adicionar uma lista de participantes
-  // TODO: verificar a necessidade de adicionar uma foto para armazenar a foto
+  // TODO: verificar a necessidade de adicionar uma foto
   // TODO: verificar a necessidade de adicionar uma descrição
   // TODO: verificar a necessidade de adicionar uma uid
   double totalValue;
@@ -29,7 +29,7 @@ class CheckModel {
     this.totalPeopleDrinking = 0,
     this.individualPriceWhoIsDrinking = 0,
     this.totalPeople = 1,
-  }) {
-  }
+  });
+
   factory CheckModel.reseted() => CheckModel();
 }
