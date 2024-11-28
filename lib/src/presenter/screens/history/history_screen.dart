@@ -1,17 +1,17 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:racha_racha/src/presenter/screens/history/widgets/popups/want_exit_popup_widget.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import '../../../infra/services/cache/cache_service.dart';
 import '../../shared/constants/app_assets.dart';
 import '../../shared/constants/cache_keys.dart';
 import '../../shared/routes/app_route_manager.dart';
-import '../../shared/widgets/floating_action_button_widget.dart';
-import '../../shared/widgets/loading_screen.dart';
+import '../../shared/ui/widgets/floating_action_button_widget.dart';
+import '../../shared/ui/widgets/loading_screen.dart';
 import '../result/widgets/bottom_nav_bar_widget.dart';
 import 'controller/history_screen_controller.dart';
 import 'widgets/check_item_widget.dart';
@@ -24,9 +24,6 @@ class HistoryScreenWrapper extends StatelessWidget {
     return ShowCaseWidget(
       autoPlay: true,
       autoPlayDelay: const Duration(seconds: 3),
-      onStart: (a, b) {
-        log('starting');
-      },
 
       onFinish: () async {
         final navigator = Navigator.of(context);
@@ -104,8 +101,8 @@ class _HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<_HistoryScreen> {
   init() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<HistoryScreenController>(context, listen: false)
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Provider.of<HistoryScreenController>(context, listen: false)
           .fetchChecks();
     });
   }
@@ -121,9 +118,7 @@ class _HistoryScreenState extends State<_HistoryScreen> {
     final historyController = Provider.of<HistoryScreenController>(context);
 
     return WillPopScope(
-      onWillPop: () {
-        return Future.value(false);
-      },
+      onWillPop: () => onWillPop(),
       child: Scaffold(
         appBar: AppBar(
           title: Showcase(
@@ -181,6 +176,14 @@ class _HistoryScreenState extends State<_HistoryScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> onWillPop() async {
+    final shouldPop = await showDialog<bool>(
+      context: context,
+      builder: (context) => WantExitPopupWidget(),
+    );
+    return shouldPop ?? false;
   }
 
   Widget _buildEmptyWidget(BuildContext context) => Column(
