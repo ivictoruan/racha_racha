@@ -1,12 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../../../../domain/check/entities/check_model.dart';
-import '../../../../infra/services/database/check_database_service.dart';
+import '../../../../domain/check/usecases/get_all_checks.dart';
 
 class HistoryScreenController with ChangeNotifier {
-  final CheckDatabaseService checkService;
+  final GetAllChecks getAllChecks;
 
-  HistoryScreenController({required this.checkService});
+  HistoryScreenController({
+    required this.getAllChecks,
+  });
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -17,12 +21,19 @@ class HistoryScreenController with ChangeNotifier {
   Future<void> fetchChecks() async {
     _isLoading = true;
     notifyListeners();
-    try {
-      _checks = await checkService.getAllChecks()!;
-    } finally {
-      _isLoading = false;
-      notifyListeners();
-    }
+
+    final result = await getAllChecks.call();
+
+    result.fold(
+      (failure) {
+        log(failure.message.toString());
+      },
+      (sucess) {
+        _checks = sucess.checks;
+      },
+    );
+    _isLoading = false;
+    notifyListeners();
   }
 
   Future<void> reloadChecks() async {
