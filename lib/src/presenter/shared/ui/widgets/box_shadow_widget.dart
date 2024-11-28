@@ -13,7 +13,7 @@ class BoxShadowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Material(
-        elevation: isExpaded ? 0 : 2,
+        elevation: isExpaded ? 0 : 1,
         shadowColor: Colors.deepPurpleAccent,
         color: Colors.white,
         borderRadius: isExpaded
