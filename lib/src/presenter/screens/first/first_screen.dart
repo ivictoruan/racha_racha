@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 
-import '../../../infra/services/database/auth_service.dart';
 import '../../../infra/services/cache/cache_service.dart';
 import '../../shared/constants/cache_keys.dart';
 import '../../shared/routes/app_route_manager.dart';
@@ -21,12 +20,10 @@ class _FirstScreenState extends State<FirstScreen> {
       if (!mounted) return;
 
       final userController = context.read<UserController>();
-      final authService = context.read<AuthService>();
       final cacheService = context.read<CacheService>();
 
       await _setUserId(
         userController: userController,
-        authService: authService,
         cacheService: cacheService,
       );
 
@@ -36,13 +33,11 @@ class _FirstScreenState extends State<FirstScreen> {
 
   Future<void> _setUserId({
     required UserController userController,
-    required AuthService authService,
     required CacheService cacheService,
   }) async {
     final userId = await cacheService.getData<String>(CacheKeys.userId);
 
     if (userId == null || userId.isEmpty) {
-      userController.id = await authService.signInAnonymously();
       await cacheService.saveData<String>(
         CacheKeys.userId,
         userController.id,
