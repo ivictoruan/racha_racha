@@ -30,6 +30,32 @@ class CheckModel {
     this.individualPriceWhoIsDrinking = 0,
     this.totalPeople = 1,
   });
-
-  factory CheckModel.reseted() => CheckModel();
+   CheckModel copyWith({
+    String? id,
+    DateTime? creationDate,
+    double? totalValue,
+    double? individualPrice,
+    double? waiterPercentage,
+    double? totalWaiterValue,
+    bool? isSomeoneDrinking,
+    double? totalDrinkPrice,
+    int? totalPeopleDrinking,
+    double? individualPriceWhoIsDrinking,
+    int? totalPeople,
+  }) {
+    return CheckModel(
+      id: id ?? this.id,
+      creationDate: creationDate ?? this.creationDate,
+      totalValue: totalValue ?? this.totalValue,
+      individualPrice: individualPrice ?? this.individualPrice,
+      waiterPercentage: waiterPercentage ?? this.waiterPercentage,
+      totalWaiterValue: totalWaiterValue ?? this.totalWaiterValue,
+      isSomeoneDrinking: isSomeoneDrinking ?? this.isSomeoneDrinking,
+      totalDrinkPrice: totalDrinkPrice ?? this.totalDrinkPrice,
+      totalPeopleDrinking: totalPeopleDrinking ?? this.totalPeopleDrinking,
+      individualPriceWhoIsDrinking:
+          individualPriceWhoIsDrinking ?? this.individualPriceWhoIsDrinking,
+      totalPeople: totalPeople ?? this.totalPeople,
+    );
+  }
 }
