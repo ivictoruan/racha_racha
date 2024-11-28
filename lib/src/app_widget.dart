@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'presenter/shared/extentions/theme/theme_config.dart';
+import 'presenter/shared/ui/theme/theme_config.dart';
 import 'presenter/shared/routes/app_route_manager.dart';
 
 class RachaRachaApp extends StatelessWidget {
