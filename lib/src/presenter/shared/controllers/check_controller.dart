@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
+import '../../../domain/check/repositories/check_repository.dart';
 import '../../../domain/check/entities/check_model.dart';
-import '../../../infra/services/database/check_database_service.dart';
 
 enum CheckState {
   totalCheckValueInvalid,
@@ -15,11 +15,31 @@ enum CheckState {
   formInValid,
 }
 
-class CheckController extends ChangeNotifier {
-  final CheckDatabaseService _dbService;
+// abstract class CheckController extends ChangeNotifier {
+//   // Função para calcular o resultado da conta
+//   Future<void> calculateCheckResult();
+//   // Funções getter e setter para os dados de entrada (como totalValue, totalPeople, etc.)
+//   set totalValue(double? newTotalCheckPrice);
+//   set totalPeople(String totalPeople);
+//   set waiterPercentage(double newWaiterPercentage);
+//   set totalDrinkPrice(String newTotalDrinkPrice);
+//   set peopleDrinking(String newValuePeopleDriking);
+//   set isSomeoneDrinking(bool newIsSomeoneDrinking);
+//   // Função para reiniciar a conta
+//   Future<void> restartCheck();
+//   // Função para deletar a conta do banco de dados
+//   Future<void> delete(CheckModel check);
+//   // Getter para mensagem de erro
+//   String get msgError;
+//   // Getter para o estado atual da conta
+//   CheckState get state;
+// }
 
-  CheckController({required CheckDatabaseService dbService})
-      : _dbService = dbService;
+class CheckController extends ChangeNotifier {
+  final CheckRepository _repository;
+
+  CheckController({required CheckRepository repository})
+      : _repository = repository;
 
 // deixar isso como privado?
   CheckModel check = CheckModel();
@@ -43,14 +63,14 @@ class CheckController extends ChangeNotifier {
     if (check.isSomeoneDrinking) {
       _calculateCheckResultWithDrinkers();
 
-      await _dbService.createCheck(check: check);
+      await _repository.createCheck(check: check);
 
       return;
     }
 
     _calculateCheckResultWithoutDrinkers();
 
-    await _dbService.createCheck(check: check);
+    await _repository.createCheck(check: check);
   }
 
   void _calculateCheckResultWithoutDrinkers() {
@@ -144,6 +164,9 @@ class CheckController extends ChangeNotifier {
     try {
       if (totalPeople.isNotEmpty && !totalPeople.startsWith(' ')) {
         int intTotalPeople = int.parse(totalPeople);
+        if (intTotalPeople <= 1) {
+          return;
+        }
         state = CheckState.totalPeopleValueValid;
         check.totalPeople = intTotalPeople;
         msgError =
@@ -262,13 +285,13 @@ class CheckController extends ChangeNotifier {
 
   Future<void> restartCheck() async {
     state = CheckState.idle;
-    check = CheckModel.reseted();
+    check = CheckModel();
     msgError = "";
     await Future.delayed(Duration.zero);
     notifyListeners();
   }
 
   Future<void> delete(CheckModel check) async {
-    _dbService.deleteCheck(checkId: check.id!);
+    _repository.deleteCheck(checkId: check.id!);
   }
 }
