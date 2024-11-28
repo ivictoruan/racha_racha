@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 
 import '../../shared/constants/space_constants.dart';
 import '../../shared/routes/app_route_manager.dart';
-import '../../shared/widgets/subtitle_text_widget.dart';
-import '../../shared/widgets/will_pop_scope_widget.dart';
+import '../../shared/ui/widgets/subtitle_text_widget.dart';
+import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import '../../shared/controllers/check_controller.dart';
-import '../../shared/widgets/text_form_field_widget.dart';
-import '../../shared/widgets/title_text_widget.dart';
-import '../../shared/widgets/slider_widget.dart';
+import '../../shared/ui/widgets/text_form_field_widget.dart';
+import '../../shared/ui/widgets/title_text_widget.dart';
+import '../../shared/ui/widgets/slider_widget.dart';
 import 'widgets/floating_action_buttons_widget.dart';
 
 class TotalPeopleScreen extends StatefulWidget {
@@ -44,7 +44,7 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
             const SizedBox(height: SpaceConstants.medium),
             buildTextFormWidget(),
             const SizedBox(height: SpaceConstants.small),
-            const SubitleTextWidget(
+            const SubtitleTextWidget(
               subtitle:
                   "Incluíndo você, digite a quantidade de pessoas dividindo a conta.",
             ),
@@ -52,7 +52,7 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SubitleTextWidget(
+                SubtitleTextWidget(
                   subtitle: "Vai pagar taxa de Serviço/Garçom?",
                 ),
               ],
@@ -75,7 +75,7 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const SubitleTextWidget(
+                  const SubtitleTextWidget(
                     subtitle: "Alguém está bebendo?",
                   ),
                   ListenableBuilder(
@@ -95,33 +95,39 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
         floatingActionButton: const FloatingActionButtonsWidget(),
       );
 
-  Widget buildTextFormWidget() => TextFormFieldWidget(
-        hintText: "Quantas pessoas?",
-        controller: TextEditingController.fromValue(
-          TextEditingValue(
-            text: controller.totalPeople.toString(),
-          ),
+  Widget buildTextFormWidget() {
+    final String initialText =
+        (controller.totalPeople == 1 ? '' : controller.totalPeople).toString();
+
+    return TextFormFieldWidget(
+      hintText: "Quantas pessoas?",
+      controller: TextEditingController.fromValue(
+        TextEditingValue(text: initialText),
+      ),
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(
+          RegExp(r'^\d{1,2}$|(?=^.{1,2}$)^\d+\$'),
         ),
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(
-            RegExp(r'^\d{1,2}$|(?=^.{1,2}$)^\d+\$'),
-          ),
-        ],
-        labelText: "Quantidade de pessoas",
-        icon: Icons.people_outline_sharp,
-        keyboardType: const TextInputType.numberWithOptions(decimal: false),
-        onChanged: (String newTotalPeople) =>
-            controller.totalPeople = newTotalPeople,
-        onFieldSubmitted: (String newTotalPeople) {
-          controller.totalPeople = newTotalPeople;
+      ],
+      labelText: "Quantidade de pessoas",
+      icon: Icons.people_outline_sharp,
+      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+      onChanged: (String newTotalPeople) =>
+          controller.totalPeople = newTotalPeople,
+      onFieldSubmitted: (String newTotalPeople) {
+        controller.totalPeople = newTotalPeople;
 
-          bool isValid = controller.totalPeople > 1;
+        bool isValid = controller.totalPeople > 1;
 
-          if (!isValid) {
-            return;
-          }
+        if (!isValid) {
+          return;
+        }
+
+        if (controller.isSomeoneDrinking) {
           Navigator.of(context).pushNamed(AppRouteManager.isSomeoneDrinking);
-        },
-        onClearTextPressed: () => controller.totalPeople = '1',
-      );
+          return;
+        }
+      },
+    );
+  }
 }
