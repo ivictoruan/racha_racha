@@ -20,7 +20,7 @@ class AppRouteManager {
   static const String totalValue = '/totalValue';
   static const String totalPeople = '/totalPeople';
   static const String isSomeoneDrinking = '/isSomeoneDrinking';
-  static const String result = '/result';
+  static const String checkDetails = '/checkDetails';
   static const String settings = '/settings';
   static const String wantDonate = '/wantDonate';
 
@@ -48,7 +48,7 @@ class AppRouteManager {
         return MaterialPageRoute(
           builder: (_) => const IsSomeoneDrinkingScreen(),
         );
-      case result:
+      case checkDetails:
         return MaterialPageRoute(
           builder: (_) {
             final arguments = routeSettings.arguments as Map<String, Object>;
