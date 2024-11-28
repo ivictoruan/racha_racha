@@ -1,14 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../domain/check/repositories/check_repository.dart';
+import '../../../external/check/datasourcers/sqflite_check_datasource.dart';
 import '../../../external/services/cache/shared_preferences_cache_service.dart';
-import '../../../external/services/database/firebase_auth_service.dart';
-import '../../../external/services/database/firestore_check_database_service.dart';
+import '../../../infra/check/check_repository_impl.dart';
+import '../../../infra/check/datasourcers/local_check_datasource.dart';
 import '../../../infra/services/cache/cache_service.dart';
-import '../../../infra/services/database/auth_service.dart';
-import '../../../infra/services/database/check_database_service.dart';
 import '../controllers/check_controller.dart';
 import '../controllers/user_controller.dart';
 
@@ -23,29 +21,20 @@ class GeneralWidgetProvider extends StatelessWidget {
           Provider<CacheService>(
             create: (_) => SharedPreferencesCacheService(),
           ),
-          Provider<FirebaseAuth>(
-            create: (_) => FirebaseAuth.instance,
-          ),
-          Provider<AuthService>(
-            create: (context) => FirebaseAuthService(
-              auth: context.read<FirebaseAuth>(),
-            ),
-          ),
           ChangeNotifierProvider(
             create: (_) => UserController(),
           ),
-          Provider<FirebaseFirestore>(
-            create: (_) => FirebaseFirestore.instance,
+          Provider<LocalCheckDatasource>(
+            create: (context) => SqfliteCheckDatasource(),
           ),
-          Provider<CheckDatabaseService>(
-            create: (context) => FirestoreCheckDatabaseService(
-              user: context.read<UserController>(),
-              firestore: context.read<FirebaseFirestore>(),
+          Provider<CheckRepository>(
+            create: (context) => CheckRepositoryImpl(
+              localDatasource: context.read<LocalCheckDatasource>(),
             ),
           ),
-          ChangeNotifierProvider(
+          ChangeNotifierProvider<CheckController>(
             create: (context) => CheckController(
-              dbService: context.read<CheckDatabaseService>(),
+              repository: context.read<CheckRepository>(),
             ),
           ),
         ],
