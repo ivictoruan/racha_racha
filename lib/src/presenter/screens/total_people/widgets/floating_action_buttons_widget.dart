@@ -13,32 +13,29 @@ class FloatingActionButtonsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Consumer<CheckController>(
-        builder: (context, controller, child) {
-          bool isValid = controller.state == CheckState.totalPeopleValueValid;
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 24),
-                child: RestartButtonWidget(
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
+        builder: (context, controller, child) => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 24),
+              child: RestartButtonWidget(
+                onPressed: () => Navigator.of(context).pop(),
               ),
-              FloatingActionButtonWidget(
-                onPressed: () async {
-                  if (controller.isSomeoneDrinking) {
-                    Navigator.of(context)
-                        .pushNamed(AppRouteManager.isSomeoneDrinking);
-                  } else {
-                    controller.check.totalDrinkPrice = 0;
-                    await showModalCustomDialog(context);
-                  }
-                },
-                isEnabled: isValid,
-              ),
-            ],
-          );
-        },
+            ),
+            FloatingActionButtonWidget(
+              onPressed: () async {
+                if (controller.isSomeoneDrinking) {
+                  Navigator.of(context)
+                      .pushNamed(AppRouteManager.isSomeoneDrinking);
+                } else {
+                  controller.check.totalDrinkPrice = 0;
+                  await showModalCustomDialog(context);
+                }
+              },
+              isEnabled: controller.state == CheckState.totalPeopleValueValid,
+            ),
+          ],
+        ),
       );
 
   Future<void> showModalCustomDialog(BuildContext context) async =>
