@@ -60,7 +60,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
           ),
           const SizedBox(height: SpaceConstants.medium),
           _buildTextFormField(controller: controller, context: context),
-          SubitleTextWidget(subtitle: subtitleText),
+          SubtitleTextWidget(subtitle: subtitleText),
         ],
       ),
       floatingActionButton: FloatingActionButtonWidget(

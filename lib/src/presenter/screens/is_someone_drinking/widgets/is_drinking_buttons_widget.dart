@@ -5,7 +5,7 @@ import '../../../../domain/check/entities/check_model.dart';
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/routes/app_route_manager.dart';
-import '../../../shared/ui/widgets/restart_check_widget.dart';
+import '../../../shared/ui/widgets/restart_button_widget.dart';
 import 'confirm_info_widget.dart';
 
 class IsDrikingButtonsWidget extends StatelessWidget {
@@ -24,7 +24,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 25.0),
-                child: RestartCheckWidget(
+                child: RestartButtonWidget(
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.pop(context);

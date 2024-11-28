@@ -5,7 +5,7 @@ import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/routes/app_route_manager.dart';
 import '../../../shared/ui/widgets/floating_action_button_widget.dart';
-import '../../../shared/ui/widgets/restart_check_widget.dart';
+import '../../../shared/ui/widgets/restart_button_widget.dart';
 import '../../is_someone_drinking/widgets/confirm_info_widget.dart';
 
 class FloatingActionButtonsWidget extends StatelessWidget {
@@ -20,7 +20,7 @@ class FloatingActionButtonsWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 24),
-                child: RestartCheckWidget(
+                child: RestartButtonWidget(
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ),
