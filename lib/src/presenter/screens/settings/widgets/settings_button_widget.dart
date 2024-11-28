@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/constants/space_constants.dart';
+import '../../../shared/ui/widgets/box_shadow_widget.dart';
 
 class SettingsButtonWidget extends StatelessWidget {
   final String text;
@@ -18,11 +18,7 @@ class SettingsButtonWidget extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: onTap,
-          child: Material(
-            elevation: 2,
-            shadowColor: Colors.deepPurple,
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(SpaceConstants.extraSmall),
+          child: BoxShadowWidget(
             child: SizedBox(
               height: 70,
               child: Row(

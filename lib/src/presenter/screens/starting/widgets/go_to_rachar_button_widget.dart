@@ -1,38 +1,25 @@
 import 'package:flutter/material.dart';
+import '../../../shared/ui/widgets/box_shadow_widget.dart';
 
-import '../../../shared/utils/custom_utils.dart';
-
-class GoToRacharButtonWidget extends StatefulWidget {
-  const GoToRacharButtonWidget({super.key});
-
-  @override
-  State<GoToRacharButtonWidget> createState() => _GoToRacharButtonWidgetState();
-}
-
-class _GoToRacharButtonWidgetState extends State<GoToRacharButtonWidget> {
-  CustomUtils get customUtils => CustomUtils();
-
-  void get onPressed => customUtils.goTo(
-        "/totalValue",
-        context,
-      );
+class GoToRacharButtonWidget extends StatelessWidget {
+  final void Function()? onPressed;
+  const GoToRacharButtonWidget({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
-  Widget build(BuildContext context) => Material(
-        elevation: 5,
-        borderRadius: BorderRadius.circular(14),
-        shadowColor: Colors.deepPurple,
-        color: Colors.deepPurple[100],
+  Widget build(BuildContext context) => BoxShadowWidget(
         child: FloatingActionButton.extended(
           backgroundColor: Colors.deepPurple,
-          onPressed: () => onPressed,
+          onPressed: onPressed,
           icon: const Icon(
             Icons.arrow_forward_ios,
             size: 16,
             color: Colors.white,
           ),
           label: const Text(
-            "Rachar",
+            "Começar",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,

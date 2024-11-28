@@ -7,12 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class AppStarter {
+  static Future _initFirebase() async {
+    await Firebase.initializeApp();
+
+    _initCrashlytics();
+  }
+
   static Future<void> initApp() async {
-    log("[Usuário] iniciou app");
+    log("[User] starts app");
 
     WidgetsFlutterBinding.ensureInitialized();
-
-    await Firebase.initializeApp();
 
     SystemChrome.setPreferredOrientations(
       <DeviceOrientation>[
@@ -20,22 +24,22 @@ class AppStarter {
         DeviceOrientation.portraitDown,
       ],
     );
-    void initCrashlytics() {
-      FlutterError.onError = (errorDetails) =>
-          FirebaseCrashlytics.instance.recordFlutterFatalError(
-            errorDetails,
-          );
+    await _initFirebase();
+  }
 
-      PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
-        FirebaseCrashlytics.instance.recordError(
-          error,
-          stack,
-          fatal: true,
-        );
-        return true;
-      };
-    }
+  static void _initCrashlytics() {
+    FlutterError.onError =
+        (errorDetails) => FirebaseCrashlytics.instance.recordFlutterFatalError(
+              errorDetails,
+            );
 
-    initCrashlytics();
+    PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+      FirebaseCrashlytics.instance.recordError(
+        error,
+        stack,
+        fatal: true,
+      );
+      return true;
+    };
   }
 }

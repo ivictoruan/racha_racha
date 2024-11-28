@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../shared/constants/space_constants.dart';
-import '../../shared/utils/custom_utils.dart';
-import '../../shared/widgets/subtitle_text_widget.dart';
-import '../../shared/widgets/custom_will_pop_scope_widget.dart';
+import '../../shared/routes/app_route_manager.dart';
+import '../../shared/ui/widgets/subtitle_text_widget.dart';
+import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import '../../shared/controllers/check_controller.dart';
-import '../../shared/widgets/text_form_field_widget.dart';
-import '../../shared/widgets/title_text_widget.dart';
-import '../home/view/widgets/slider_widget.dart';
+import '../../shared/ui/widgets/text_form_field_widget.dart';
+import '../../shared/ui/widgets/title_text_widget.dart';
+import '../../shared/ui/widgets/slider_widget.dart';
 import 'widgets/floating_action_buttons_widget.dart';
 
 class TotalPeopleScreen extends StatefulWidget {
@@ -31,8 +31,11 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
         "Incluíndo você, digite a quantidade de pessoas dividindo a conta.";
   }
 
+  Future<void> onYesPressed() async {}
+
   @override
-  Widget build(BuildContext context) => CustomWillPopWidget(
+  Widget build(BuildContext context) => WillPopScopeWidget(
+        onYesPressed: () async => await onYesPressed(),
         body: Column(
           children: [
             const TitleTextWidget(
@@ -41,28 +44,29 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
             const SizedBox(height: SpaceConstants.medium),
             buildTextFormWidget(),
             const SizedBox(height: SpaceConstants.small),
-            const SubitleTextWidget(
+            const SubtitleTextWidget(
               subtitle:
-                  "* Incluíndo você, digite a quantidade de pessoas dividindo a conta.",
+                  "Incluíndo você, digite a quantidade de pessoas dividindo a conta.",
             ),
             const Divider(),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const SubitleTextWidget(
+                SubtitleTextWidget(
                   subtitle: "Vai pagar taxa de Serviço/Garçom?",
-                ),
-                Switch(
-                  value: serviceTax,
-                  onChanged: (bool newValue) {
-                    serviceTax = newValue;
-                    controller.waiterPercentage = 0;
-                    setState(() {});
-                  },
                 ),
               ],
             ),
-            serviceTax ? const SliderWidget() : const SizedBox.shrink(),
+            ListenableBuilder(
+              listenable: controller,
+              builder: (_, __) => SliderWidget(
+                value: controller.check.waiterPercentage,
+                onChanged: (double newWaiterPercentage) {
+                  controller.waiterPercentage = newWaiterPercentage;
+                },
+                label: controller.waiterPercentage.toStringAsFixed(0),
+              ),
+            ),
             const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -71,15 +75,17 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const SubitleTextWidget(
+                  const SubtitleTextWidget(
                     subtitle: "Alguém está bebendo?",
                   ),
-                  Switch(
-                    value: controller.isSomeoneDrinking,
-                    onChanged: (bool isSomeoneDrinking) {
-                      controller.isSomeoneDrinking = isSomeoneDrinking;
-                      setState(() {});
-                    },
+                  ListenableBuilder(
+                    listenable: controller,
+                    builder: (_, __) => Switch(
+                      value: controller.isSomeoneDrinking,
+                      onChanged: (bool isSomeoneDrinking) {
+                        controller.isSomeoneDrinking = isSomeoneDrinking;
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -89,29 +95,39 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
         floatingActionButton: const FloatingActionButtonsWidget(),
       );
 
-  Widget buildTextFormWidget() => TextFormFieldWidget(
-        hintText: "Quantas pessoas?",
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(
-            RegExp(r'^\d{1,2}$|(?=^.{1,2}$)^\d+\$'),
-          ),
-        ],
-        labelText: "Quantidade de pessoas",
-        icon: Icons.people_outline_sharp,
-        keyboardType: const TextInputType.numberWithOptions(decimal: false),
-        onChanged: (String newTotalPeople) =>
-            controller.totalPeople = newTotalPeople,
-        onFieldSubmitted: (String newTotalPeople) {
-          controller.totalPeople = newTotalPeople;
+  Widget buildTextFormWidget() {
+    final String initialText =
+        (controller.totalPeople == 1 ? '' : controller.totalPeople).toString();
 
-          bool isValid = controller.totalPeople > 1;
+    return TextFormFieldWidget(
+      hintText: "Quantas pessoas?",
+      controller: TextEditingController.fromValue(
+        TextEditingValue(text: initialText),
+      ),
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.allow(
+          RegExp(r'^\d{1,2}$|(?=^.{1,2}$)^\d+\$'),
+        ),
+      ],
+      labelText: "Quantidade de pessoas",
+      icon: Icons.people_outline_sharp,
+      keyboardType: const TextInputType.numberWithOptions(decimal: false),
+      onChanged: (String newTotalPeople) =>
+          controller.totalPeople = newTotalPeople,
+      onFieldSubmitted: (String newTotalPeople) {
+        controller.totalPeople = newTotalPeople;
 
-          if (!isValid) {
-            return;
-          }
+        bool isValid = controller.totalPeople > 1;
 
-          CustomUtils().goTo("/isSomeoneDrinking", context);
-        },
-        onClearTextPressed: () => controller.totalPeople = '1',
-      );
+        if (!isValid) {
+          return;
+        }
+
+        if (controller.isSomeoneDrinking) {
+          Navigator.of(context).pushNamed(AppRouteManager.isSomeoneDrinking);
+          return;
+        }
+      },
+    );
+  }
 }

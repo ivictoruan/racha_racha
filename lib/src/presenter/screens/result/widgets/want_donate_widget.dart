@@ -6,17 +6,15 @@ import '../../../shared/utils/custom_utils.dart';
 class WantDonateWidget extends StatelessWidget {
   const WantDonateWidget({Key? key}) : super(key: key);
 
-  String get appPix => "04165030392";
+  String get _appPix => "04165030392";
 
   @override
   Widget build(BuildContext context) {
-    CustomUtils customUtils = CustomUtils();
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () => customUtils.goToBack(context),
+          onPressed: () => Navigator.of(context).pop(),
           icon: const Icon(
             Icons.close,
             color: Colors.deepPurple,
@@ -50,7 +48,7 @@ class WantDonateWidget extends StatelessWidget {
             InkWell(
               borderRadius: BorderRadius.circular(20),
               onTap: () async {
-                await Clipboard.setData(ClipboardData(text: appPix)).then((_) {
+                await Clipboard.setData(ClipboardData(text: _appPix)).then((_) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       behavior: SnackBarBehavior.floating,
@@ -109,7 +107,7 @@ class WantDonateWidget extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             FilledButton.tonal(
-              onPressed: () => customUtils.goToUrl(
+              onPressed: () => CustomUtils().goToUrl(
                 "https://play.google.com/store/apps/details?id=com.matopibatech.racharacha",
               ),
               child: Padding(

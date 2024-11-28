@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../shared/widgets/custom_will_pop_scope_widget.dart';
+import '../../shared/routes/app_route_manager.dart';
+import '../../shared/constants/app_assets.dart';
+import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import '../../shared/constants/space_constants.dart';
 import 'widgets/go_to_rachar_button_widget.dart';
 import 'widgets/introduction_widget.dart';
@@ -12,22 +14,28 @@ class StartingScreen extends StatefulWidget {
   State<StartingScreen> createState() => _StartingScreenState();
 }
 
-class _StartingScreenState extends State<StartingScreen>
-    with SingleTickerProviderStateMixin {
+class _StartingScreenState extends State<StartingScreen> {
   @override
-  Widget build(BuildContext context) => CustomWillPopWidget(
-        isExitedPaged: true,
+  Widget build(BuildContext context) => WillPopScopeWidget(
+        onYesPressed: () => Navigator.pop(context, true),
         appBar: buildAppBar,
         body: const IntroductionWidget(),
         isBodyScrollable: false,
-        floatingActionButton: const GoToRacharButtonWidget(),
+        floatingActionButton: GoToRacharButtonWidget(
+          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRouteManager.history,
+            (route) => false,
+          ),
+        ),
+        mustShowDialog: false,
       );
 
   PreferredSizeWidget get buildAppBar => AppBar(
         title: Padding(
           padding: const EdgeInsets.only(top: SpaceConstants.large),
           child: Image.asset(
-            "assets/images/app/splash.png",
+            AppAssets.splash,
             width: 240,
             height: 120,
           ),

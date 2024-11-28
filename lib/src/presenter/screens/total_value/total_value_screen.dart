@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
-import '../../shared/utils/custom_utils.dart';
-import '../../shared/widgets/title_text_widget.dart';
+import 'package:provider/provider.dart';
+import 'package:racha_racha/src/presenter/shared/extentions/monetary_extention.dart';
+
+import '../../shared/input_formatters/currency_text_input_formatter.dart';
+import '../../shared/routes/app_route_manager.dart';
+import '../../shared/ui/widgets/text_form_field_widget.dart';
+import '../../shared/ui/widgets/title_text_widget.dart';
 import '../../shared/constants/space_constants.dart';
-import '../../shared/widgets/floating_action_button_widget.dart';
-import '../../shared/widgets/subtitle_text_widget.dart';
-import '../../shared/widgets/custom_will_pop_scope_widget.dart';
+import '../../shared/ui/widgets/floating_action_button_widget.dart';
+import '../../shared/ui/widgets/subtitle_text_widget.dart';
+import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import '../../shared/controllers/check_controller.dart';
-import 'field/total_value_field_widget.dart';
 
 class TotalValueScreen extends StatefulWidget {
   const TotalValueScreen({Key? key}) : super(key: key);
@@ -18,80 +22,99 @@ class TotalValueScreen extends StatefulWidget {
 }
 
 class _TotalValueScreenState extends State<TotalValueScreen> {
-  void restartData() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await context.read<CheckController>().restartCheck();
-    });
-  }
+  late TextEditingController _textController;
+  final _currencyFormatter = CurrencyTextInputFormatter();
 
   @override
-  initState() {
+  void initState() {
     super.initState();
+    _textController = TextEditingController();
 
-    restartData();
+    _textController.addListener(() {
+      final formattedText = _currencyFormatter
+          .formatEditUpdate(
+            TextEditingValue.empty,
+            TextEditingValue(text: _textController.text),
+          )
+          .text;
+
+      if (formattedText != _textController.text) {
+        _textController.value = TextEditingValue(
+          text: formattedText,
+          selection: TextSelection.collapsed(offset: formattedText.length),
+        );
+      }
+    });
   }
-
-  String get titleText => 'Para começar, digite o valor total da sua conta.';
-
-  String get subtitleText =>
-      '* Precisamos do valor do recibo para dar início à divisão da sua conta.';
-
-  String get pathToNextPage => "/totalPeople";
 
   @override
   Widget build(BuildContext context) {
     final CheckController controller = context.watch<CheckController>();
 
-    return CustomWillPopWidget(
-      isExitedPaged: true,
-      body: SafeArea(
-        child: Column(
-          children: [
-            // TODO: implantar TitleTextWidget em TotalValueFieldWidget de e expor
-            /// ´titleText´ como parâmetro
-            TitleTextWidget(
-              titleText: titleText,
-            ),
-            const SizedBox(height: SpaceConstants.medium),
-            Column(
-              children: [
-                TotalValueFieldWidget(
-                  onChanged: (String newTotalCheckValue) {
-                    // final double? parsedValue =
-                    //     parsedNewTotalCheckValue(newTotalCheckValue);
-
-                    // if (parsedValue == null) {
-                    //   return;
-                    // }
-
-                    controller.totalCheckPrice = newTotalCheckValue;
-                  },
-                  onFieldSubmitted: (String newTotalCheckValue) {
-                    // final double? parsedValue =
-                    //     parsedNewTotalCheckValue(newTotalCheckValue);
-
-                    // if (parsedValue == null || parsedValue > 0) {
-                    //   return;
-                    // }
-                    CustomUtils customUtils = CustomUtils();
-                    controller.totalCheckPrice = newTotalCheckValue;
-                    bool isValid = controller.check.totalValue > 0;
-                    isValid ? customUtils.goTo("/totalPeople", context) : null;
-                  },
-                ),
-              ],
-            ),
-            // TODO: implantar CustomSubitleTextWidget em TotalValueFieldWidget de e expor ´titleText´ como parâmetro
-            SubitleTextWidget(
-              subtitle: subtitleText,
-            ),
-          ],
-        ),
+    return WillPopScopeWidget(
+      onYesPressed: () async => await onYesPressed(),
+      body: Column(
+        children: [
+          TitleTextWidget(
+            titleText: titleText,
+          ),
+          const SizedBox(height: SpaceConstants.medium),
+          _buildTextFormField(controller: controller, context: context),
+          SubtitleTextWidget(subtitle: subtitleText),
+        ],
       ),
       floatingActionButton: FloatingActionButtonWidget(
-        onPressed: () => CustomUtils().goTo(pathToNextPage, context),
-        isActivated: controller.state == CheckState.totalCheckValueValid,
+        onPressed: () => Navigator.of(context).pushNamed(
+          AppRouteManager.totalPeople,
+        ),
+        isEnabled: (controller.totalValue > 0),
       ),
     );
+  }
+
+  TextFormFieldWidget _buildTextFormField({
+    required CheckController controller,
+    required BuildContext context,
+  }) =>
+      TextFormFieldWidget(
+        hintText: 'R\$ 0,00',
+        controller: _textController,
+        inputFormatters: <TextInputFormatter>[
+          CurrencyTextInputFormatter(),
+        ],
+        labelText: "Valor total da conta",
+        icon: Icons.price_change_outlined,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        onChanged: (String newTotalCheckValue) {
+          controller.totalValue = newTotalCheckValue.parseCurrency();
+        },
+        onFieldSubmitted: (String newTotalCheckValue) {
+          controller.totalValue = newTotalCheckValue.parseCurrency();
+
+          bool isValid = controller.check.totalValue > 0;
+          if (isValid) {
+            Navigator.of(context).pushNamed(
+              AppRouteManager.totalPeople,
+            );
+          }
+        },
+      );
+
+  String get titleText => 'Para começar, digite o valor total da sua conta.';
+
+  String get subtitleText =>
+      'Precisamos do valor do recibo para dar início à divisão da sua conta.';
+
+  Future<void> onYesPressed() async {
+    final navigator = Navigator.of(context);
+
+    await context.read<CheckController>().restartCheck();
+
+    if (mounted) {
+      navigator.pushNamedAndRemoveUntil(
+        AppRouteManager.history,
+        (route) => false,
+      );
+    }
   }
 }

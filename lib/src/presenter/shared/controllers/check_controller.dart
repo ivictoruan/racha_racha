@@ -2,8 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter/foundation.dart';
-
+import '../../../domain/check/repositories/check_repository.dart';
 import '../../../domain/check/entities/check_model.dart';
 
 enum CheckState {
@@ -16,10 +15,37 @@ enum CheckState {
   formInValid,
 }
 
+// abstract class CheckController extends ChangeNotifier {
+//   // Função para calcular o resultado da conta
+//   Future<void> calculateCheckResult();
+//   // Funções getter e setter para os dados de entrada (como totalValue, totalPeople, etc.)
+//   set totalValue(double? newTotalCheckPrice);
+//   set totalPeople(String totalPeople);
+//   set waiterPercentage(double newWaiterPercentage);
+//   set totalDrinkPrice(String newTotalDrinkPrice);
+//   set peopleDrinking(String newValuePeopleDriking);
+//   set isSomeoneDrinking(bool newIsSomeoneDrinking);
+//   // Função para reiniciar a conta
+//   Future<void> restartCheck();
+//   // Função para deletar a conta do banco de dados
+//   Future<void> delete(CheckModel check);
+//   // Getter para mensagem de erro
+//   String get msgError;
+//   // Getter para o estado atual da conta
+//   CheckState get state;
+// }
+
 class CheckController extends ChangeNotifier {
+  final CheckRepository _repository;
+
+  CheckController({required CheckRepository repository})
+      : _repository = repository;
+
+// deixar isso como privado?
   CheckModel check = CheckModel();
 
   CheckState state = CheckState.idle;
+
   String _msgError = "Digite o valor total da conta";
 
   String get msgError => _msgError;
@@ -32,17 +58,22 @@ class CheckController extends ChangeNotifier {
     );
   }
 
-  void calculateCheckResult() {
+  Future<void> calculateCheckResult() async {
     check.totalValue += check.totalWaiterValue;
     if (check.isSomeoneDrinking) {
-      calculateCheckResultWithDrinkers();
+      _calculateCheckResultWithDrinkers();
+
+      await _repository.createCheck(check: check);
+
       return;
     }
 
-    calculateCheckResultWithoutDrinkers();
+    _calculateCheckResultWithoutDrinkers();
+
+    await _repository.createCheck(check: check);
   }
 
-  void calculateCheckResultWithoutDrinkers() {
+  void _calculateCheckResultWithoutDrinkers() {
     if (check.waiterPercentage == 0) {
       check.individualPrice = check.totalValue / check.totalPeople;
     } else {
@@ -53,7 +84,7 @@ class CheckController extends ChangeNotifier {
   }
 
   // TODO: melhorar legibilidade
-  void calculateCheckResultWithDrinkers() {
+  void _calculateCheckResultWithDrinkers() {
     double individualTotalPriceWhoIsDrinking =
         check.totalDrinkPrice / check.totalPeopleDrinking;
     check.individualPrice =
@@ -100,28 +131,24 @@ class CheckController extends ChangeNotifier {
     return check.individualPriceWhoIsDrinking;
   }
 
-  String get totalCheckPrice => check.totalValue.toStringAsFixed(2);
+  double get totalValue => check.totalValue;
 
-  double? parseCurrency(String formattedText) {
-    String cleanedText = formattedText
-        .replaceAll(RegExp(r'[^\d,]'), '')
-        .replaceAll(',', '.')
-        .trim();
-
-    return double.tryParse(cleanedText);
-  }
-
-  set totalCheckPrice(String newTotalCheckPrice) {
+  set totalValue(double? newTotalCheckPrice) {
+    if (newTotalCheckPrice == null) return;
     try {
-      if (newTotalCheckPrice.isNotEmpty &&
-          !newTotalCheckPrice.startsWith(' ')) {
+      if (newTotalCheckPrice == 0) {
+        msgError = "Digite o valor total da conta";
+        state = CheckState.totalCheckValueInvalid;
+        notifyListeners();
+        log('newTotalCheckPrice: $newTotalCheckPrice');
+
+        return;
+      }
+
+      if (newTotalCheckPrice != 0) {
         state = CheckState.totalCheckValueValid;
-        check.totalValue = parseCurrency(newTotalCheckPrice) ?? 0;
+        check.totalValue = newTotalCheckPrice;
         msgError = "";
-        if (check.totalValue == 0) {
-          msgError = "Digite o valor total da conta";
-          state = CheckState.totalCheckValueInvalid;
-        }
       } else {
         check.totalValue = 0;
         state = CheckState.totalCheckValueInvalid;
@@ -137,6 +164,9 @@ class CheckController extends ChangeNotifier {
     try {
       if (totalPeople.isNotEmpty && !totalPeople.startsWith(' ')) {
         int intTotalPeople = int.parse(totalPeople);
+        if (intTotalPeople <= 1) {
+          return;
+        }
         state = CheckState.totalPeopleValueValid;
         check.totalPeople = intTotalPeople;
         msgError =
@@ -177,6 +207,7 @@ class CheckController extends ChangeNotifier {
   }
 
   set peopleDrinking(String newValuePeopleDriking) {
+    if (newValuePeopleDriking.isEmpty) return;
     try {
       int intNewValuePeopleDriking = int.parse(newValuePeopleDriking);
       bool isTotalPeopleDrinkingSmallerThanTotalPeople =
@@ -255,9 +286,12 @@ class CheckController extends ChangeNotifier {
   Future<void> restartCheck() async {
     state = CheckState.idle;
     check = CheckModel();
-
     msgError = "";
     await Future.delayed(Duration.zero);
     notifyListeners();
+  }
+
+  Future<void> delete(CheckModel check) async {
+    _repository.deleteCheck(checkId: check.id!);
   }
 }

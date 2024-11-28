@@ -4,18 +4,6 @@ import 'package:flutter/material.dart';
 import '../../domain/check/entities/check_model.dart';
 import '../../infra/services/generate_check_service.dart';
 
-/// A service implementation responsible for generating an image of a check.
-///
-/// The class `GenerateCheckServiceImpl` implements the `GenerateCheckService`
-/// interface and is responsible for drawing the header, content, and footer of a check
-/// based on the `CheckModel` provided. It uses Flutter's low-level canvas APIs
-/// to render the check design.
-///
-/// The generated check includes a header with a title and subtitle,
-/// a content area that displays the check summary (total value, tip, and individual share),
-/// and a footer with promotional information.
-///
-/// The generated image is returned as a `Uint8List` for further use, such as saving or sharing.
 class GenerateCheckServiceImpl implements GenerateCheckService {
   late ui.Canvas _canvas;
   late ui.Size _size;
@@ -65,32 +53,46 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
     final double totalValueWithoutWaiterValue =
         check.totalValue - check.totalWaiterValue;
 
-    _drawText('Resumo da Conta', 30, 180,
+    _drawText('Detalhes da Divisão', 30, 180,
         fontSize: 36, fontWeight: FontWeight.bold);
 
     double yOffset = 240;
-    _drawRow('Total da Conta:', 'R\$ ${check.totalValue.toStringAsFixed(2)}',
-        yOffset);
+    _drawRow(
+        '💰 Total:', 'R\$ ${check.totalValue.toStringAsFixed(2)}', yOffset);
     yOffset += 60;
-    _drawRow('Total sem Gorjeta:',
-        'R\$ ${totalValueWithoutWaiterValue.toStringAsFixed(2)}', yOffset);
-    yOffset += 60;
-    _drawRow('Gorjeta:', 'R\$ ${check.totalWaiterValue.toStringAsFixed(2)}',
-        yOffset);
+
+    if (check.waiterPercentage > 0) {
+      _drawRow(
+        '🪙 Valor sem gorjeta:',
+        'R\$ ${totalValueWithoutWaiterValue.toStringAsFixed(2)}',
+        yOffset,
+      );
+      yOffset += 60;
+    }
+
+    _drawRow(
+      '📊 Gorjeta:',
+      'R\$ ${check.totalWaiterValue.toStringAsFixed(2)} (${check.waiterPercentage.toStringAsFixed(0)}%)',
+      yOffset,
+    );
     yOffset += 60;
 
     if (check.isSomeoneDrinking) {
-      _drawRow('Valor p/ quem não bebeu:',
-          'R\$ ${check.individualPrice.toStringAsFixed(2)}', yOffset);
-      yOffset += 60;
       _drawRow(
-          'Valor p/ quem bebeu:',
+          '🍻 Se bebeu, paga:',
           'R\$ ${check.individualPriceWhoIsDrinking.toStringAsFixed(2)}',
           yOffset);
+      yOffset += 60;
+      _drawRow('🚫 Não bebeu, paga:',
+          'R\$ ${check.individualPrice.toStringAsFixed(2)}', yOffset);
     } else {
-      _drawRow('Valor Individual:',
+      _drawRow('👤 Valor Individual:',
           'R\$ ${check.individualPrice.toStringAsFixed(2)}', yOffset);
     }
+
+    yOffset += 60;
+    _drawRow('👥 Pessoas:', check.totalPeople.toString(), yOffset,
+        isWithDollarSign: false);
   }
 
   void _drawFooter() {
@@ -100,12 +102,6 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
 
     _drawText('Baixe o Racha Racha', 30, _size.height - 70,
         color: Colors.white, fontSize: 20);
-    _drawText(
-        'play.google.com/store/apps/details?id=com.matopibatech.racharacha',
-        30,
-        _size.height - 40,
-        color: Colors.white,
-        fontSize: 16);
   }
 
   void _drawText(
@@ -139,10 +135,19 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
     textPainter.paint(_canvas, offset);
   }
 
-  void _drawRow(String label, String value, double y) {
+  void _drawRow(String label, String value, double y,
+      {bool isWithDollarSign = true}) {
+    // if (!isVisible) return;
+
     _drawText(label, 30, y, fontSize: 22, maxWidth: _size.width * 0.6);
-    _drawText(value, _size.width - 30, y,
-        fontSize: 22, align: TextAlign.right, maxWidth: _size.width * 0.4);
+    _drawText(
+      isWithDollarSign ? 'R\$ $value' : value,
+      _size.width - 30,
+      y,
+      fontSize: 22,
+      align: TextAlign.right,
+      maxWidth: _size.width * 0.4,
+    );
   }
 
   Future<Uint8List> _finalizeImage(ui.PictureRecorder recorder) async {
