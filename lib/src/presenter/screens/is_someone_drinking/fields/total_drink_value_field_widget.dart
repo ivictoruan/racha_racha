@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../shared/input_formatters/currency_text_input_formatter.dart';
 import '../../../shared/extentions/monetary_extention.dart';
+import '../../../shared/input_formatters/currency_text_input_formatter.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/routes/app_route_manager.dart';
-import '../../../shared/widgets/text_form_field_widget.dart';
+import '../../../shared/ui/widgets/text_form_field_widget.dart';
 
 class TotalDrinkValueFieldWidget extends StatelessWidget {
   final CheckController controller;
@@ -36,14 +36,14 @@ class TotalDrinkValueFieldWidget extends StatelessWidget {
                   controller.check.isSomeoneDrinking;
 
           if (isContinueButtonActivated) {
-            final Map<String, Object> argumentsToHistoryScreen = {
+            final Map<String, Object> argumentsToCheckDetailsScreen = {
               'isFinishing': true,
               'check': controller.check,
             };
 
             Navigator.of(context).pushNamed(
-              AppRouteManager.result,
-              arguments: argumentsToHistoryScreen,
+              AppRouteManager.checkDetails,
+              arguments: argumentsToCheckDetailsScreen,
             );
           }
         },

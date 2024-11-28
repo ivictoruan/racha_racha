@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../shared/routes/app_route_manager.dart';
-import '../../shared/widgets/will_pop_scope_widget.dart';
+import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/controllers/check_controller.dart';
-import '../../shared/widgets/title_text_widget.dart';
+import '../../shared/ui/widgets/title_text_widget.dart';
 import 'widgets/confirm_info_widget.dart';
 import 'widgets/is_drinking_buttons_widget.dart';
 import 'widgets/is_drinking_form_field_widget.dart';
@@ -133,14 +133,15 @@ class _IsSomeoneDrinkingScreenState extends State<IsSomeoneDrinkingScreen> {
                       controller.calculateCheckResult();
                       controller.isSomeoneDrinking = false;
 
-                      final Map<String, Object> argumentsToHistoryScreen = {
+                      final Map<String, Object> argumentsToCheckDetailsScreen =
+                          {
                         'isFinishing': true,
                         'check': controller.check,
                       };
 
                       Navigator.of(context).pushNamed(
-                        AppRouteManager.result,
-                        arguments: argumentsToHistoryScreen,
+                        AppRouteManager.checkDetails,
+                        arguments: argumentsToCheckDetailsScreen,
                       );
                     },
                     style: ElevatedButton.styleFrom(

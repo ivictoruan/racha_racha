@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../shared/controllers/check_controller.dart';
-import '../../../shared/widgets/text_form_field_widget.dart';
+import '../../../shared/ui/widgets/text_form_field_widget.dart';
 
 class TotalPeopleDrinkingFieldWidget extends StatelessWidget {
   final CheckController controller;

@@ -7,7 +7,7 @@ import '../../../domain/check/entities/check_model.dart';
 import '../../shared/routes/app_route_manager.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/controllers/check_controller.dart';
-import '../../shared/widgets/will_pop_scope_widget.dart';
+import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import '../../../infra/services/generate_check_service.dart';
 import '../../../infra/services/share_check_service.dart';
 import 'widgets/bottom_nav_bar_widget.dart';

@@ -9,7 +9,7 @@ import '../../../../infra/services/share_check_service.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/routes/app_route_manager.dart';
-import '../../../shared/widgets/box_shadow_widget.dart';
+import '../../../shared/ui/widgets/box_shadow_widget.dart';
 import '../controller/history_screen_controller.dart';
 import 'confirm_exclusion_popup_widget.dart';
 
@@ -196,7 +196,7 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
       return;
     }
     Navigator.of(context).pushNamed(
-      AppRouteManager.result,
+      AppRouteManager.checkDetails,
       arguments: {
         'isFinishing': false,
         'check': widget.check,

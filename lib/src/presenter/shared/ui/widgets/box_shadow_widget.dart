@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/space_constants.dart';
+import '../../constants/space_constants.dart';
 
 class BoxShadowWidget extends StatelessWidget {
   final Widget child;

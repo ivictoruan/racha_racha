@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
+import 'package:racha_racha/src/presenter/shared/extentions/monetary_extention.dart';
 
-import '../../shared/extentions/monetary_extention.dart';
 import '../../shared/input_formatters/currency_text_input_formatter.dart';
 import '../../shared/routes/app_route_manager.dart';
-import '../../shared/widgets/text_form_field_widget.dart';
-import '../../shared/widgets/title_text_widget.dart';
+import '../../shared/ui/widgets/text_form_field_widget.dart';
+import '../../shared/ui/widgets/title_text_widget.dart';
 import '../../shared/constants/space_constants.dart';
-import '../../shared/widgets/floating_action_button_widget.dart';
-import '../../shared/widgets/subtitle_text_widget.dart';
-import '../../shared/widgets/will_pop_scope_widget.dart';
+import '../../shared/ui/widgets/floating_action_button_widget.dart';
+import '../../shared/ui/widgets/subtitle_text_widget.dart';
+import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import '../../shared/controllers/check_controller.dart';
 
 class TotalValueScreen extends StatefulWidget {

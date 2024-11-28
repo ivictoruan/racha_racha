@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../shared/widgets/box_shadow_widget.dart';
+import '../../../shared/ui/widgets/box_shadow_widget.dart';
 
 class GoToRacharButtonWidget extends StatelessWidget {
   final void Function()? onPressed;

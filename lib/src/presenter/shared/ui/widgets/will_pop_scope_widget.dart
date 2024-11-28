@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants/space_constants.dart';
+import '../../constants/space_constants.dart';
 import 'will_pop_scope_widget/confirm_will_pop_scope_popup_widget.dart';
 
 class WillPopScopeWidget extends StatelessWidget {

@@ -5,7 +5,7 @@ import '../../../../domain/check/entities/check_model.dart';
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/routes/app_route_manager.dart';
-import '../../../shared/widgets/restart_check_widget.dart';
+import '../../../shared/ui/widgets/restart_check_widget.dart';
 import 'confirm_info_widget.dart';
 
 class IsDrikingButtonsWidget extends StatelessWidget {
@@ -144,14 +144,14 @@ class CheckConfirmationModal extends StatelessWidget {
                   controller.calculateCheckResult();
                   controller.isSomeoneDrinking = true;
 
-                  final Map<String, Object> argumentsToHistoryScreen = {
+                  final Map<String, Object> argumentsToCheckDetailsScreen = {
                     'isFinishing': true,
                     'check': controller.check,
                   };
 
                   Navigator.of(context).pushNamed(
-                    AppRouteManager.result,
-                    arguments: argumentsToHistoryScreen,
+                    AppRouteManager.checkDetails,
+                    arguments: argumentsToCheckDetailsScreen,
                   );
                 },
                 style: ElevatedButton.styleFrom(

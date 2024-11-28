@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/routes/app_route_manager.dart';
-import '../../../shared/widgets/floating_action_button_widget.dart';
-import '../../../shared/widgets/restart_check_widget.dart';
+import '../../../shared/ui/widgets/floating_action_button_widget.dart';
+import '../../../shared/ui/widgets/restart_check_widget.dart';
 import '../../is_someone_drinking/widgets/confirm_info_widget.dart';
 
 class FloatingActionButtonsWidget extends StatelessWidget {
@@ -112,14 +112,14 @@ class FloatingActionButtonsWidget extends StatelessWidget {
     final controller = context.read<CheckController>();
     controller.calculateCheckResult();
     controller.isSomeoneDrinking = false;
-    final Map<String, Object> argumentsToHistoryScreen = {
+    final Map<String, Object> argumentsToCheckDetailsScreen = {
       'isFinishing': true,
       'check': controller.check,
     };
 
     Navigator.of(context).pushNamed(
-      AppRouteManager.result,
-      arguments: argumentsToHistoryScreen,
+      AppRouteManager.checkDetails,
+      arguments: argumentsToCheckDetailsScreen,
     );
   }
 }

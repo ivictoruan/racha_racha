@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class RestartCheckWidget extends StatelessWidget {
+class RestartButtonWidget extends StatelessWidget {
   final void Function()? onPressed;
-  const RestartCheckWidget({
+  const RestartButtonWidget({
     Key? key,
     required this.onPressed,
   }) : super(key: key);
