@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import '../../../domain/check/repositories/check_repository.dart';
-import '../../../domain/check/entities/check_model.dart';
+import '../../../domain/check/entities/check.dart';
 
 enum CheckState {
   totalCheckValueInvalid,
@@ -42,7 +42,7 @@ class CheckController extends ChangeNotifier {
       : _repository = repository;
 
 // deixar isso como privado?
-  CheckModel check = CheckModel();
+  Check check = Check();
 
   CheckState state = CheckState.idle;
 
@@ -285,13 +285,13 @@ class CheckController extends ChangeNotifier {
 
   Future<void> restartCheck() async {
     state = CheckState.idle;
-    check = CheckModel();
+    check = Check();
     msgError = "";
     await Future.delayed(Duration.zero);
     notifyListeners();
   }
 
-  Future<void> delete(CheckModel check) async {
+  Future<void> delete(Check check) async {
     _repository.deleteCheck(checkId: check.id!);
   }
 }

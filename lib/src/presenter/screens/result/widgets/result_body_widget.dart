@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../../../../domain/check/entities/check_model.dart';
+import '../../../../domain/check/entities/check.dart';
 import '../../../shared/constants/space_constants.dart';
 import 'result_info_widget.dart';
 
 class ResultBodyWidget extends StatelessWidget {
-  final CheckModel check;
+  final Check check;
 
   const ResultBodyWidget({
     Key? key,

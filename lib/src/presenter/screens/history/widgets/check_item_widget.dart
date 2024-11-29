@@ -3,7 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/check/entities/check_model.dart';
+import '../../../../domain/check/entities/check.dart';
 import '../../../../infra/services/generate_check_service.dart';
 import '../../../../infra/services/share_check_service.dart';
 import '../../../shared/controllers/check_controller.dart';
@@ -14,7 +14,7 @@ import '../controller/history_screen_controller.dart';
 import 'confirm_exclusion_popup_widget.dart';
 
 class CheckItemWidget extends StatefulWidget {
-  final CheckModel check;
+  final Check check;
   final int index;
 
   const CheckItemWidget({

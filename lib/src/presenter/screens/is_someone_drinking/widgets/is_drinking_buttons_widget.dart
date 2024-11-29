@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../domain/check/entities/check_model.dart';
+import '../../../../domain/check/entities/check.dart';
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/routes/app_route_manager.dart';
@@ -63,7 +63,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
 
   void _showModalIsSomeoneDrinking(
     BuildContext context,
-    CheckModel check,
+    Check check,
   ) {
     showModalBottomSheet(
       context: context,
@@ -77,7 +77,7 @@ class IsDrikingButtonsWidget extends StatelessWidget {
 
 // Novo Widget para o Modal de Confirmação
 class CheckConfirmationModal extends StatelessWidget {
-  final CheckModel check;
+  final Check check;
 
   const CheckConfirmationModal({
     Key? key,

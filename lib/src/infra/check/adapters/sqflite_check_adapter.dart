@@ -1,7 +1,7 @@
-import '../../../domain/check/entities/check_model.dart';
+import '../../../domain/check/entities/check.dart';
 
 class SqfliteCheckAdapter {
-  static Map<String, dynamic> toMap(CheckModel check) {
+  static Map<String, dynamic> toMap(Check check) {
     return {
       'id': check.id,
       'creationDate': check.creationDate?.toIso8601String() ??
@@ -18,8 +18,8 @@ class SqfliteCheckAdapter {
     };
   }
 
-  static CheckModel fromMap(Map<String, dynamic> map) {
-    return CheckModel(
+  static Check fromMap(Map<String, dynamic> map) {
+    return Check(
       id: map['id'] as String?,
       creationDate: map['creationDate'] != null
           ? DateTime.parse(map['creationDate'])

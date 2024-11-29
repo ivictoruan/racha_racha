@@ -1,8 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:racha_racha/src/domain/check/entities/check_model.dart';
+import 'package:racha_racha/src/domain/check/entities/check.dart';
 
 import '../../domain/check/errors/erros.dart';
-import '../../domain/check/entities/result_get_all_checks.dart';
 import '../../domain/check/repositories/check_repository.dart';
 import 'datasourcers/local_check_datasource.dart';
 
@@ -12,7 +11,7 @@ class CheckRepositoryImpl implements CheckRepository {
   CheckRepositoryImpl({required this.localDatasource});
 
   @override
-  Future<Either<Failure, ResultGetAllChecks>> getAllChecks() async {
+  Future<Either<Failure, List<Check>>> getAllChecks() async {
     try {
       final result = await localDatasource.getAllChecks();
       return Right(result);
@@ -32,7 +31,7 @@ class CheckRepositoryImpl implements CheckRepository {
   }
 
   @override
-  Future<Either<Failure, void>> createCheck({required CheckModel check}) async {
+  Future<Either<Failure, void>> createCheck({required Check check}) async {
     try {
       final result = await localDatasource.createCheck(check: check);
 

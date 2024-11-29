@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/check/entities/check_model.dart';
+import '../../../domain/check/entities/check.dart';
 import '../../screens/history/history_screen.dart';
 import '../../screens/first/first_screen.dart';
 import '../../screens/history/provider/history_screen_provider.dart';
@@ -55,7 +55,7 @@ class AppRouteManager {
 
             final isFinishingCheck = arguments['isFinishing'] as bool;
 
-            final check = arguments['check'] as CheckModel;
+            final check = arguments['check'] as Check;
 
             return CheckDetailsScreenProvider(
               child: CheckDetailsScreen(

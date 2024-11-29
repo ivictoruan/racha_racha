@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:racha_racha/src/domain/check/entities/check.dart';
 
-import '../entities/result_get_all_checks.dart';
 import '../errors/erros.dart';
 import '../repositories/check_repository.dart';
 
 abstract class GetAllChecks {
-  Future<Either<Failure, ResultGetAllChecks>> call();
+  Future<Either<Failure, List<Check>>> call();
 }
 
 class GetAllChecksImpl implements GetAllChecks {
@@ -16,7 +16,7 @@ class GetAllChecksImpl implements GetAllChecks {
   });
 
   @override
-  Future<Either<Failure, ResultGetAllChecks>> call() async {
+  Future<Either<Failure, List<Check>>> call() async {
     return repository.getAllChecks();
   }
 }

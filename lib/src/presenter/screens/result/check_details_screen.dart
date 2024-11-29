@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../../domain/check/entities/check_model.dart';
+import '../../../domain/check/entities/check.dart';
 import '../../shared/routes/app_route_manager.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/controllers/check_controller.dart';
@@ -16,7 +16,7 @@ import 'widgets/shared_check_widget.dart';
 
 class CheckDetailsScreen extends StatefulWidget {
   final bool isFinishingCheck;
-  final CheckModel check;
+  final Check check;
 
   const CheckDetailsScreen({
     Key? key,

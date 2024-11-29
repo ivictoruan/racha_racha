@@ -2,14 +2,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-import '../../../../domain/check/entities/check_model.dart';
+import '../../../../domain/check/entities/check.dart';
 import '../../../../infra/services/generate_check_service.dart';
 import '../../../../infra/services/share_check_service.dart';
 
 class SharedCheckWidget extends StatelessWidget {
   final ShareCheckService shareService;
   final GenerateCheckService generateImageService;
-  final CheckModel check;
+  final Check check;
 
   const SharedCheckWidget({
     Key? key,
@@ -43,7 +43,7 @@ class SharedCheckWidget extends StatelessWidget {
         ),
       );
 
-  Future<void> _onShareCheck({required CheckModel check}) async {
+  Future<void> _onShareCheck({required Check check}) async {
     // TODO: gerar essa imagem diretamente no ShareService
     await generateImageService
         .generateImage(
