@@ -1,4 +1,4 @@
-class CheckModel {
+class Check {
   DateTime? creationDate;
   String? id;
   // TODO: verificar a necessidade de adicionar uma localização
@@ -17,7 +17,7 @@ class CheckModel {
   double individualPriceWhoIsDrinking;
   int totalPeople;
 
-  CheckModel({
+  Check({
     this.creationDate,
     this.id,
     this.totalValue = 0,
@@ -30,7 +30,7 @@ class CheckModel {
     this.individualPriceWhoIsDrinking = 0,
     this.totalPeople = 1,
   });
-   CheckModel copyWith({
+   Check copyWith({
     String? id,
     DateTime? creationDate,
     double? totalValue,
@@ -43,7 +43,7 @@ class CheckModel {
     double? individualPriceWhoIsDrinking,
     int? totalPeople,
   }) {
-    return CheckModel(
+    return Check(
       id: id ?? this.id,
       creationDate: creationDate ?? this.creationDate,
       totalValue: totalValue ?? this.totalValue,

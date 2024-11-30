@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
-import '../../domain/check/entities/check_model.dart';
+import '../../domain/check/entities/check.dart';
 
 abstract class GenerateCheckService {
   Future<Uint8List> generateImage({
-    required CheckModel check,
+    required Check check,
   });
 }

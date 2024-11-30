@@ -37,6 +37,14 @@ class ThemeConfig {
       bodyMedium: TextStyle(color: Colors.deepPurple),
       bodySmall: TextStyle(color: Colors.deepPurple),
     ),
+    snackBarTheme: SnackBarThemeData(
+      showCloseIcon: true,
+      backgroundColor: Colors.deepPurple[500],
+      contentTextStyle: const TextStyle(
+        fontWeight: FontWeight.w600,
+        fontSize: 14,
+      ),
+    ),
     iconTheme: const IconThemeData(color: Colors.deepPurple),
   );
 }

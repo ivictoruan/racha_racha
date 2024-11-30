@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import '../../domain/check/entities/check_model.dart';
+import '../../domain/check/entities/check.dart';
 import '../../infra/services/generate_check_service.dart';
 
 class GenerateCheckServiceImpl implements GenerateCheckService {
@@ -13,7 +13,7 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
   late Color _textColor;
 
   @override
-  Future<Uint8List> generateImage({required CheckModel check}) async {
+  Future<Uint8List> generateImage({required Check check}) async {
     final ui.PictureRecorder recorder = ui.PictureRecorder();
     _canvas = Canvas(recorder);
     _size = const Size(800, 700);
@@ -49,7 +49,7 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
         color: Colors.white, fontSize: 24);
   }
 
-  void _drawContent(CheckModel check) {
+  void _drawContent(Check check) {
     final double totalValueWithoutWaiterValue =
         check.totalValue - check.totalWaiterValue;
 

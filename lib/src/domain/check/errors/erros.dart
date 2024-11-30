@@ -10,3 +10,10 @@ class LocalDatasouceError implements Failure {
 
   LocalDatasouceError({required this.message});
 }
+
+class CheckSharingServiceError implements Failure {
+  @override
+  final String message;
+
+  CheckSharingServiceError({required this.message});
+}

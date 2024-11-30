@@ -1,10 +1,9 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:uuid/uuid.dart'; // Importando o pacote uuid
+import 'package:uuid/uuid.dart';
 import '../../../infra/check/adapters/sqflite_check_adapter.dart';
 import '../../../infra/check/datasourcers/local_check_datasource.dart';
-import '../../../domain/check/entities/check_model.dart';
-import '../../../domain/check/entities/result_get_all_checks.dart';
+import '../../../domain/check/entities/check.dart';
 
 class SqfliteCheckDatasource implements LocalCheckDatasource {
   static const String _tableName = 'checks';
@@ -48,14 +47,12 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
   }
 
   @override
-  Future<void> createCheck({required CheckModel check}) async {
+  Future<void> createCheck({required Check check}) async {
     try {
       final db = await _db; // Espera até que o banco de dados esteja pronto
 
-      // Atribuindo um id único ao check
-      final id = const Uuid().v4(); // Gera um ID único
-      final updatedCheck =
-          check.copyWith(id: id); // Copia o check e define o id gerado
+      final id = const Uuid().v4();
+      final updatedCheck = check.copyWith(id: id);
 
       final checkMap = SqfliteCheckAdapter.toMap(updatedCheck);
       await db.insert(
@@ -69,7 +66,7 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
   }
 
   @override
-  Future<ResultGetAllChecks> getAllChecks() async {
+  Future<List<Check>> getAllChecks() async {
     try {
       final db = await _db; // Espera até que o banco de dados esteja pronto
       final List<Map<String, dynamic>> maps = await db.query(
@@ -79,7 +76,7 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
 
       final checks = maps.map(SqfliteCheckAdapter.fromMap).toList();
 
-      return ResultGetAllChecks(checks: checks);
+      return checks;
     } catch (e) {
       throw Exception('Erro ao buscar todos os checks: $e');
     }
@@ -88,7 +85,7 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
   @override
   Future<void> deleteCheck({required String checkId}) async {
     try {
-      final db = await _db; // Espera até que o banco de dados esteja pronto
+      final db = await _db;
       await db.delete(
         _tableName,
         where: 'id = ?',

@@ -1,11 +1,10 @@
-
 import 'package:flutter_test/flutter_test.dart';
-import 'package:racha_racha/src/domain/check/entities/check_model.dart';
+import 'package:racha_racha/src/domain/check/entities/check.dart';
 
 void main() {
   group('CheckModel', () {
     test('should initialize with default values', () {
-      final model = CheckModel();
+      final model = Check();
       expect(model.totalValue, 0);
       expect(model.individualPrice, 0);
       expect(model.waiterPercentage, 0);
@@ -18,7 +17,7 @@ void main() {
     });
 
     test('should initialize with custom values', () {
-      final model = CheckModel(
+      final model = Check(
         totalValue: 100,
         individualPrice: 25,
         waiterPercentage: 10,
@@ -42,7 +41,7 @@ void main() {
     });
 
     test('should handle zero values', () {
-      final model = CheckModel(
+      final model = Check(
         totalValue: 0,
         totalPeople: 0,
         totalPeopleDrinking: 0,
@@ -54,7 +53,7 @@ void main() {
     });
 
     test('should handle large values', () {
-      final model = CheckModel(
+      final model = Check(
         totalValue: 1000000,
         individualPrice: 500000,
         waiterPercentage: 20,
