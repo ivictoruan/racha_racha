@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../domain/check/repositories/check_repository.dart';
 import '../../../domain/check/services/check_sharing_service.dart';
 import '../../../domain/check/usecases/create_check.dart';
+import '../../../domain/check/usecases/delete_check.dart';
 import '../../../domain/check/usecases/share_check.dart';
 import '../../../external/check/datasourcers/sqflite_check_datasource.dart';
 import '../../../external/services/cache/shared_preferences_cache_service.dart';
@@ -62,11 +63,16 @@ class GeneralWidgetProvider extends StatelessWidget {
               repository: context.read<CheckRepository>(),
             ),
           ),
+          Provider<DeleteCheck>(
+            create: (context) => DeleteCheckImpl(
+              repository: context.read<CheckRepository>(),
+            ),
+          ),
           ChangeNotifierProvider<CheckController>(
             create: (context) => CheckController(
               shareCheck: context.read<ShareCheck>(),
               createCheck: context.read<CreateCheck>(),
-              repository: context.read<CheckRepository>(),
+              // deleteCheck: context.read<DeleteCheck>(),
             ),
           ),
         ],
