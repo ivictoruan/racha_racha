@@ -8,12 +8,12 @@ import '../../../external/check/datasourcers/sqflite_check_datasource.dart';
 import '../../../external/services/cache/shared_preferences_cache_service.dart';
 import '../../../external/services/generate_check_service_impl.dart';
 import '../../../external/services/share_plus_service_impl.dart';
-import '../../../infra/check/check_repository_impl.dart';
+import '../../../infra/check/repositories/check_repository_impl.dart';
 import '../../../infra/check/datasourcers/local_check_datasource.dart';
 import '../../../infra/services/cache/cache_service.dart';
-import '../../../infra/services/check_sharing_service_impl.dart';
+import '../../../infra/check/services/check_sharing_service_impl.dart';
 import '../../../infra/services/generate_check_service.dart';
-import '../../../infra/services/share_check_service.dart';
+import '../../../infra/services/share_service.dart';
 import '../controllers/check_controller.dart';
 import '../controllers/user_controller.dart';
 
@@ -42,13 +42,13 @@ class GeneralWidgetProvider extends StatelessWidget {
           Provider<GenerateCheckService>(
             create: (_) => GenerateCheckServiceImpl(),
           ),
-          Provider<ShareCheckService>(
+          Provider<ShareService>(
             create: (_) => SharePlusCheckServiceImpl(),
           ),
           Provider<CheckSharingService>(
             create: (context) => CheckSharingServiceImpl(
               generateCheckService: context.read<GenerateCheckService>(),
-              shareCheckService: context.read<ShareCheckService>(),
+              shareCheckService: context.read<ShareService>(),
             ),
           ),
           Provider<ShareCheck>(
