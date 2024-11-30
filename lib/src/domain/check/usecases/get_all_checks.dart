@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:racha_racha/src/domain/check/entities/check.dart';
 
+import '../entities/check.dart';
 import '../errors/erros.dart';
 import '../repositories/check_repository.dart';
 
