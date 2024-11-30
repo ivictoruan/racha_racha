@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:racha_racha/src/domain/check/usecases/delete_check.dart';
 
 import '../../../../domain/check/entities/check.dart';
 import '../../../../domain/check/usecases/share_check.dart';
@@ -9,13 +10,15 @@ import '../../../../domain/check/usecases/get_all_checks.dart';
 class HistoryScreenController with ChangeNotifier {
   final GetAllChecks _getAllChecks;
   final ShareCheck _shareCheck;
-  // TODO: implementar caso de uso de deletar!
+  final DeleteCheck _deleteCheck;
 
   HistoryScreenController({
     required GetAllChecks getAllChecks,
     required ShareCheck shareCheck,
+    required DeleteCheck deleteCheck,
   })  : _shareCheck = shareCheck,
-        _getAllChecks = getAllChecks;
+        _getAllChecks = getAllChecks,
+        _deleteCheck = deleteCheck;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;
@@ -41,10 +44,6 @@ class HistoryScreenController with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> reloadChecks() async {
-    await fetchChecks();
-  }
-
   Future<bool> shareCheck(Check check) async {
     final result = await _shareCheck.call(check: check);
 
@@ -58,5 +57,17 @@ class HistoryScreenController with ChangeNotifier {
         return sucess;
       },
     );
+  }
+
+  Future<bool> delete(Check check) async {
+    final result = await _deleteCheck.call(check: check);
+
+    await fetchChecks();
+
+    if (result.isLeft()) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
