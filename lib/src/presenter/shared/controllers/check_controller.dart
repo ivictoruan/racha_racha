@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-import '../../../domain/check/repositories/check_repository.dart';
 import '../../../domain/check/entities/check.dart';
 import '../../../domain/check/usecases/create_check.dart';
 import '../../../domain/check/usecases/share_check.dart';
@@ -38,16 +37,13 @@ enum CheckState {
 // }
 
 class CheckController extends ChangeNotifier {
-  final CheckRepository _repository;
   final ShareCheck _shareCheck;
   final CreateCheck _createCheck;
 
   CheckController({
-    required CheckRepository repository,
     required ShareCheck shareCheck,
     required CreateCheck createCheck,
-  })  : _repository = repository,
-        _shareCheck = shareCheck,
+  })  : _shareCheck = shareCheck,
         _createCheck = createCheck;
 
 // deixar isso como privado?
@@ -313,9 +309,5 @@ class CheckController extends ChangeNotifier {
     msgError = "";
     await Future.delayed(Duration.zero);
     notifyListeners();
-  }
-
-  Future<void> delete(Check check) async {
-    _repository.deleteCheck(checkId: check.id!);
   }
 }
