@@ -21,9 +21,9 @@ class CheckRepositoryImpl implements CheckRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteCheck({required String checkId}) async {
+  Future<Either<Failure, void>> deleteCheck({required Check check}) async {
     try {
-      final result = await localDatasource.deleteCheck(checkId: checkId);
+      final result = await localDatasource.deleteCheck(check: check);
       return Right(result);
     } catch (e) {
       return Left(LocalDatasouceError(message: 'LocalDatasoucerError: $e'));

@@ -83,16 +83,16 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
   }
 
   @override
-  Future<void> deleteCheck({required String checkId}) async {
+  Future<void> deleteCheck({required Check check}) async {
     try {
       final db = await _db;
       await db.delete(
         _tableName,
         where: 'id = ?',
-        whereArgs: [checkId],
+        whereArgs: [check.id],
       );
     } catch (e) {
-      throw Exception('Erro ao deletar o check com ID $checkId: $e');
+      throw Exception('Erro ao deletar o check com ID $check.id: $e');
     }
   }
 }
