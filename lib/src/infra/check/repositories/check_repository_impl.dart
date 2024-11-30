@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:racha_racha/src/domain/check/entities/check.dart';
 
-import '../../domain/check/errors/erros.dart';
-import '../../domain/check/repositories/check_repository.dart';
-import 'datasourcers/local_check_datasource.dart';
+import '../../../domain/check/entities/check.dart';
+import '../../../domain/check/errors/erros.dart';
+import '../../../domain/check/repositories/check_repository.dart';
+import '../datasourcers/local_check_datasource.dart';
 
 class CheckRepositoryImpl implements CheckRepository {
   final LocalCheckDatasource localDatasource;
