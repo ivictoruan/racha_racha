@@ -4,8 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../domain/check/entities/check.dart';
-import '../../../../infra/services/generate_check_service.dart';
-import '../../../../infra/services/share_check_service.dart';
 import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/routes/app_route_manager.dart';
@@ -34,7 +32,9 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
   @override
   void initState() {
     super.initState();
+
     _slidableController = SlidableController(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
   @override
@@ -73,7 +73,7 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
   Widget _buildShareAction() => SlidableAction(
         flex: 3,
         onPressed: (_) => onSharePressed(),
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.primaryFixedDim,
         foregroundColor: Colors.white,
         icon: Icons.share,
         label: 'Compartilhar',
@@ -211,22 +211,30 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
   }
 
   Future<void> onSharePressed() async {
-    final image = await context
-        .read<GenerateCheckService>()
-        .generateImage(check: widget.check);
+    final result =
+        await context.read<HistoryScreenController>().shareCheck(widget.check);
 
-    if (mounted) {
-      await context.read<ShareCheckService>().shareCheck(
-            imageBytes: image,
-          );
-    }
+    if (!mounted) return;
+    final messageText = 'A divisão ${(result) ? '' : 'não'} foi compartilhada!';
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          messageText,
+        ),
+        backgroundColor: !result ? Colors.red : null,
+      ),
+    );
   }
 
   Future<bool?> _showDeleteConfirmationDialog() => showDialog<bool>(
-      context: context,
-      builder: (context) => const ConfirmExclusionPopupWidget());
+        context: context,
+        builder: (context) => const ConfirmExclusionPopupWidget(),
+      );
 
   void onDeleteConfirmed() {
+    // TODO: verificar se não é possível fazer o reload dentro de (Check/History)Controller ou de outra forma.
+    //! TODO: Remover CheckController daqui (método delete deve estar no historyScreen)
     context.read<CheckController>().delete(widget.check);
     context.read<HistoryScreenController>().reloadChecks();
   }

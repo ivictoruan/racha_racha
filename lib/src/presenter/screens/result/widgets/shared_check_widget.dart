@@ -1,23 +1,22 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../domain/check/entities/check.dart';
-import '../../../../infra/services/generate_check_service.dart';
-import '../../../../infra/services/share_check_service.dart';
+import '../../../shared/controllers/check_controller.dart';
 
-class SharedCheckWidget extends StatelessWidget {
-  final ShareCheckService shareService;
-  final GenerateCheckService generateImageService;
+class SharedCheckWidget extends StatefulWidget {
   final Check check;
 
   const SharedCheckWidget({
     Key? key,
     required this.check,
-    required this.shareService,
-    required this.generateImageService,
   }) : super(key: key);
 
+  @override
+  State<SharedCheckWidget> createState() => _SharedCheckWidgetState();
+}
+
+class _SharedCheckWidgetState extends State<SharedCheckWidget> {
   @override
   Widget build(BuildContext context) => Material(
         elevation: 2,
@@ -37,22 +36,25 @@ class SharedCheckWidget extends StatelessWidget {
                   fontWeight: FontWeight.w500,
                 ),
           ),
-          onPressed: () async => await _onShareCheck(
-            check: check,
-          ),
+          onPressed: () async => await onSharePressed(),
         ),
       );
 
-  Future<void> _onShareCheck({required Check check}) async {
-    // TODO: gerar essa imagem diretamente no ShareService
-    await generateImageService
-        .generateImage(
-          check: check,
-        )
-        .then(
-          (Uint8List image) async => await shareService.shareCheck(
-            imageBytes: image,
-          ),
-        );
+  Future<void> onSharePressed() async {
+    final result =
+        await context.read<CheckController>().shareCheck(widget.check);
+
+    if (!mounted) return;
+    final messageText = 'A divisão ${(result) ? '' : 'não'} foi compartilhada!';
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          messageText,
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+        ),
+        backgroundColor: !result ? Colors.red : null,
+      ),
+    );
   }
 }
