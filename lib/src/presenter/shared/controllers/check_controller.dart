@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/check/repositories/check_repository.dart';
 import '../../../domain/check/entities/check.dart';
+import '../../../domain/check/usecases/share_check.dart';
 
 enum CheckState {
   totalCheckValueInvalid,
@@ -37,9 +38,12 @@ enum CheckState {
 
 class CheckController extends ChangeNotifier {
   final CheckRepository _repository;
+  final ShareCheck _shareCheck;
 
-  CheckController({required CheckRepository repository})
-      : _repository = repository;
+  CheckController(
+      {required CheckRepository repository, required ShareCheck shareCheck})
+      : _repository = repository,
+        _shareCheck = shareCheck;
 
 // deixar isso como privado?
   Check check = Check();
@@ -281,6 +285,21 @@ class CheckController extends ChangeNotifier {
       log("Erro ao setar valor total de bebida!");
     }
     notifyListeners();
+  }
+
+  Future<bool> shareCheck(Check check) async {
+    final result = await _shareCheck.call(check: check);
+
+    return result.fold(
+      (failure) {
+        // TODO: tratar esta falha.
+        log(failure.message);
+        return false;
+      },
+      (sucess) {
+        return sucess;
+      },
+    );
   }
 
   Future<void> restartCheck() async {
