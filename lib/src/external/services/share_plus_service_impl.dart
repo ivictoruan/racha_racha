@@ -2,14 +2,14 @@ import 'dart:typed_data';
 
 import 'package:share_plus/share_plus.dart';
 
-import '../../infra/services/share_check_service.dart';
+import '../../infra/services/share_service.dart';
 
-class SharePlusCheckServiceImpl extends ShareCheckService {
+class SharePlusCheckServiceImpl extends ShareService {
   final String _appUrl =
       'play.google.com/store/apps/details?id=com.matopibatech.racharacha';
 
   @override
-  Future<bool> shareCheck({required Uint8List imageBytes}) async {
+  Future<bool> shareCheckImage({required Uint8List imageBytes}) async {
     final result = await Share.shareXFiles(
       [
         XFile.fromData(
