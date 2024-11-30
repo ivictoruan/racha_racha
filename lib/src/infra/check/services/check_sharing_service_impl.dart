@@ -2,15 +2,15 @@ import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
 
-import '../../domain/check/entities/check.dart';
-import '../../domain/check/errors/erros.dart';
-import '../../domain/check/services/check_sharing_service.dart';
-import 'generate_check_service.dart';
-import 'share_check_service.dart';
+import '../../../domain/check/entities/check.dart';
+import '../../../domain/check/errors/erros.dart';
+import '../../../domain/check/services/check_sharing_service.dart';
+import '../../services/generate_check_service.dart';
+import '../../services/share_service.dart';
 
 class CheckSharingServiceImpl implements CheckSharingService {
   final GenerateCheckService generateCheckService;
-  final ShareCheckService shareCheckService;
+  final ShareService shareCheckService;
 
   CheckSharingServiceImpl({
     required this.generateCheckService,
@@ -33,7 +33,8 @@ class CheckSharingServiceImpl implements CheckSharingService {
     required Uint8List imageBytes,
   }) async {
     try {
-      final result = await shareCheckService.shareCheck(imageBytes: imageBytes);
+      final result =
+          await shareCheckService.shareCheckImage(imageBytes: imageBytes);
       return Right(result);
     } catch (e) {
       return Left(
