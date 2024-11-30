@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../domain/check/entities/check.dart';
-import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/constants/space_constants.dart';
 import '../../../shared/routes/app_route_manager.dart';
 import '../../../shared/ui/widgets/box_shadow_widget.dart';
@@ -84,7 +83,7 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
         onPressed: (_) async {
           final result = await _showDeleteConfirmationDialog();
           if (result == true) {
-            onDeleteConfirmed();
+            await onDeleteConfirmed();
           }
         },
         backgroundColor: Colors.red,
@@ -232,10 +231,20 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
         builder: (context) => const ConfirmExclusionPopupWidget(),
       );
 
-  void onDeleteConfirmed() {
-    // TODO: verificar se não é possível fazer o reload dentro de (Check/History)Controller ou de outra forma.
-    //! TODO: Remover CheckController daqui (método delete deve estar no historyScreen)
-    context.read<CheckController>().delete(widget.check);
-    context.read<HistoryScreenController>().reloadChecks();
+  Future<void> onDeleteConfirmed() async {
+    final result =
+        await context.read<HistoryScreenController>().delete(widget.check);
+
+    if (!mounted) return;
+    const messageText = 'A divisão foi excluída!';
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text(
+          messageText,
+        ),
+        backgroundColor: !result ? Colors.red : null,
+      ),
+    );
   }
 }
