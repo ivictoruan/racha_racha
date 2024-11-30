@@ -6,11 +6,12 @@ Com o aplicativo Racha Racha, você pode dividir facilmente as contas entre amig
 O aplicativo foi desenvolvido em Flutter, utilizando a arquitetura MVC para separação de responsabilidades. Além disso, a inversão de dependências foi implementada com Provider e a gestão de estado é feita através de ChangeNotifier.
 
 ## Recursos 🚀
+- [❌] Adicionar Participantes 📜
 - [✅] Divisão automática de contas 🧮
 - [✅] Separação de valor das bebidas consumidas por pessoa 🍻
 - [✅] Interface amigável e fácil de usar 🎨
 - [✅] Compartilhamento de contas via WhatsApp 📲
-- [❌] Histórico de contas anteriores 📜
+- [✅] Histórico de contas anteriores 📜
 
 ## Instalação 📲
 O Racha Racha pode ser baixado gratuitamente na Play Store através do link: https://play.google.com/store/apps/details?id=com.matopibatech.racharacha&hl=pt_BR&gl=US
