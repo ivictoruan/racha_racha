@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../domain/check/repositories/check_repository.dart';
+import '../../../domain/check/services/check_sharing_service.dart';
+import '../../../domain/check/usecases/share_check.dart';
 import '../../../external/check/datasourcers/sqflite_check_datasource.dart';
 import '../../../external/services/cache/shared_preferences_cache_service.dart';
+import '../../../external/services/generate_check_service_impl.dart';
+import '../../../external/services/share_plus_service_impl.dart';
 import '../../../infra/check/check_repository_impl.dart';
 import '../../../infra/check/datasourcers/local_check_datasource.dart';
 import '../../../infra/services/cache/cache_service.dart';
+import '../../../infra/services/check_sharing_service_impl.dart';
+import '../../../infra/services/generate_check_service.dart';
+import '../../../infra/services/share_check_service.dart';
 import '../controllers/check_controller.dart';
 import '../controllers/user_controller.dart';
 
@@ -32,8 +39,26 @@ class GeneralWidgetProvider extends StatelessWidget {
               localDatasource: context.read<LocalCheckDatasource>(),
             ),
           ),
+          Provider<GenerateCheckService>(
+            create: (_) => GenerateCheckServiceImpl(),
+          ),
+          Provider<ShareCheckService>(
+            create: (_) => SharePlusCheckServiceImpl(),
+          ),
+          Provider<CheckSharingService>(
+            create: (context) => CheckSharingServiceImpl(
+              generateCheckService: context.read<GenerateCheckService>(),
+              shareCheckService: context.read<ShareCheckService>(),
+            ),
+          ),
+          Provider<ShareCheck>(
+            create: (context) => ShareCheckImpl(
+              sharingService: context.read<CheckSharingService>(),
+            ),
+          ),
           ChangeNotifierProvider<CheckController>(
             create: (context) => CheckController(
+              shareCheck: context.read<ShareCheck>(),
               repository: context.read<CheckRepository>(),
             ),
           ),
