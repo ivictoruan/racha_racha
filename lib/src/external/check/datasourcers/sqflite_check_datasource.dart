@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
+
 import '../../../infra/check/adapters/sqflite_check_adapter.dart';
 import '../../../infra/check/datasourcers/local_check_datasource.dart';
 import '../../../domain/check/entities/check.dart';
@@ -49,8 +50,7 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
   @override
   Future<void> createCheck({required Check check}) async {
     try {
-      final db = await _db; // Espera até que o banco de dados esteja pronto
-
+      final db = await _db;
       final id = const Uuid().v4();
       final updatedCheck = check.copyWith(id: id);
 
@@ -68,7 +68,7 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
   @override
   Future<List<Check>> getAllChecks() async {
     try {
-      final db = await _db; // Espera até que o banco de dados esteja pronto
+      final db = await _db;
       final List<Map<String, dynamic>> maps = await db.query(
         _tableName,
         orderBy: 'creationDate DESC',
