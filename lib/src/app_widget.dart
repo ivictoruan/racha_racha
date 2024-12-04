@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:racha_racha/src/core/ui/theme_config.dart';
 
-import 'core/utils/routes/routes.dart';
+import 'presenter/shared/ui/theme/theme_config.dart';
+import 'presenter/shared/routes/app_route_manager.dart';
 
 class RachaRachaApp extends StatelessWidget {
   const RachaRachaApp({Key? key}) : super(key: key);
 
+  String get title => "Racha Racha";
+
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
-        routerDelegate: routes.routerDelegate,
-        routeInformationParser: routes.routeInformationParser,
-        routeInformationProvider: routes.routeInformationProvider,
+  Widget build(BuildContext context) => MaterialApp(
+        onGenerateRoute: AppRouteManager.onGenerateRoute,
+        initialRoute: '/',
         debugShowCheckedModeBanner: false,
-        title: "Racha Racha",
+        title: title,
         theme: ThemeConfig.theme,
       );
 }
