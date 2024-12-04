@@ -1,11 +1,11 @@
 // TODO: avaliar a necessidade desta extension
 extension StringExtension on String {
   String convertCurrencyValues() {
-    String valueWithoutSymbol = replaceAll(',', '.').replaceAll('R\$', '').trim();
+    String valueWithoutSymbol =
+        replaceAll(',', '.').replaceAll('R\$', '').trim();
     return valueWithoutSymbol;
   }
 }
-
 
 extension StringExtensions on String {
   double? parseCurrency() {
