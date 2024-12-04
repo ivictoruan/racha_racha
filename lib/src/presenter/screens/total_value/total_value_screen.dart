@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/presenter/shared/extentions/monetary_extention.dart';
 
+import '../../shared/extentions/monetary_extention.dart';
 import '../../shared/input_formatters/currency_text_input_formatter.dart';
 import '../../shared/routes/app_route_manager.dart';
 import '../../shared/ui/widgets/text_form_field_widget.dart';
@@ -25,9 +25,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
   late TextEditingController _textController;
   final _currencyFormatter = CurrencyTextInputFormatter();
 
-  @override
-  void initState() {
-    super.initState();
+  void initTextController() {
     _textController = TextEditingController();
 
     _textController.addListener(() {
@@ -48,8 +46,17 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    initTextController();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final CheckController controller = context.watch<CheckController>();
+    CheckController controller = context.watch<CheckController>();
+
+    bool isTextFormFieldValid = controller.totalValue > 0 &&
+        controller.state == CheckState.totalCheckValueValid;
 
     return WillPopScopeWidget(
       onYesPressed: () async => await onYesPressed(),
@@ -59,22 +66,29 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
             titleText: titleText,
           ),
           const SizedBox(height: SpaceConstants.medium),
-          _buildTextFormField(controller: controller, context: context),
-          SubtitleTextWidget(subtitle: subtitleText),
+          _buildTextFormField(
+            controller: controller,
+            enableNavigation: isTextFormFieldValid,
+          ),
+          SubtitleTextWidget(
+            subtitle: controller.msgError.isEmpty
+                ? subtitleText
+                : controller.msgError,
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButtonWidget(
         onPressed: () => Navigator.of(context).pushNamed(
           AppRouteManager.totalPeople,
         ),
-        isEnabled: (controller.totalValue > 0),
+        isEnabled: isTextFormFieldValid,
       ),
     );
   }
 
   TextFormFieldWidget _buildTextFormField({
     required CheckController controller,
-    required BuildContext context,
+    required bool enableNavigation,
   }) =>
       TextFormFieldWidget(
         hintText: 'R\$ 0,00',
@@ -86,13 +100,12 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
         icon: Icons.price_change_outlined,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         onChanged: (String newTotalCheckValue) {
-          controller.totalValue = newTotalCheckValue.parseCurrency();
+          controller.totalValue = newTotalCheckValue.parseCurrency()!;
         },
         onFieldSubmitted: (String newTotalCheckValue) {
-          controller.totalValue = newTotalCheckValue.parseCurrency();
+          controller.totalValue = newTotalCheckValue.parseCurrency()!;
 
-          bool isValid = controller.check.totalValue > 0;
-          if (isValid) {
+          if (enableNavigation) {
             Navigator.of(context).pushNamed(
               AppRouteManager.totalPeople,
             );
