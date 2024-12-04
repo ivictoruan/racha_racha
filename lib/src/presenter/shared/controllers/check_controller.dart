@@ -16,26 +16,6 @@ enum CheckState {
   formInValid,
 }
 
-// abstract class CheckController extends ChangeNotifier {
-//   // Função para calcular o resultado da conta
-//   Future<void> calculateCheckResult();
-//   // Funções getter e setter para os dados de entrada (como totalValue, totalPeople, etc.)
-//   set totalValue(double? newTotalCheckPrice);
-//   set totalPeople(String totalPeople);
-//   set waiterPercentage(double newWaiterPercentage);
-//   set totalDrinkPrice(String newTotalDrinkPrice);
-//   set peopleDrinking(String newValuePeopleDriking);
-//   set isSomeoneDrinking(bool newIsSomeoneDrinking);
-//   // Função para reiniciar a conta
-//   Future<void> restartCheck();
-//   // Função para deletar a conta do banco de dados
-//   Future<void> delete(CheckModel check);
-//   // Getter para mensagem de erro
-//   String get msgError;
-//   // Getter para o estado atual da conta
-//   CheckState get state;
-// }
-
 class CheckController extends ChangeNotifier {
   final ShareCheck _shareCheck;
   final CreateCheck _createCheck;
@@ -46,7 +26,6 @@ class CheckController extends ChangeNotifier {
   })  : _shareCheck = shareCheck,
         _createCheck = createCheck;
 
-// deixar isso como privado?
   Check check = Check();
 
   CheckState state = CheckState.idle;
@@ -68,12 +47,9 @@ class CheckController extends ChangeNotifier {
 
     if (check.isSomeoneDrinking) {
       _calculateCheckResultWithDrinkers();
-      await _createCheck.call(check: check);
-
-      return;
+    } else {
+      _calculateCheckResultWithoutDrinkers();
     }
-
-    _calculateCheckResultWithoutDrinkers();
 
     await _createCheck.call(check: check);
   }
@@ -138,17 +114,15 @@ class CheckController extends ChangeNotifier {
 
   double get totalValue => check.totalValue;
 
-  set totalValue(double? newTotalCheckPrice) {
-    if (newTotalCheckPrice == null) return;
+  set totalValue(double newTotalCheckPrice) {
     try {
       if (newTotalCheckPrice == 0) {
         msgError = "Digite o valor total da conta";
         state = CheckState.totalCheckValueInvalid;
         notifyListeners();
-        log('newTotalCheckPrice: $newTotalCheckPrice');
-
-        return;
       }
+
+      log('newTotalCheckPrice: $newTotalCheckPrice');
 
       if (newTotalCheckPrice != 0) {
         state = CheckState.totalCheckValueValid;
