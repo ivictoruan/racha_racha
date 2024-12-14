@@ -4,7 +4,7 @@ import '../../shared/routes/app_route_manager.dart';
 import '../../shared/constants/app_assets.dart';
 import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import '../../shared/constants/space_constants.dart';
-import 'widgets/go_to_rachar_button_widget.dart';
+import 'widgets/start_button_widget.dart';
 import 'widgets/introduction_widget.dart';
 
 class StartingScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class _StartingScreenState extends State<StartingScreen> {
         appBar: buildAppBar,
         body: const IntroductionWidget(),
         isBodyScrollable: false,
-        floatingActionButton: GoToRacharButtonWidget(
+        floatingActionButton: StartButtonWidget(
           onPressed: () => Navigator.pushNamedAndRemoveUntil(
             context,
             AppRouteManager.history,
