@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../shared/ui/widgets/box_shadow_widget.dart';
 
-class GoToRacharButtonWidget extends StatelessWidget {
+class StartButtonWidget extends StatelessWidget {
   final void Function()? onPressed;
-  const GoToRacharButtonWidget({
+  const StartButtonWidget({
     super.key,
     required this.onPressed,
   });
