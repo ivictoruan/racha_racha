@@ -117,6 +117,7 @@ class _HistoryScreenState extends State<_HistoryScreen> {
   Widget build(BuildContext context) {
     final historyController = Provider.of<HistoryScreenController>(context);
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () => onWillPop(),
       child: Scaffold(
@@ -181,7 +182,7 @@ class _HistoryScreenState extends State<_HistoryScreen> {
   Future<bool> onWillPop() async {
     final shouldPop = await showDialog<bool>(
       context: context,
-      builder: (context) => WantExitPopupWidget(),
+      builder: (context) => const WantExitPopupWidget(),
     );
     return shouldPop ?? false;
   }

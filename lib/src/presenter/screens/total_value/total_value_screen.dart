@@ -59,7 +59,7 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
         controller.state == CheckState.totalCheckValueValid;
 
     return WillPopScopeWidget(
-      onYesPressed: () async => await onYesPressed(),
+      onYesPressed: () => onYesPressed(),
       body: Column(
         children: [
           TitleTextWidget(
@@ -118,16 +118,15 @@ class _TotalValueScreenState extends State<TotalValueScreen> {
   String get subtitleText =>
       'Precisamos do valor do recibo para dar início à divisão da sua conta.';
 
-  Future<void> onYesPressed() async {
-    final navigator = Navigator.of(context);
+  onYesPressed() {
+    Navigator.pop(context);
 
-    await context.read<CheckController>().restartCheck();
+    // await context.read<CheckController>().restartCheck();
 
-    if (mounted) {
-      navigator.pushNamedAndRemoveUntil(
-        AppRouteManager.history,
-        (route) => false,
-      );
-    }
+    // if (mounted) {
+    //   navigator.pop(
+    //     AppRouteManager.homePage,
+    // );
+    // }
   }
 }

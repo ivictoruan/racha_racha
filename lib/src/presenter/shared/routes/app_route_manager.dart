@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:racha_racha/src/homepage.dart';
 
 import '../../../domain/check/entities/check.dart';
 import '../../screens/history/history_screen.dart';
-import '../../screens/first/first_screen.dart';
 import '../../screens/history/provider/history_screen_provider.dart';
 import '../../screens/is_someone_drinking/is_someone_drinking_screen.dart';
 import '../../screens/result/provider/check_details_screen_provider.dart';
@@ -14,7 +14,6 @@ import '../../screens/total_people/total_people_screen.dart';
 import '../../screens/total_value/total_value_screen.dart';
 
 class AppRouteManager {
-  static const String firstScreen = '/';
   static const String starting = '/starting';
   static const String history = '/history';
   static const String totalValue = '/totalValue';
@@ -23,11 +22,12 @@ class AppRouteManager {
   static const String checkDetails = '/checkDetails';
   static const String settings = '/settings';
   static const String wantDonate = '/wantDonate';
+  static const String homePage = '/homepage';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case firstScreen:
-        return MaterialPageRoute(builder: (_) => const FirstScreen());
+      case homePage:
+        return MaterialPageRoute(builder: (_) => const HomePage());
       case starting:
         return MaterialPageRoute(builder: (_) => const StartingScreen());
       case history:
@@ -75,7 +75,7 @@ class AppRouteManager {
         );
       default:
         return MaterialPageRoute(
-          builder: (_) => const StartingScreen(),
+          builder: (_) => const HomePage(),
         );
     }
   }

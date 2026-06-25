@@ -49,6 +49,7 @@ class WantDonateWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               onTap: () async {
                 await Clipboard.setData(ClipboardData(text: _appPix)).then((_) {
+                  // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       behavior: SnackBarBehavior.floating,
@@ -73,6 +74,7 @@ class WantDonateWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
+                      // ignore: deprecated_member_use
                       color: Colors.deepPurple.withOpacity(0.3),
                       blurRadius: 8,
                       spreadRadius: 2,
