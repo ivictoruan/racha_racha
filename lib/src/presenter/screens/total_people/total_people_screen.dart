@@ -99,7 +99,7 @@ class _TotalPeopleScreenState extends State<TotalPeopleScreen> {
     final String initialText =
         (controller.totalPeople == 1 ? '' : controller.totalPeople).toString();
 
-    return TextFormFieldWidget(
+    return TextFormFieldWidget( 
       hintText: "Quantas pessoas?",
       controller: TextEditingController.fromValue(
         TextEditingValue(text: initialText),

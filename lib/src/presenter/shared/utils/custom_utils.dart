@@ -22,7 +22,7 @@ class CustomUtils {
         throw 'Could not launch $url';
       }
     } catch (e) {
-      log("Não foi possível ur para $url");
+      log("Não foi possível ir para $url");
     }
   }
 }

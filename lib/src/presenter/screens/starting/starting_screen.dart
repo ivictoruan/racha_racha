@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:racha_racha/src/homepage.dart';
 
 import '../../shared/routes/app_route_manager.dart';
 import '../../shared/constants/app_assets.dart';
@@ -17,15 +18,16 @@ class StartingScreen extends StatefulWidget {
 class _StartingScreenState extends State<StartingScreen> {
   @override
   Widget build(BuildContext context) => WillPopScopeWidget(
-        onYesPressed: () => Navigator.pop(context, true),
+        onYesPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const HomePage())),
         appBar: buildAppBar,
         body: const IntroductionWidget(),
         isBodyScrollable: false,
         floatingActionButton: GoToRacharButtonWidget(
           onPressed: () => Navigator.pushNamedAndRemoveUntil(
             context,
-            AppRouteManager.history,
-            (route) => false,
+            AppRouteManager.homePage,
+            (route) => true,
           ),
         ),
         mustShowDialog: false,
