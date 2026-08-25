@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../domain/check/entities/check.dart';
-import '../../../shared/controllers/check_controller.dart';
 
 class SharedCheckWidget extends StatefulWidget {
   final Check check;
@@ -41,20 +39,20 @@ class _SharedCheckWidgetState extends State<SharedCheckWidget> {
       );
 
   Future<void> onSharePressed() async {
-    final result =
-        await context.read<CheckController>().shareCheck(widget.check);
+    // final result =
+    // await context.read<CheckController>().shareCheck(widget.check);
 
     if (!mounted) return;
-    final messageText = 'A divisão ${(result) ? '' : 'não'} foi compartilhada!';
+    // final messageText = 'A divisão ${(result) ? '' : 'não'} foi compartilhada!';
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          messageText,
-          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-        ),
-        backgroundColor: !result ? Colors.red : null,
-      ),
-    );
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   SnackBar(
+    //     content: Text(
+    //       messageText,
+    //       style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+    //     ),
+    //     backgroundColor: !result ? Colors.red : null,
+    //   ),
+    // );
   }
 }

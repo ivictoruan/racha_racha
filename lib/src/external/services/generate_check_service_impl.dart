@@ -16,7 +16,16 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
   Future<Uint8List> generateImage({required Check check}) async {
     final ui.PictureRecorder recorder = ui.PictureRecorder();
     _canvas = Canvas(recorder);
-    _size = const Size(800, 700);
+
+    final double contentHeight = 150.0 +
+        100.0 +
+        60.0 +
+        (check.participants.length * 45.0) +
+        60.0 +
+        (check.items.length * 60.0) +
+        140.0;
+    final double totalHeight = contentHeight.clamp(700.0, 5000.0);
+    _size = Size(800, totalHeight);
 
     _setupColors();
     _drawBackground();
@@ -43,65 +52,128 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
     final ui.Paint headerPaint = Paint()..color = _headerColor;
     _canvas.drawRect(Rect.fromLTWH(0, 0, _size.width, 150), headerPaint);
 
-    _drawText('Racha Racha', 30, 50,
-        color: Colors.white, fontSize: 48, fontWeight: FontWeight.bold);
-    _drawText('Seu app de dividir a conta no rolê!', 30, 110,
-        color: Colors.white, fontSize: 24);
+    _drawText('Racha Racha', 30, 45,
+        color: Colors.white, fontSize: 44, fontWeight: FontWeight.bold);
+    _drawText('Divisão da Conta', 30, 100,
+        color: Colors.white.withValues(alpha: 0.9), fontSize: 22);
   }
 
   void _drawContent(Check check) {
-    final double totalValueWithoutWaiterValue =
-        check.totalValue - check.totalWaiterValue;
+    double yOffset = 180;
 
-    _drawText('Detalhes da Divisão', 30, 180,
-        fontSize: 36, fontWeight: FontWeight.bold);
-
-    double yOffset = 240;
-    _drawRow(
-        '💰 Total:', 'R\$ ${check.totalValue.toStringAsFixed(2)}', yOffset);
-    yOffset += 60;
-
-    if (check.waiterPercentage > 0) {
-      _drawRow(
-        '🪙 Valor sem gorjeta:',
-        'R\$ ${totalValueWithoutWaiterValue.toStringAsFixed(2)}',
-        yOffset,
-      );
-      yOffset += 60;
-    }
-
-    _drawRow(
-      '📊 Gorjeta:',
-      'R\$ ${check.totalWaiterValue.toStringAsFixed(2)} (${check.waiterPercentage.toStringAsFixed(0)}%)',
+    _drawText(
+      'Detalhes da Divisão',
+      30,
       yOffset,
+      fontSize: 30,
+      fontWeight: FontWeight.bold,
+      color: _baseColor.shade900,
     );
-    yOffset += 60;
+    yOffset += 45;
 
-    if (check.isSomeoneDrinking) {
-      _drawRow(
-          '🍻 Se bebeu, paga:',
-          'R\$ ${check.individualPriceWhoIsDrinking.toStringAsFixed(2)}',
-          yOffset);
-      yOffset += 60;
-      _drawRow('🚫 Não bebeu, paga:',
-          'R\$ ${check.individualPrice.toStringAsFixed(2)}', yOffset);
-    } else {
-      _drawRow('👤 Valor Individual:',
-          'R\$ ${check.individualPrice.toStringAsFixed(2)}', yOffset);
+    // Card de Valor Total
+    final ui.Paint cardPaint = Paint()
+      ..color = Colors.deepPurple.shade100.withValues(alpha: 0.6);
+    final RRect totalRRect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(30, yOffset, _size.width - 60, 50),
+      const Radius.circular(12),
+    );
+    _canvas.drawRRect(totalRRect, cardPaint);
+    _drawText(
+      '💰 Valor Total da Conta:',
+      45,
+      yOffset + 12,
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: _baseColor.shade900,
+    );
+    _drawText(
+      'R\$ ${check.totalValue.toStringAsFixed(2).replaceAll('.', ',')}',
+      _size.width - 45,
+      yOffset + 10,
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+      align: TextAlign.right,
+      color: _baseColor.shade800,
+    );
+    yOffset += 75;
+
+    // Seção Participantes
+    if (check.participants.isNotEmpty) {
+      _drawText(
+        '👥 Participantes (${check.participants.length}):',
+        30,
+        yOffset,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: _baseColor.shade800,
+      );
+      yOffset += 38;
+
+      for (final participant in check.participants) {
+        _drawRow(
+          '• ${participant.name}',
+          'Deve: R\$ ${participant.total.toStringAsFixed(2).replaceAll('.', ',')}',
+          yOffset,
+          isWithDollarSign: false,
+        );
+        yOffset += 36;
+      }
+      yOffset += 20;
     }
 
-    yOffset += 60;
-    _drawRow('👥 Pessoas:', check.totalPeople.toString(), yOffset,
-        isWithDollarSign: false);
+    // Seção Itens
+    if (check.items.isNotEmpty) {
+      _drawText(
+        '🛒 Itens Consumidos (${check.items.length}):',
+        30,
+        yOffset,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        color: _baseColor.shade800,
+      );
+      yOffset += 38;
+
+      for (final item in check.items) {
+        final consumersText = item.consumers.isNotEmpty
+            ? item.consumers.map((c) => c.name).join(', ')
+            : 'Nenhum participante';
+
+        _drawRow(
+          '• ${item.name}',
+          'R\$ ${item.price.toStringAsFixed(2).replaceAll('.', ',')}',
+          yOffset,
+          isWithDollarSign: false,
+        );
+        yOffset += 26;
+
+        _drawText(
+          '   Consumido por: $consumersText',
+          30,
+          yOffset,
+          fontSize: 16,
+          color: Colors.grey.shade700,
+          maxWidth: _size.width - 60,
+        );
+        yOffset += 34;
+      }
+    }
   }
 
   void _drawFooter() {
     final ui.Paint footerPaint = Paint()..color = _headerColor;
     _canvas.drawRect(
-        Rect.fromLTWH(0, _size.height - 100, _size.width, 100), footerPaint);
+      Rect.fromLTWH(0, _size.height - 80, _size.width, 80),
+      footerPaint,
+    );
 
-    _drawText('Baixe o Racha Racha', 30, _size.height - 70,
-        color: Colors.white, fontSize: 20);
+    _drawText(
+      'Racha Racha - Seu app de dividir a conta no rolê!',
+      30,
+      _size.height - 50,
+      color: Colors.white,
+      fontSize: 18,
+    );
   }
 
   void _drawText(
@@ -118,9 +190,10 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
       text: TextSpan(
         text: text,
         style: TextStyle(
-            color: color ?? _textColor,
-            fontSize: fontSize,
-            fontWeight: fontWeight),
+          color: color ?? _textColor,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+        ),
       ),
       textDirection: TextDirection.ltr,
       textAlign: align,
@@ -135,16 +208,26 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
     textPainter.paint(_canvas, offset);
   }
 
-  void _drawRow(String label, String value, double y,
-      {bool isWithDollarSign = true}) {
-    // if (!isVisible) return;
-
-    _drawText(label, 30, y, fontSize: 22, maxWidth: _size.width * 0.6);
+  void _drawRow(
+    String label,
+    String value,
+    double y, {
+    bool isWithDollarSign = true,
+  }) {
+    _drawText(
+      label,
+      30,
+      y,
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
+      maxWidth: _size.width * 0.6,
+    );
     _drawText(
       isWithDollarSign ? 'R\$ $value' : value,
       _size.width - 30,
       y,
-      fontSize: 22,
+      fontSize: 20,
+      fontWeight: FontWeight.w600,
       align: TextAlign.right,
       maxWidth: _size.width * 0.4,
     );

@@ -3,13 +3,59 @@ import '../../../../domain/check/entities/check.dart';
 import '../../../shared/constants/space_constants.dart';
 import 'result_info_widget.dart';
 
-class ResultBodyWidget extends StatelessWidget {
+class ResultBodyWidget extends StatefulWidget {
   final Check check;
 
   const ResultBodyWidget({
     Key? key,
     required this.check,
   }) : super(key: key);
+
+  @override
+  State<ResultBodyWidget> createState() => _ResultBodyWidgetState();
+}
+
+class _ResultBodyWidgetState extends State<ResultBodyWidget> {
+  Widget _buildSubtitle() => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Total: R\$ ${widget.check.totalValue.toStringAsFixed(2)}',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Participantes:',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+          ),
+          ...widget.check.participants.map(
+            (participant) => Text(
+              '- ${participant.name}: R\$ ${participant.total.toStringAsFixed(2)}',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Itens:',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+          ),
+          ...widget.check.items.map(
+            (item) => Text(
+              '- ${item.name} (R\$ ${item.price.toStringAsFixed(2)})',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ),
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -36,45 +82,46 @@ class ResultBodyWidget extends StatelessWidget {
                 context,
                 icon: Icons.attach_money,
                 label: "Total:",
-                value: check.totalValue.toStringAsFixed(2),
+                value: widget.check.totalValue.toStringAsFixed(2),
               ),
-              _buildInfoCard(
-                context,
-                icon: Icons.monetization_on,
-                label: "Valor sem gorjeta:",
-                value: (check.totalValue - check.totalWaiterValue)
-                    .toStringAsFixed(2),
-                isVisible: check.waiterPercentage > 0,
-              ),
-              _buildInfoCard(
-                context,
-                icon: Icons.percent,
-                label: "Gorjeta:",
-                value:
-                    '${check.totalWaiterValue.toStringAsFixed(2)} (${check.waiterPercentage.toStringAsFixed(0)})%',
-              ),
-              _buildInfoCard(
-                context,
-                icon: Icons.local_drink,
-                label: "Se bebeu, paga:",
-                value: check.individualPriceWhoIsDrinking.toStringAsFixed(2),
-                isVisible: check.isSomeoneDrinking,
-              ),
-              _buildInfoCard(
-                context,
-                icon: Icons.person,
-                label: check.isSomeoneDrinking
-                    ? "Não bebeu, paga:"
-                    : "Valor individual:",
-                value: check.individualPrice.toStringAsFixed(2),
-              ),
-              _buildInfoCard(
-                context,
-                icon: Icons.people_outline_sharp,
-                label: "Pessoas:",
-                isWithDollarSign: false,
-                value: check.totalPeople.toString(),
-              ),
+              // _buildInfoCard(
+              //   context,
+              //   icon: Icons.monetization_on,
+              //   label: "Valor sem gorjeta:",
+              //   value: (check.totalValue - check.totalWaiterValue)
+              //       .toStringAsFixed(2),
+              //   isVisible: check.waiterPercentage > 0,
+              // ),
+              // _buildInfoCard(
+              //   context,
+              //   icon: Icons.percent,
+              //   label: "Gorjeta:",
+              //   value:
+              //       '${check.totalWaiterValue.toStringAsFixed(2)} (${check.waiterPercentage.toStringAsFixed(0)})%',
+              // ),
+              // _buildInfoCard(
+              //   context,
+              //   icon: Icons.local_drink,
+              //   label: "Se bebeu, paga:",
+              //   value: check.individualPriceWhoIsDrinking.toStringAsFixed(2),
+              //   isVisible: check.isSomeoneDrinking,
+              // ),
+              // _buildInfoCard(
+              //   context,
+              //   icon: Icons.person,
+              //   label: check.isSomeoneDrinking
+              //       ? "Não bebeu, paga:"
+              //       : "Valor individual:",
+              //   value: check.individualPrice.toStringAsFixed(2),
+              // ),
+              // _buildInfoCard(
+              //   context,
+              //   icon: Icons.people_outline_sharp,
+              //   label: "Pessoas:",
+              //   isWithDollarSign: false,
+              //   value: check.totalPeople.toString(),
+              // ),
+              _buildSubtitle(),
               const SizedBox(height: SpaceConstants.medium),
               Text(
                 "Resumo Final",

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../../shared/controllers/check_controller.dart';
 import '../../../shared/routes/app_route_manager.dart';
 
 class BottomNavBarWidget extends StatefulWidget {
@@ -20,7 +18,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
     if (widget.isFinishingCheck) {
       final navigator = Navigator.of(context);
 
-      await context.read<CheckController>().restartCheck();
+      // await context.read<CheckController>().restartCheck();
 
       if (mounted) {
         navigator.pushNamedAndRemoveUntil(

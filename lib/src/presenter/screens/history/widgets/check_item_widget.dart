@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -33,7 +35,6 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
     super.initState();
 
     _slidableController = SlidableController(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
   }
 
   @override
@@ -151,33 +152,33 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
             children: [
               const Icon(Icons.people_alt_outlined, color: Colors.deepPurple),
               Text(
-                ' ${widget.check.totalPeople} pessoas',
+                ' ${widget.check.participants.length} pessoas',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w400,
                       fontSize: 16,
                     ),
               ),
-              if (widget.check.isSomeoneDrinking) ...[
-                const SizedBox(width: SpaceConstants.extraSmall),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 2),
-                  decoration: BoxDecoration(
-                      color: Colors.deepPurple[50],
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(
-                        color: Colors.deepPurpleAccent,
-                        width: 0.5,
-                      )),
-                  child: Text(
-                    '${widget.check.totalPeopleDrinking} bebendo',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14,
-                          fontStyle: FontStyle.italic,
-                        ),
-                  ),
-                ),
-              ],
+              // if (widget.check.isSomeoneDrinking) ...[
+              //   const SizedBox(width: SpaceConstants.extraSmall),
+              //   Container(
+              //     padding: const EdgeInsets.symmetric(horizontal: 2),
+              //     decoration: BoxDecoration(
+              //         color: Colors.deepPurple[50],
+              //         borderRadius: BorderRadius.circular(4),
+              //         border: Border.all(
+              //           color: Colors.deepPurpleAccent,
+              //           width: 0.5,
+              //         )),
+              //     child: Text(
+              //       '${widget.check.totalPeopleDrinking} bebendo',
+              //       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              //             fontWeight: FontWeight.w400,
+              //             fontSize: 14,
+              //             fontStyle: FontStyle.italic,
+              //           ),
+              //     ),
+              //   ),
+              //   ],
             ],
           ),
         ],
@@ -189,18 +190,19 @@ class _CheckItemWidgetState extends State<CheckItemWidget>
         : _slidableController.openEndActionPane();
   }
 
-  void onCheckPressed() {
+  Future<void> onCheckPressed() async {
     if (isExpanded) {
       _slidableController.close();
       return;
     }
-    Navigator.of(context).pushNamed(
-      AppRouteManager.checkDetails,
-      arguments: {
-        'isFinishing': false,
-        'check': widget.check,
-      },
+    log('Check pressed| Será enviado: ${widget.check}');
+    final result = await Navigator.of(context).pushNamed(
+      AppRouteManager.splitScreen,
+      arguments: widget.check,
     );
+    if (result == true && mounted) {
+      context.read<HistoryScreenController>().fetchChecks();
+    }
   }
 
   String get dateFormatted {

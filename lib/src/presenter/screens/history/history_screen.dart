@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:racha_racha/src/presenter/screens/history/widgets/popups/want_exit_popup_widget.dart';
 import 'package:showcaseview/showcaseview.dart';
 
+import '../../../domain/check/entities/check.dart';
 import '../../../infra/services/cache/cache_service.dart';
 import '../../shared/constants/app_assets.dart';
 import '../../shared/constants/cache_keys.dart';
@@ -14,27 +14,27 @@ import '../../shared/ui/widgets/floating_action_button_widget.dart';
 import '../../shared/ui/widgets/loading_screen.dart';
 import '../result/widgets/bottom_nav_bar_widget.dart';
 import 'controller/history_screen_controller.dart';
+import 'widgets/popups/want_exit_popup_widget.dart';
 import 'widgets/check_item_widget.dart';
 
 class HistoryScreenWrapper extends StatelessWidget {
   const HistoryScreenWrapper({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ShowCaseWidget(
-      autoPlay: true,
-      autoPlayDelay: const Duration(seconds: 3),
+  Widget build(BuildContext context) => ShowCaseWidget(
+        autoPlay: true,
+        autoPlayDelay: const Duration(seconds: 3),
+        onFinish: () async => await onFinish(context),
+        builder: (context) => _HistoryScreenTutorial(),
+        // ),
+      );
 
-      onFinish: () async {
-        final navigator = Navigator.of(context);
-        await Future.delayed(
-          const Duration(milliseconds: 500),
-        );
-        navigator.pushNamed(AppRouteManager.totalValue);
-      },
-      builder: (context) => _HistoryScreenTutorial(),
-      // ),
-    );
+  Future<void> onFinish(BuildContext context) async {
+    final navigator = Navigator.of(context);
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    navigator.pushNamed(AppRouteManager.splitScreen);
   }
 }
 
@@ -44,7 +44,6 @@ class _HistoryScreenTutorial extends StatefulWidget {
 }
 
 class _HistoryScreenTutorialState extends State<_HistoryScreenTutorial> {
-  // Chaves para cada elemento do tutorial
   final GlobalKey _addButtonShowcaseKey = GlobalKey();
   final GlobalKey _titleShowcaseKey = GlobalKey();
   final GlobalKey _emptyStateShowcaseKey = GlobalKey();
@@ -52,7 +51,9 @@ class _HistoryScreenTutorialState extends State<_HistoryScreenTutorial> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkFirstTime());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) async => _checkFirstTime(),
+    );
   }
 
   Future<void> _checkFirstTime() async {
@@ -100,17 +101,17 @@ class _HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<_HistoryScreen> {
-  init() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Provider.of<HistoryScreenController>(context, listen: false)
-          .fetchChecks();
-    });
-  }
+  void fetchChecks() => WidgetsBinding.instance.addPostFrameCallback(
+        (_) async {
+          await Provider.of<HistoryScreenController>(context, listen: false)
+              .fetchChecks();
+        },
+      );
 
   @override
   void initState() {
     super.initState();
-    init();
+    fetchChecks();
   }
 
   @override
@@ -129,6 +130,7 @@ class _HistoryScreenState extends State<_HistoryScreen> {
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     color: Colors.deepPurple[600],
                     fontWeight: FontWeight.w600,
+                    // fontStyle: FontStyle.italic
                   ),
             ),
           ),
@@ -143,7 +145,7 @@ class _HistoryScreenState extends State<_HistoryScreen> {
                     builder: (context, child) => ListView.builder(
                       itemCount: historyController.checks.length,
                       itemBuilder: (context, index) {
-                        final check = historyController.checks[index];
+                        final Check check = historyController.checks[index];
                         final checkIndex =
                             historyController.checks.length - index;
                         return CheckItemWidget(
@@ -153,6 +155,7 @@ class _HistoryScreenState extends State<_HistoryScreen> {
                       },
                     ),
                   ),
+        // TODO: fazer um wrapper para a parte do ShowCase FABWrapper()
         floatingActionButton: Showcase(
           key: widget.addButtonKey ?? GlobalKey(),
           description: 'Toque aqui para adicionar uma nova divisão de conta',
@@ -163,9 +166,14 @@ class _HistoryScreenState extends State<_HistoryScreen> {
           ),
           targetShapeBorder: const CircleBorder(),
           child: FloatingActionButtonWidget(
-            onPressed: () => Navigator.of(context).pushNamed(
-              AppRouteManager.totalValue,
-            ),
+            onPressed: () async {
+              final result = await Navigator.of(context).pushNamed(
+                AppRouteManager.splitScreen,
+              );
+              if (result == true) {
+                fetchChecks();
+              }
+            },
             isEnabled: !historyController.isLoading,
             icon: Icons.add,
           ),
@@ -181,7 +189,7 @@ class _HistoryScreenState extends State<_HistoryScreen> {
   Future<bool> onWillPop() async {
     final shouldPop = await showDialog<bool>(
       context: context,
-      builder: (context) => WantExitPopupWidget(),
+      builder: (context) => const WantExitPopupWidget(),
     );
     return shouldPop ?? false;
   }

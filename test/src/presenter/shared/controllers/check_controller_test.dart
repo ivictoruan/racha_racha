@@ -1,54 +1,97 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
+import 'package:racha_racha/src/domain/check/entities/check.dart';
 import 'package:racha_racha/src/domain/check/usecases/create_check.dart';
-import 'package:racha_racha/src/domain/check/usecases/share_check.dart';
-import 'package:racha_racha/src/presenter/shared/controllers/check_controller.dart';
-
-class MockShareCheck extends Mock implements ShareCheck {}
+import 'package:racha_racha/src/domain/item/item.dart';
+import 'package:racha_racha/src/presenter/shared/controllers/split_screen_controller.dart';
 
 class MockCreateCheck extends Mock implements CreateCheck {}
+class FakeCheck extends Fake implements Check {}
 
 void main() {
-  late CheckController controller;
-  late MockShareCheck mockShareCheck;
+  late SplitScreenController controller;
   late MockCreateCheck mockCreateCheck;
 
-  setUp(() {
-    mockShareCheck = MockShareCheck();
-    mockCreateCheck = MockCreateCheck();
-    controller = CheckController(
-      shareCheck: mockShareCheck,
-      createCheck: mockCreateCheck,
-    );
+  setUpAll(() {
+    registerFallbackValue(FakeCheck());
   });
 
-  group('totalValue setter', () {
-    test('Deve definir o totalValue corretamente quando o valor for válido',
-        () {
-      controller.totalValue = 100.0;
+  setUp(() {
+    mockCreateCheck = MockCreateCheck();
+    controller = SplitScreenController(createCheck: mockCreateCheck);
+  });
 
-      expect(controller.totalValue, 100.0);
-      expect(controller.msgError, "");
-      expect(controller.state, CheckState.totalCheckValueValid);
+  group('SplitScreenController', () {
+    test('should add and remove participants correctly', () {
+      controller.addParticipant('Alice');
+      controller.addParticipant('Bob');
+
+      expect(controller.participants.length, 2);
+      expect(controller.participants.first.name, 'Alice');
+
+      controller.removeParticipant(0);
+      expect(controller.participants.length, 1);
+      expect(controller.participants.first.name, 'Bob');
     });
 
-    test('Deve exibir mensagem de erro para valor total igual a zero', () {
-      controller.totalValue = 0.0;
+    test('should not add duplicate participants', () {
+      controller.addParticipant('Alice');
+      controller.addParticipant('alice');
 
-      expect(controller.totalValue, 0.0);
-      expect(controller.msgError, "Digite o valor total da conta");
-      expect(controller.state, CheckState.totalCheckValueInvalid);
+      expect(controller.participants.length, 1);
     });
 
-    test('Deve notificar listeners ao alterar o totalValue', () {
-      bool isNotified = false;
-      controller.addListener(() {
-        isNotified = true;
-      });
+    test('should add item and distribute cost proportionally', () {
+      controller.addParticipant('Alice');
+      controller.addParticipant('Bob');
 
-      controller.totalValue = 200.0;
+      final alice = controller.participants[0];
+      final bob = controller.participants[1];
 
-      expect(isNotified, isTrue);
+      controller.addItem(
+        item: Item(
+          name: 'Pizza',
+          price: 50.0,
+          consumers: [alice, bob],
+        ),
+      );
+
+      expect(controller.participants[0].total, 25.0);
+      expect(controller.participants[1].total, 25.0);
+    });
+
+    test('should recalculate correctly when participant is removed', () {
+      controller.addParticipant('Alice');
+      controller.addParticipant('Bob');
+
+      final alice = controller.participants[0];
+      final bob = controller.participants[1];
+
+      controller.addItem(
+        item: Item(
+          name: 'Pizza',
+          price: 50.0,
+          consumers: [alice, bob],
+        ),
+      );
+
+      controller.removeParticipant(1); // remove Bob
+      // Bob was removed from consumers, so Alice is sole consumer of Pizza
+      expect(controller.participants.length, 1);
+      expect(controller.participants[0].total, 50.0);
+    });
+
+    test('createCheck should return true on success', () async {
+      when(() => mockCreateCheck.call(check: any(named: 'check')))
+          .thenAnswer((_) async => const Right('check-id-123'));
+
+      controller.addParticipant('Alice');
+      final result = await controller.createCheck();
+
+      expect(result, isTrue);
+      expect(controller.id, 'check-id-123');
     });
   });
 }
+

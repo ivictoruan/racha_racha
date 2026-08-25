@@ -16,7 +16,6 @@ import '../../../infra/services/cache/cache_service.dart';
 import '../../../infra/check/services/check_sharing_service_impl.dart';
 import '../../../infra/services/generate_check_service.dart';
 import '../../../infra/services/share_service.dart';
-import '../controllers/check_controller.dart';
 import '../controllers/user_controller.dart';
 
 class GeneralWidgetProvider extends StatelessWidget {
@@ -68,13 +67,13 @@ class GeneralWidgetProvider extends StatelessWidget {
               repository: context.read<CheckRepository>(),
             ),
           ),
-          ChangeNotifierProvider<CheckController>(
-            create: (context) => CheckController(
-              shareCheck: context.read<ShareCheck>(),
-              createCheck: context.read<CreateCheck>(),
-              // deleteCheck: context.read<DeleteCheck>(),
-            ),
-          ),
+          // ChangeNotifierProvider<CheckController>(
+          //   create: (context) => CheckController(
+          //     shareCheck: context.read<ShareCheck>(),
+          //     createCheck: context.read<CreateCheck>(),
+          //     // deleteCheck: context.read<DeleteCheck>(),
+          //   ),
+          // ),
         ],
         child: child,
       );

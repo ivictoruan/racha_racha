@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:provider/provider.dart';
-
 import '../../../domain/check/entities/check.dart';
 import '../../shared/routes/app_route_manager.dart';
-import '../../shared/constants/space_constants.dart';
-import '../../shared/controllers/check_controller.dart';
 import '../../shared/ui/widgets/will_pop_scope_widget.dart';
 import 'widgets/bottom_nav_bar_widget.dart';
 import 'widgets/result_body_widget.dart';
@@ -28,7 +24,7 @@ class CheckDetailsScreen extends StatefulWidget {
 
 class _CheckDetailsScreenState extends State<CheckDetailsScreen> {
   void onYesPressed() async {
-    await context.read<CheckController>().restartCheck();
+    // await context.read<CheckController>().restartCheck();
     if (mounted) {
       Navigator.pushNamedAndRemoveUntil(
         context,
@@ -38,16 +34,16 @@ class _CheckDetailsScreenState extends State<CheckDetailsScreen> {
     }
   }
 
-  void onAddCheckPressed() async {
-    context.read<CheckController>().restartCheck();
+  // void onAddCheckPressed() async {
+  //   // context.read<CheckController>().restartCheck();
 
-    if (mounted) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-        AppRouteManager.totalValue,
-        (route) => route.isFirst,
-      );
-    }
-  }
+  //   if (mounted) {
+  //     Navigator.of(context).pushNamedAndRemoveUntil(
+  //       AppRouteManager.totalValue,
+  //       (route) => route.isFirst,
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) => WillPopScopeWidget(
@@ -81,26 +77,26 @@ class _CheckDetailsScreenState extends State<CheckDetailsScreen> {
             ? MainAxisAlignment.spaceAround
             : MainAxisAlignment.center,
         children: [
-          if (widget.isFinishingCheck) ...[
-            const SizedBox(width: SpaceConstants.small),
-            FilledButton.tonalIcon(
-              onPressed: onAddCheckPressed,
-              icon: const Icon(
-                Icons.add,
-                color: Colors.deepPurple,
-              ),
-              label: const Text(
-                "Dividir",
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.deepPurple,
-                ),
-              ),
-            ),
-            const SizedBox(width: SpaceConstants.small),
-          ] else ...[
-            const Spacer(),
-          ],
+          // if (widget.isFinishingCheck) ...[
+          //   const SizedBox(width: SpaceConstants.small),
+          //   FilledButton.tonalIcon(
+          //     onPressed: onAddCheckPressed,
+          //     icon: const Icon(
+          //       Icons.add,
+          //       color: Colors.deepPurple,
+          //     ),
+          //     label: const Text(
+          //       "Dividir",
+          //       style: TextStyle(
+          //         fontWeight: FontWeight.w600,
+          //         color: Colors.deepPurple,
+          //       ),
+          //     ),
+          //   ),
+          //   const SizedBox(width: SpaceConstants.small),
+          // ] else ...[
+          //   const Spacer(),
+          // ],
           SharedCheckWidget(
             // generateImageService: context.read<GenerateCheckService>(),
             // shareService: context.read<ShareCheckService>(),

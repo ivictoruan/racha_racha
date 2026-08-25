@@ -5,7 +5,7 @@ import '../errors/erros.dart';
 import '../repositories/check_repository.dart';
 
 abstract class CreateCheck {
-  Future<Either<Failure, void>> call({required Check check});
+  Future<Either<Failure, String>> call({required Check check});
 }
 
 class CreateCheckImpl implements CreateCheck {
@@ -14,7 +14,7 @@ class CreateCheckImpl implements CreateCheck {
   CreateCheckImpl({required this.repository});
 
   @override
-  Future<Either<Failure, void>> call({required Check check}) {
+  Future<Either<Failure, String>> call({required Check check}) {
     return repository.createCheck(check: check);
   }
 }

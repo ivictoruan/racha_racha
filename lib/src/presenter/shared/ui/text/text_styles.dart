@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 class TextStyles {
   static TextStyle smallText({Color color = Colors.black, bold = false}) {
     return TextStyle(
-      // fontFamily: 'Lato',
       fontSize: 12,
       color: color,
       fontWeight: bold ? FontWeight.bold : FontWeight.normal,
@@ -11,7 +10,6 @@ class TextStyles {
   }
 
   static TextStyle hintText = const TextStyle(
-    // fontFamily: 'Lato',
     fontSize: 16,
     color: Colors.grey,
     fontWeight: FontWeight.normal,
@@ -23,7 +21,6 @@ class TextStyles {
     double fontSize = 16,
   }) {
     return TextStyle(
-      // fontFamily: 'Lato',
       fontSize: fontSize,
       color: color,
       fontWeight: fontWeight,
@@ -31,12 +28,11 @@ class TextStyles {
   }
 
   static TextStyle mediumTextBold({
-    Color color = Colors.black,
+    Color color = Colors.deepPurple,
     FontWeight fontWeight = FontWeight.w600,
     double fontSize = 16,
   }) {
     return TextStyle(
-      fontFamily: 'Lato',
       fontSize: fontSize,
       color: color,
       fontWeight: fontWeight,

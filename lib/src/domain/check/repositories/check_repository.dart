@@ -8,5 +8,5 @@ abstract class CheckRepository {
 
   Future<Either<Failure, void>> deleteCheck({required Check check});
 
-  Future<Either<Failure, void>> createCheck({required Check check});
+  Future<Either<Failure, String>> createCheck({required Check check});
 }

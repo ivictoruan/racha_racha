@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../text/text_styles.dart';
+
 class ThemeConfig {
   ThemeConfig._();
 
@@ -46,5 +48,9 @@ class ThemeConfig {
       ),
     ),
     iconTheme: const IconThemeData(color: Colors.deepPurple),
+    listTileTheme: ListTileThemeData(
+      titleTextStyle: TextStyles.mediumText(color: Colors.deepPurple),
+      subtitleTextStyle: TextStyles.smallText(color: Colors.deepPurple),
+    ),
   );
 }

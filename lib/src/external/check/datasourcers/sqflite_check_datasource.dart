@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
@@ -9,7 +11,7 @@ import '../../../domain/check/entities/check.dart';
 class SqfliteCheckDatasource implements LocalCheckDatasource {
   static const String _tableName = 'checks';
   static const String _databaseName = 'checks_database.db';
-  static const int _databaseVersion = 1;
+  static const int _databaseVersion = 2;
 
   Database? _database;
 
@@ -33,26 +35,34 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
             id TEXT PRIMARY KEY,
             creationDate TEXT,
             totalValue REAL,
-            individualPrice REAL,
-            waiterPercentage REAL,
-            totalWaiterValue REAL,
-            isSomeoneDrinking INTEGER,
-            totalDrinkPrice REAL,
-            totalPeopleDrinking INTEGER,
-            individualPriceWhoIsDrinking REAL,
-            totalPeople INTEGER
+            participants TEXT,
+            items TEXT
           )
         ''');
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute(
+            'ALTER TABLE $_tableName ADD COLUMN participants TEXT',
+          );
+          await db.execute(
+            'ALTER TABLE $_tableName ADD COLUMN items TEXT',
+          );
+        }
       },
     );
   }
 
   @override
-  Future<void> createCheck({required Check check}) async {
+  Future<String> createCheck({required Check check}) async {
     try {
       final db = await _db;
-      final id = const Uuid().v4();
-      final updatedCheck = check.copyWith(id: id);
+      final id = check.id ?? const Uuid().v4();
+      final creationDate = check.creationDate ?? DateTime.now();
+      final updatedCheck = check.copyWith(
+        id: id,
+        creationDate: creationDate,
+      );
 
       final checkMap = SqfliteCheckAdapter.toMap(updatedCheck);
       await db.insert(
@@ -60,7 +70,9 @@ class SqfliteCheckDatasource implements LocalCheckDatasource {
         checkMap,
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-    } catch (e) {
+      return id;
+    } catch (e, stackTrace) {
+      log('[SqfliteCheckDatasource] Erro ao criar/salvar check: $e', stackTrace: stackTrace);
       throw Exception('Erro ao criar o check: $e');
     }
   }

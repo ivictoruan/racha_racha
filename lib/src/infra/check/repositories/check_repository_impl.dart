@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../domain/check/entities/check.dart';
@@ -31,12 +33,13 @@ class CheckRepositoryImpl implements CheckRepository {
   }
 
   @override
-  Future<Either<Failure, void>> createCheck({required Check check}) async {
+  Future<Either<Failure, String>> createCheck({required Check check}) async {
     try {
       final result = await localDatasource.createCheck(check: check);
 
       return Right(result);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      log('[CheckRepositoryImpl] Erro ao salvar check: $e', stackTrace: stackTrace);
       return Left(LocalDatasouceError(message: 'LocalDatasoucerError: $e'));
     }
   }

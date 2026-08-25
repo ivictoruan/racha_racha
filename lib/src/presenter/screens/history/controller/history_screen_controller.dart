@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:racha_racha/src/domain/check/usecases/delete_check.dart';
 
 import '../../../../domain/check/entities/check.dart';
+import '../../../../domain/check/usecases/delete_check.dart';
 import '../../../../domain/check/usecases/share_check.dart';
 import '../../../../domain/check/usecases/get_all_checks.dart';
 
