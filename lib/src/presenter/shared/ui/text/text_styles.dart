@@ -30,7 +30,7 @@ class TextStyles {
   static TextStyle mediumTextBold({
     Color color = Colors.deepPurple,
     FontWeight fontWeight = FontWeight.w600,
-    double fontSize = 16,
+    double fontSize = 22,
   }) {
     return TextStyle(
       fontSize: fontSize,

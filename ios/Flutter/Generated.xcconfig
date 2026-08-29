@@ -1,12 +1,11 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=C:\Users\victo\fvm\versions\stable
-FLUTTER_APPLICATION_PATH=C:\Users\victo\Documents\projects\mobile\flutter\racha_racha
+FLUTTER_ROOT=C:\Users\leode\flutter
+FLUTTER_APPLICATION_PATH=C:\Users\leode\Documents\Dev\racha_racha
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_TARGET=lib\main.dart
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=1.7.0
-FLUTTER_BUILD_NUMBER=6
-FLUTTER_CLI_BUILD_MODE=debug
+FLUTTER_BUILD_NAME=1.0.135
+FLUTTER_BUILD_NUMBER=9
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
 DART_OBFUSCATION=false

@@ -169,13 +169,18 @@ class _SplitScreenState extends State<SplitScreen> {
             icon: const Icon(Icons.arrow_back_ios_new, size: 20),
             onPressed: _handleBack,
           ),
-          title: Text(widget.check != null ? "Editar Divisão" : "Nova Divisão"),
+          title: Text(widget.check != null ? "Editar Divisão" : "Nova Divisão",
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              )),
           actions: [
             if (canShare()) ...{
               IconButton(
                 icon: const Icon(
                   Icons.share_outlined,
                   color: Colors.deepPurple,
+                  size: 28,
                 ),
                 tooltip: 'Compartilhar divisão',
                 onPressed: _shareCheck,
@@ -214,7 +219,7 @@ class _SplitScreenState extends State<SplitScreen> {
                           .toCurrency(),
                       style: TextStyles.mediumTextBold(
                         color: Colors.deepPurple[800]!,
-                        fontSize: 18,
+                        fontSize: 22,
                       ),
                     ),
                   ],
@@ -278,6 +283,7 @@ class _SplitScreenState extends State<SplitScreen> {
           direction: SpeedDialDirection.up,
           children: [
             SpeedDialChild(
+              labelStyle: const TextStyle(fontSize: 18),
               child: const Icon(
                 Icons.person_add_alt,
                 color: Colors.deepPurple,
@@ -296,6 +302,7 @@ class _SplitScreenState extends State<SplitScreen> {
               },
             ),
             SpeedDialChild(
+              labelStyle: const TextStyle(fontSize: 18),
               child: const Icon(
                 Icons.add_shopping_cart_rounded,
                 color: Colors.deepPurple,

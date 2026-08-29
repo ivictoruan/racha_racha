@@ -80,7 +80,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.index == null ? 'Adicionar Item' : 'Editar Item'),
+        title: Text(
+          widget.index == null ? 'Adicionar Item' : 'Editar Item',
+          style: const TextStyle(fontSize: 26, fontWeight: FontWeight.w600),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -90,24 +93,34 @@ class _AddItemScreenState extends State<AddItemScreen> {
               controller: _nameController,
               autofocus: widget.index == null,
               decoration: const InputDecoration(
-                labelText: 'Nome do Item',
-              ),
+                  labelText: 'Nome do Item',
+                  labelStyle: TextStyle(
+                      color: Colors.deepPurple,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w500)),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
             TextField(
               controller: _totalPriceController,
               decoration: const InputDecoration(
                 labelText: 'Preço Total do Item',
                 hintText: 'R\$ 0,00',
+                labelStyle: TextStyle(
+                    color: Colors.deepPurple,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500),
               ),
               keyboardType: TextInputType.number,
               inputFormatters: [_currencyFormatter],
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: SpaceConstants.extraSmall),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Consumidores',
-                style: TextStyles.mediumTextBold(fontWeight: FontWeight.w500),
+                style: TextStyles.mediumTextBold(
+                    fontWeight: FontWeight.w500, fontSize: 22),
               ),
             ),
             if (participants.isNotEmpty) ...[
@@ -115,7 +128,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 dense: true,
                 title: const Text(
                   'Todos',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 22),
                 ),
                 tristate: true,
                 value: _selectedParticipants.isEmpty
@@ -125,8 +138,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         : null,
                 onChanged: (_) {
                   setState(() {
-                    final isAllSelected = _selectedParticipants.length ==
-                        participants.length;
+                    final isAllSelected =
+                        _selectedParticipants.length == participants.length;
                     if (isAllSelected) {
                       _selectedParticipants.clear();
                     } else {
@@ -143,7 +156,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 itemBuilder: (context, index) {
                   final participant = participants[index];
                   return CheckboxListTile(
-                    title: Text(participant.name),
+                    title: Text(
+                      participant.name,
+                      style: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.w500),
+                    ),
                     value: _selectedParticipants.contains(participant),
                     onChanged: (value) {
                       setState(() {
@@ -167,8 +184,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
           if (_nameController.text.isEmpty || _nameController.text.length < 2) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content:
-                      Text('O nome do item deve ter pelo menos 2 caracteres.')),
+                  content: Text(
+                'O nome do item deve ter pelo menos 2 caracteres.',
+                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+              )),
             );
             return;
           }
@@ -178,16 +197,20 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   null) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content:
-                      Text('O preço total do item deve ser um número válido.')),
+                  content: Text(
+                      'O preço total do item deve ser um número válido.',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 20))),
             );
             return;
           }
           if (_selectedParticipants.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                  content:
-                      Text('Você deve selecionar pelo menos um participante.')),
+                  content: Text(
+                      'Você deve selecionar pelo menos um participante.',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500, fontSize: 20))),
             );
             return;
           }
@@ -212,7 +235,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
           }
           Navigator.pop(context);
         },
-        child: Text(widget.index == null ? 'Adicionar Item' : 'Salvar'),
+        child: Text(
+          widget.index == null ? 'Adicionar Item' : 'Salvar',
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+        ),
       ),
     );
   }

@@ -79,10 +79,10 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.editIndex != null
-              ? 'Editar Participante'
-              : 'Adicionar Participante',
-        ),
+            widget.editIndex != null
+                ? 'Editar Participante'
+                : 'Adicionar Participante',
+            style: const TextStyle(fontWeight: FontWeight.w600)),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -93,20 +93,23 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
               autofocus: true,
               controller: _nameController,
               textCapitalization: TextCapitalization.words,
-              decoration:
-                  const InputDecoration(labelText: 'Nome do Participante'),
+              decoration: const InputDecoration(
+                  labelText: 'Nome do Participante',
+                  labelStyle: TextStyle(fontSize: 24)),
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
             ),
             const SizedBox(height: SpaceConstants.medium),
             if (items.isNotEmpty) ...[
               Text(
                 'Itens consumidos',
-                style: TextStyles.mediumTextBold(fontWeight: FontWeight.w500),
+                style: TextStyles.mediumTextBold(
+                    fontWeight: FontWeight.w500, fontSize: 20),
               ),
               CheckboxListTile(
                 dense: true,
                 title: const Text(
                   'Todos',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                 ),
                 tristate: true,
                 value: _selectedItems.isEmpty
@@ -116,8 +119,7 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
                         : null,
                 onChanged: (_) {
                   setState(() {
-                    final isAllSelected =
-                        _selectedItems.length == items.length;
+                    final isAllSelected = _selectedItems.length == items.length;
                     if (isAllSelected) {
                       _selectedItems.clear();
                     } else {
@@ -133,8 +135,12 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
                   itemBuilder: (context, index) {
                     final item = items[index];
                     return CheckboxListTile(
-                      title: Text(item.name),
-                      subtitle: Text('Total: ${item.price.toCurrency()}'),
+                      title: Text(item.name,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w600, fontSize: 20)),
+                      subtitle: Text('Total: ${item.price.toCurrency()}',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w500, fontSize: 18)),
                       value: _selectedItems.contains(item),
                       onChanged: (value) {
                         setState(() {
@@ -162,7 +168,9 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
           if (name.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('O participante deve ter nome!'),
+                content: Text('O participante deve ter nome!',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
               ),
             );
             return;
@@ -184,8 +192,8 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
           Navigator.pop(context);
         },
         child: Text(
-          widget.editIndex != null ? 'Salvar Alterações' : 'Adicionar',
-        ),
+            widget.editIndex != null ? 'Salvar Alterações' : 'Adicionar',
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22)),
       ),
     );
   }
