@@ -127,11 +127,7 @@ class _HistoryScreenState extends State<_HistoryScreen> {
             description: 'Aqui você encontra todas as suas divisões de conta',
             child: Text(
               'Histórico',
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    color: Colors.deepPurple[600],
-                    fontWeight: FontWeight.w600,
-                    // fontStyle: FontStyle.italic
-                  ),
+              style: Theme.of(context).textTheme.headlineSmall,
             ),
           ),
         ),

@@ -79,10 +79,11 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            widget.editIndex != null
-                ? 'Editar Participante'
-                : 'Adicionar Participante',
-            style: const TextStyle(fontWeight: FontWeight.w600)),
+          widget.editIndex != null
+              ? 'Editar Participante'
+              : 'Adicionar Participante',
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
