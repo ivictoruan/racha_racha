@@ -43,22 +43,18 @@ class ItemListWidget extends StatelessWidget {
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.add_shopping_cart_rounded,
                   color: Colors.deepPurple,
                   size: 35,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   'Adicionar Item',
-                  style: TextStyle(
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22,
-                  ),
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               ],
             ),
@@ -105,9 +101,10 @@ class ItemListWidget extends StatelessWidget {
                           Text(
                             'Total: ${item.price.toCurrency()}',
                             style: const TextStyle(
-                                color: Color.fromARGB(255, 49, 48, 48),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500),
+                              color: Color.fromARGB(255, 49, 48, 48),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ],
                       ),
@@ -193,11 +190,7 @@ class ItemListWidget extends StatelessWidget {
                               const SizedBox(width: 3),
                               Text(
                                 consumer.name,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.deepPurple[800],
-                                ),
+                                style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ],
                           ),

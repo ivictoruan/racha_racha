@@ -169,11 +169,10 @@ class _SplitScreenState extends State<SplitScreen> {
             icon: const Icon(Icons.arrow_back_ios_new, size: 20),
             onPressed: _handleBack,
           ),
-          title: Text(widget.check != null ? "Editar Divisão" : "Nova Divisão",
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-              )),
+          title: Text(
+            widget.check != null ? "Editar Divisão" : "Nova Divisão",
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
           actions: [
             if (canShare()) ...{
               IconButton(
