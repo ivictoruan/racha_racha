@@ -22,9 +22,10 @@ class ItemListWidget extends StatelessWidget {
           onTap: () {
             if (billSplitter.participants.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Text(
                     'Adicione pelo menos um participante para adicionar itens!',
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                 ),
               );
@@ -49,12 +50,12 @@ class ItemListWidget extends StatelessWidget {
                 const Icon(
                   Icons.add_shopping_cart_rounded,
                   color: Colors.deepPurple,
-                  size: 35,
+                  size: 28,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'Adicionar Item',
-                  style: Theme.of(context).textTheme.headlineSmall,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
             ),
@@ -91,21 +92,10 @@ class ItemListWidget extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            item.name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),
-                          ),
-                          Text(
-                            'Total: ${item.price.toCurrency()}',
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 49, 48, 48),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          Text(item.name,
+                              style: Theme.of(context).textTheme.titleMedium),
+                          Text('Total: ${item.price.toCurrency()}',
+                              style: Theme.of(context).textTheme.titleSmall),
                         ],
                       ),
                     ),
@@ -113,7 +103,7 @@ class ItemListWidget extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.edit, size: 20),
+                          icon: const Icon(Icons.edit, size: 18),
                           color: Colors.deepPurple,
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
@@ -136,7 +126,7 @@ class ItemListWidget extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         IconButton(
-                          icon: const Icon(Icons.delete, size: 20),
+                          icon: const Icon(Icons.delete, size: 18),
                           color: Colors.deepPurple,
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
@@ -188,10 +178,7 @@ class ItemListWidget extends StatelessWidget {
                                 color: Colors.deepPurple,
                               ),
                               const SizedBox(width: 3),
-                              Text(
-                                consumer.name,
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
+                              Text(consumer.name),
                             ],
                           ),
                         );
