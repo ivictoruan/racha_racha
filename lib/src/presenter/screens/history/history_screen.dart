@@ -131,7 +131,6 @@ class _HistoryScreenState extends State<_HistoryScreen> {
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
-          elevation: 4,
           shadowColor: Colors.deepPurple,
         ),
         backgroundColor: Colors.white,

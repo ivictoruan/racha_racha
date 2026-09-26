@@ -97,9 +97,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
               controller: _nameController,
               autofocus: widget.index == null,
               decoration: InputDecoration(
-                  labelText: 'Nome do Item',
-                  labelStyle: Theme.of(context).textTheme.titleMedium),
-              style: Theme.of(context).textTheme.labelLarge,
+                labelText: 'Nome do Item',
+                labelStyle: Theme.of(context).textTheme.titleMedium,
+              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             TextField(
               controller: _totalPriceController,
@@ -110,7 +111,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
               ),
               keyboardType: TextInputType.number,
               inputFormatters: [_currencyFormatter],
-              style: Theme.of(context).textTheme.labelLarge,
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: SpaceConstants.extraSmall),
             Align(
@@ -182,7 +183,7 @@ class _AddItemScreenState extends State<AddItemScreen> {
               SnackBar(
                   content: Text(
                 'O nome do item deve ter pelo menos 2 caracteres.',
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.labelMedium,
               )),
             );
             return;
@@ -193,18 +194,22 @@ class _AddItemScreenState extends State<AddItemScreen> {
                   null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                  content: Text(
-                      'O preço total do item deve ser um número válido.',
-                      style: Theme.of(context).textTheme.titleLarge)),
+                content: Text(
+                  'O preço total do item deve ser um número válido.',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
             );
             return;
           }
           if (_selectedParticipants.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                  content: Text(
-                      'Você deve selecionar pelo menos um participante.',
-                      style: Theme.of(context).textTheme.titleLarge)),
+                content: Text(
+                  'Você deve selecionar pelo menos um participante.',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
             );
             return;
           }

@@ -100,14 +100,17 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
               controller: _nameController,
               textCapitalization: TextCapitalization.words,
               decoration: InputDecoration(
-                  labelText: 'Nome do Participante',
-                  labelStyle: Theme.of(context).textTheme.headlineSmall),
-              style: Theme.of(context).textTheme.labelLarge,
+                labelText: 'Nome do Participante',
+                labelStyle: Theme.of(context).textTheme.titleMedium,
+              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: SpaceConstants.medium),
             if (items.isNotEmpty) ...[
-              Text('Itens consumidos',
-                  style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                'Itens consumidos',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               CheckboxListTile(
                 dense: true,
                 title: Text(

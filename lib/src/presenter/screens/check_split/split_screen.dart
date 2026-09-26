@@ -174,7 +174,7 @@ class _SplitScreenState extends State<SplitScreen> {
           ),
           title: Text(
             widget.check != null ? "Editar Divisão" : "Nova Divisão",
-            style: Theme.of(context).textTheme.titleLarge,
+            style: Theme.of(context).textTheme.titleLarge
           ),
           actions: [
             if (canShare()) ...{
@@ -189,7 +189,6 @@ class _SplitScreenState extends State<SplitScreen> {
               ),
             },
           ],
-          elevation: 4,
           shadowColor: Colors.deepPurple,
         ),
         body: Padding(

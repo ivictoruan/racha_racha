@@ -44,7 +44,9 @@ class ParticipantListWidget extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   'Adicionar Participante',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.black87,
+                      ),
                 ),
               ],
             ),
