@@ -122,16 +122,18 @@ class _HistoryScreenState extends State<_HistoryScreen> {
       onWillPop: () => onWillPop(),
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
           title: Showcase(
             key: widget.titleKey ?? GlobalKey(),
             description: 'Aqui você encontra todas as suas divisões de conta',
             child: Text(
               'Histórico',
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
+          shadowColor: Colors.deepPurple,
         ),
-        backgroundColor: Theme.of(context).colorScheme.surface,
+        backgroundColor: Colors.white,
         body: historyController.isLoading
             ? const LoadingScreen()
             : historyController.checks.isEmpty

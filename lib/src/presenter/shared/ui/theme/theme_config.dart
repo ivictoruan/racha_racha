@@ -26,25 +26,35 @@ class ThemeConfig {
       ),
     ),
     textTheme: const TextTheme(
-      displayLarge: TextStyle(color: Colors.deepPurple),
-      displayMedium: TextStyle(color: Colors.deepPurple),
-      displaySmall: TextStyle(color: Colors.deepPurple),
-      headlineLarge: TextStyle(color: Colors.deepPurple),
-      headlineMedium: TextStyle(color: Colors.deepPurple),
       headlineSmall: TextStyle(
         color: Colors.deepPurple,
-        fontWeight: FontWeight.w600,
-      ),
-      titleLarge: TextStyle(color: Colors.deepPurple),
-      titleMedium: TextStyle(color: Colors.deepPurple),
-      titleSmall: TextStyle(
-        fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: Colors.deepPurple,
       ),
+      titleLarge: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+      ),
+      bodySmall: TextStyle(
+        color: Colors.deepPurple,
+        fontSize: 12,
+      ),
+      titleMedium: TextStyle(
+        color: Colors.deepPurple,
+        fontWeight: FontWeight.w500,
+        fontSize: 18,
+      ),
+      labelMedium: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
+      labelLarge: TextStyle(
+        color: Colors.black87,
+        fontWeight: FontWeight.w500,
+        fontSize: 18,
+      ),
+      titleSmall: TextStyle(color: Colors.black87),
       bodyLarge: TextStyle(color: Colors.deepPurple),
       bodyMedium: TextStyle(color: Colors.deepPurple),
-      bodySmall: TextStyle(color: Colors.deepPurple),
     ),
     snackBarTheme: SnackBarThemeData(
       showCloseIcon: true,

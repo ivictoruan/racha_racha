@@ -5,7 +5,6 @@ import '../../domain/item/item.dart';
 import '../shared/constants/space_constants.dart';
 import '../shared/controllers/split_screen_controller.dart';
 import '../shared/ui/extentions/monetary_extentions.dart';
-import '../shared/ui/text/text_styles.dart';
 
 class AddParticipantScreen extends StatefulWidget {
   final int? editIndex;
@@ -68,8 +67,9 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
 
       if (nameExists) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Já existe um participante com esse nome!'),
+          SnackBar(
+            content: Text('Já existe um participante com esse nome!',
+                style: Theme.of(context).textTheme.titleMedium),
           ),
         );
       }
@@ -78,39 +78,44 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
         title: Text(
           widget.editIndex != null
               ? 'Editar Participante'
               : 'Adicionar Participante',
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
+        elevation: 4,
+        shadowColor: Colors.deepPurple,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: SpaceConstants.medium),
             TextField(
               autofocus: true,
               controller: _nameController,
               textCapitalization: TextCapitalization.words,
-              decoration: const InputDecoration(
-                  labelText: 'Nome do Participante',
-                  labelStyle: TextStyle(fontSize: 24)),
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+              decoration: InputDecoration(
+                labelText: 'Nome do Participante',
+                labelStyle: Theme.of(context).textTheme.titleMedium,
+              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: SpaceConstants.medium),
             if (items.isNotEmpty) ...[
               Text(
                 'Itens consumidos',
-                style: TextStyles.mediumTextBold(
-                    fontWeight: FontWeight.w500, fontSize: 20),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               CheckboxListTile(
                 dense: true,
-                title: const Text(
+                title: Text(
                   'Todos',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 tristate: true,
                 value: _selectedItems.isEmpty
@@ -137,11 +142,9 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
                     final item = items[index];
                     return CheckboxListTile(
                       title: Text(item.name,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w600, fontSize: 20)),
+                          style: Theme.of(context).textTheme.titleMedium),
                       subtitle: Text('Total: ${item.price.toCurrency()}',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 18)),
+                          style: Theme.of(context).textTheme.titleSmall),
                       value: _selectedItems.contains(item),
                       onChanged: (value) {
                         setState(() {
@@ -168,10 +171,9 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
 
           if (name.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
+              SnackBar(
                 content: Text('O participante deve ter nome!',
-                    style:
-                        TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
+                    style: Theme.of(context).textTheme.titleLarge),
               ),
             );
             return;
@@ -192,9 +194,10 @@ class _AddParticipantScreenState extends State<AddParticipantScreen> {
           }
           Navigator.pop(context);
         },
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
         child: Text(
             widget.editIndex != null ? 'Salvar Alterações' : 'Adicionar',
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 22)),
+            style: Theme.of(context).textTheme.titleLarge),
       ),
     );
   }

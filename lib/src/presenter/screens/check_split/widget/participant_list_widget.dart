@@ -33,22 +33,20 @@ class ParticipantListWidget extends StatelessWidget {
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.person_add_alt,
                   color: Colors.deepPurple,
-                  size: 40,
+                  size: 32,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   'Adicionar Participante',
-                  style: TextStyle(
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.black87,
+                      ),
                 ),
               ],
             ),
@@ -89,20 +87,10 @@ class ParticipantListWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        participant.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 20,
-                        ),
-                      ),
-                      Text(
-                        'Deve: ${participant.total.toCurrency()}',
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 49, 48, 48),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500),
-                      ),
+                      Text(participant.name,
+                          style: Theme.of(context).textTheme.titleMedium),
+                      Text('Deve: ${participant.total.toCurrency()}',
+                          style: Theme.of(context).textTheme.titleSmall),
                     ],
                   ),
                 ),
@@ -110,7 +98,7 @@ class ParticipantListWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.info_outline, size: 20),
+                      icon: const Icon(Icons.info_outline, size: 18),
                       color: Colors.deepPurple,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
@@ -143,7 +131,7 @@ class ParticipantListWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     IconButton(
-                      icon: const Icon(Icons.edit, size: 20),
+                      icon: const Icon(Icons.edit, size: 18),
                       color: Colors.deepPurple,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
@@ -165,7 +153,7 @@ class ParticipantListWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     IconButton(
-                      icon: const Icon(Icons.delete, size: 20),
+                      icon: const Icon(Icons.delete, size: 18),
                       color: Colors.deepPurple,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),

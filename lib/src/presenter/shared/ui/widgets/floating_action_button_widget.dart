@@ -25,7 +25,7 @@ class _FloatingActionButtonWidgetState
         curve: Curves.easeInOut,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: backgroundColor,
+          color: Colors.deepPurple,
           boxShadow: [
             BoxShadow(
               color: widget.isEnabled
@@ -41,7 +41,7 @@ class _FloatingActionButtonWidgetState
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           splashColor: Colors.white70,
-          elevation: 0,
+          elevation: 4,
           backgroundColor: Colors.transparent,
           onPressed: widget.isEnabled ? widget.onPressed : null,
           child: Icon(

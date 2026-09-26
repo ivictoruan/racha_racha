@@ -9,7 +9,6 @@ import '../../../domain/check/usecases/share_check.dart';
 import '../../shared/controllers/split_screen_controller.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/ui/extentions/monetary_extentions.dart';
-import '../../shared/ui/text/text_styles.dart';
 import '../add_item/add_item_screen.dart';
 import '../add_participant_screen.dart';
 import 'widget/initial_participants_popup_widget.dart';
@@ -26,6 +25,8 @@ class SplitScreen extends StatefulWidget {
 
 class _SplitScreenState extends State<SplitScreen> {
   late final SplitScreenController controller;
+
+  get conts => null;
 
   @override
   void initState() {
@@ -165,33 +166,37 @@ class _SplitScreenState extends State<SplitScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
+          foregroundColor: Colors.white,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new, size: 20),
             onPressed: _handleBack,
           ),
           title: Text(
             widget.check != null ? "Editar Divisão" : "Nova Divisão",
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context).textTheme.titleLarge
           ),
           actions: [
             if (canShare()) ...{
               IconButton(
                 icon: const Icon(
                   Icons.share_outlined,
-                  color: Colors.deepPurple,
-                  size: 28,
+                  color: Colors.white,
+                  size: 26,
                 ),
                 tooltip: 'Compartilhar divisão',
                 onPressed: _shareCheck,
               ),
             },
           ],
+          shadowColor: Colors.deepPurple,
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const SizedBox(height: SpaceConstants.medium),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(
@@ -207,38 +212,28 @@ class _SplitScreenState extends State<SplitScreen> {
                   children: [
                     Text(
                       'Valor total da conta',
-                      style: TextStyles.mediumTextBold(
-                        color: Colors.deepPurple[900]!,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Text(
-                      context
-                          .watch<SplitScreenController>()
-                          .totalValue
-                          .toCurrency(),
-                      style: TextStyles.mediumTextBold(
-                        color: Colors.deepPurple[800]!,
-                        fontSize: 22,
-                      ),
-                    ),
+                        context
+                            .watch<SplitScreenController>()
+                            .totalValue
+                            .toCurrency(),
+                        style: Theme.of(context).textTheme.titleMedium),
                   ],
                 ),
               ),
               const SizedBox(height: SpaceConstants.medium),
-              Text(
-                'Itens consumidos',
-                style: TextStyles.mediumTextBold(),
-              ),
+              Text('Itens consumidos',
+                  style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 4),
               const Expanded(
                 flex: 1,
                 child: ItemListWidget(),
               ),
               const SizedBox(height: SpaceConstants.medium),
-              Text(
-                'Participantes',
-                style: TextStyles.mediumTextBold(),
-              ),
+              Text('Participantes',
+                  style: Theme.of(context).textTheme.titleMedium),
               const SizedBox(height: 4),
               const Expanded(
                 flex: 1,
@@ -313,9 +308,10 @@ class _SplitScreenState extends State<SplitScreen> {
                     .participants
                     .isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text(
                         'Adicione pelo menos um participante para adicionar itens!',
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
                   );
