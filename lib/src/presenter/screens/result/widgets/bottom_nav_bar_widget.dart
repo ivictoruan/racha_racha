@@ -36,6 +36,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
       selectedIndex = 0;
     }
     return BottomNavigationBar(
+      backgroundColor: Colors.white,
       currentIndex: selectedIndex,
       onTap: (int index) async {
         switch (index) {
@@ -62,7 +63,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
       },
       items: [
         const BottomNavigationBarItem(
-          icon: Icon(Icons.history),
+          icon: Icon(Icons.history, size: 32),
           label: "Divisões",
         ),
         if (widget.isFinishingCheck)
@@ -73,10 +74,14 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
                 : "Rachar",
           ),
         const BottomNavigationBarItem(
-          icon: Icon(Icons.menu_rounded),
+          icon: Icon(Icons.menu_rounded, size: 32),
           label: "Menu",
         ),
       ],
+      unselectedFontSize: 18,
+      unselectedItemColor: Colors.deepPurple,
+      selectedItemColor: Colors.deepPurple,
+      selectedFontSize: 16,
     );
   }
 }

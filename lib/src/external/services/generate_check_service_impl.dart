@@ -83,7 +83,7 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
       '💰 Valor Total da Conta:',
       45,
       yOffset + 12,
-      fontSize: 20,
+      fontSize: 22,
       fontWeight: FontWeight.bold,
       color: _baseColor.shade900,
     );
@@ -104,7 +104,7 @@ class GenerateCheckServiceImpl implements GenerateCheckService {
         '👥 Participantes (${check.participants.length}):',
         30,
         yOffset,
-        fontSize: 22,
+        fontSize: 24,
         fontWeight: FontWeight.bold,
         color: _baseColor.shade800,
       );

@@ -6,7 +6,6 @@ import '../../../domain/participant/participant.dart';
 import '../../shared/controllers/split_screen_controller.dart';
 import '../../shared/constants/space_constants.dart';
 import '../../shared/input_formatters/currency_text_input_formatter.dart';
-import '../../shared/ui/text/text_styles.dart';
 import '../../shared/extentions/monetary_extention.dart';
 
 class AddItemScreen extends StatefulWidget {
@@ -80,42 +79,54 @@ class _AddItemScreenState extends State<AddItemScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.index == null ? 'Adicionar Item' : 'Editar Item'),
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        title: Text(
+          widget.index == null ? 'Adicionar Item' : 'Editar Item',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        elevation: 4,
+        shadowColor: Colors.deepPurple,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+            const SizedBox(height: SpaceConstants.medium),
             TextField(
               controller: _nameController,
               autofocus: widget.index == null,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Nome do Item',
+                labelStyle: Theme.of(context).textTheme.titleMedium,
               ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             TextField(
               controller: _totalPriceController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Preço Total do Item',
                 hintText: 'R\$ 0,00',
+                labelStyle: Theme.of(context).textTheme.titleMedium,
               ),
               keyboardType: TextInputType.number,
               inputFormatters: [_currencyFormatter],
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             const SizedBox(height: SpaceConstants.extraSmall),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
                 'Consumidores',
-                style: TextStyles.mediumTextBold(fontWeight: FontWeight.w500),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             if (participants.isNotEmpty) ...[
               CheckboxListTile(
                 dense: true,
-                title: const Text(
+                title: Text(
                   'Todos',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 tristate: true,
                 value: _selectedParticipants.isEmpty
@@ -125,8 +136,8 @@ class _AddItemScreenState extends State<AddItemScreen> {
                         : null,
                 onChanged: (_) {
                   setState(() {
-                    final isAllSelected = _selectedParticipants.length ==
-                        participants.length;
+                    final isAllSelected =
+                        _selectedParticipants.length == participants.length;
                     if (isAllSelected) {
                       _selectedParticipants.clear();
                     } else {
@@ -143,7 +154,10 @@ class _AddItemScreenState extends State<AddItemScreen> {
                 itemBuilder: (context, index) {
                   final participant = participants[index];
                   return CheckboxListTile(
-                    title: Text(participant.name),
+                    title: Text(
+                      participant.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     value: _selectedParticipants.contains(participant),
                     onChanged: (value) {
                       setState(() {
@@ -166,9 +180,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
           // Validações
           if (_nameController.text.isEmpty || _nameController.text.length < 2) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                  content:
-                      Text('O nome do item deve ter pelo menos 2 caracteres.')),
+              SnackBar(
+                  content: Text(
+                'O nome do item deve ter pelo menos 2 caracteres.',
+                style: Theme.of(context).textTheme.labelMedium,
+              )),
             );
             return;
           }
@@ -177,17 +193,23 @@ class _AddItemScreenState extends State<AddItemScreen> {
                       _totalPriceController.text.convertCurrencyValues()) ==
                   null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                  content:
-                      Text('O preço total do item deve ser um número válido.')),
+              SnackBar(
+                content: Text(
+                  'O preço total do item deve ser um número válido.',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
             );
             return;
           }
           if (_selectedParticipants.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                  content:
-                      Text('Você deve selecionar pelo menos um participante.')),
+              SnackBar(
+                content: Text(
+                  'Você deve selecionar pelo menos um participante.',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ),
             );
             return;
           }
@@ -212,7 +234,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
           }
           Navigator.pop(context);
         },
-        child: Text(widget.index == null ? 'Adicionar Item' : 'Salvar'),
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.deepPurple),
+        child: Text(
+          widget.index == null ? 'Adicionar Item' : 'Salvar',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
     );
   }

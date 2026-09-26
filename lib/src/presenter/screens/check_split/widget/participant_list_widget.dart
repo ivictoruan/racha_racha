@@ -32,23 +32,21 @@ class ParticipantListWidget extends StatelessWidget {
           },
           child: Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-            child: const Row(
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
+                const Icon(
                   Icons.person_add_alt,
                   color: Colors.deepPurple,
-                  size: 20,
+                  size: 32,
                 ),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   'Adicionar Participante',
-                  style: TextStyle(
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.black87,
+                      ),
                 ),
               ],
             ),
@@ -78,8 +76,7 @@ class ParticipantListWidget extends StatelessWidget {
               .where((item) => item.consumers.contains(participant))
               .toList();
 
-          final itemNames =
-              consumedItems.map((item) => item.name).toList();
+          final itemNames = consumedItems.map((item) => item.name).toList();
 
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 2),
@@ -90,20 +87,10 @@ class ParticipantListWidget extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        participant.name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 15,
-                        ),
-                      ),
-                      Text(
-                        'Deve: ${participant.total.toCurrency()}',
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 13,
-                        ),
-                      ),
+                      Text(participant.name,
+                          style: Theme.of(context).textTheme.titleMedium),
+                      Text('Deve: ${participant.total.toCurrency()}',
+                          style: Theme.of(context).textTheme.titleSmall),
                     ],
                   ),
                 ),
@@ -111,7 +98,7 @@ class ParticipantListWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.info_outline, size: 16),
+                      icon: const Icon(Icons.info_outline, size: 18),
                       color: Colors.deepPurple,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
@@ -128,11 +115,13 @@ class ParticipantListWidget extends StatelessWidget {
                                 itemNames.isNotEmpty
                                     ? itemNames.join(', ')
                                     : 'Este participante não consumiu itens.',
+                                style: const TextStyle(fontSize: 18),
                               ),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.pop(context),
-                                  child: const Text('Fechar'),
+                                  child: const Text('Fechar',
+                                      style: TextStyle(fontSize: 18)),
                                 ),
                               ],
                             );
@@ -142,7 +131,7 @@ class ParticipantListWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     IconButton(
-                      icon: const Icon(Icons.edit, size: 16),
+                      icon: const Icon(Icons.edit, size: 18),
                       color: Colors.deepPurple,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
@@ -164,7 +153,7 @@ class ParticipantListWidget extends StatelessWidget {
                     ),
                     const SizedBox(width: 12),
                     IconButton(
-                      icon: const Icon(Icons.delete, size: 16),
+                      icon: const Icon(Icons.delete, size: 18),
                       color: Colors.deepPurple,
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),

@@ -36,7 +36,7 @@ class SettingsButtonWidget extends StatelessWidget {
                     text,
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 14,
+                      fontSize: 16,
                     ),
                   ),
                   const Spacer(),
